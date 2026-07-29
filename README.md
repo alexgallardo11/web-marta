@@ -94,6 +94,7 @@ pnpm lint
 pnpm typecheck
 pnpm test:coverage
 pnpm build
+pnpm audit --prod --audit-level high
 pnpm exec playwright install chromium firefox webkit
 pnpm test:e2e
 ```
@@ -105,6 +106,16 @@ supabase db reset
 supabase db lint --local --fail-on error
 supabase test db
 ```
+
+GitHub Actions repite estas comprobaciones en cada pull request hacia `main` y
+en cada push a esa rama. El resultado agregado que debe quedar verde antes de
+fusionar es `CI / Required`. Consulta [CONTRIBUTING.md](./CONTRIBUTING.md) para
+el flujo de ramas, pull requests y validación local.
+
+El repositorio es privado y actualmente utiliza GitHub Free, que no permite
+aplicar protección técnica a ramas privadas. Hasta habilitar GitHub Pro, el
+flujo por pull request es una política operativa y no una restricción imposible
+de eludir.
 
 ## Decisiones de seguridad
 
@@ -122,3 +133,7 @@ supabase test db
 Las páginas legales incluyen la información funcional disponible, pero deben
 revisarse con los datos fiscales reales de Marta (nombre legal completo, NIF y
 domicilio profesional, si corresponde) y validarse con asesoría jurídica.
+
+Vercel se vinculará más adelante directamente con GitHub. No hay workflows de
+despliegue ni credenciales de Vercel en este repositorio; al conectarlo,
+`main` será la Production Branch y el resto de ramas generará Previews.

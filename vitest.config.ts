@@ -10,6 +10,12 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "html"],
       include: ["src/lib/game-utils.ts", "src/lib/document-validation.ts"],
+      thresholds: {
+        branches: 85,
+        functions: 90,
+        lines: 90,
+        statements: 90,
+      },
     },
   },
   resolve: {
