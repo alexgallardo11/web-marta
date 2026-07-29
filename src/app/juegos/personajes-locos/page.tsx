@@ -14,16 +14,21 @@ export default function CrazyCharactersPage() {
   return (
     <GameShell active="vasos">
       <main id="contenido" className="paper-grain">
-        <section className="site-container flex flex-col items-center gap-5 py-14 text-center sm:py-20">
+        <section className="game-hero site-container">
+          <span className="game-hero__doodle game-hero__doodle--one" aria-hidden="true">
+            ✦
+          </span>
+          <span className="game-hero__doodle game-hero__doodle--two" aria-hidden="true">
+            ↝
+          </span>
           <p className="eyebrow text-[var(--pink)]">
             <Sparkles className="size-4" aria-hidden="true" />
-            Laboratorio de ideas
+            Cuatro vasos, miles de combinaciones
           </p>
           <h1 className="display-title max-w-[12ch]">Crea personajes locos</h1>
           <p className="max-w-[48rem] text-lg text-foreground/70 sm:text-xl">
-            Toca cada vaso, dibuja la combinación que aparezca y vuelve a
-            intentarlo tantas veces como quieras. Aquí no hay respuestas
-            incorrectas.
+            Agita cada vaso y deja que el azar te proponga un personaje. Junta
+            las cuatro pistas y dibuja lo primero que se te ocurra.
           </p>
         </section>
         <CupsGame />

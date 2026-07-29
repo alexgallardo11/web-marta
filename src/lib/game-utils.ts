@@ -5,6 +5,16 @@ export function pickRandom<T>(items: readonly T[], random = Math.random): T {
   return items[Math.floor(random() * items.length)]!;
 }
 
+export function agreeAdjectiveWithCharacter(
+  character: string,
+  adjective: string,
+): string {
+  const isFeminine = character.trim().toLocaleLowerCase("es").startsWith("una ");
+
+  if (!isFeminine) return adjective;
+  return adjective.replace(/o$/u, "a");
+}
+
 export function wrapCanvasText(
   context: CanvasRenderingContext2D,
   text: string,
