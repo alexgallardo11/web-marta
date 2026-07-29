@@ -112,10 +112,10 @@ en cada push a esa rama. El resultado agregado que debe quedar verde antes de
 fusionar es `CI / Required`. Consulta [CONTRIBUTING.md](./CONTRIBUTING.md) para
 el flujo de ramas, pull requests y validación local.
 
-El repositorio es privado y actualmente utiliza GitHub Free, que no permite
-aplicar protección técnica a ramas privadas. Hasta habilitar GitHub Pro, el
-flujo por pull request es una política operativa y no una restricción imposible
-de eludir.
+Las pull requests creadas por Dependabot se fusionan automáticamente mediante
+squash únicamente cuando la ejecución completa de CI y el check
+`CI / Required` han finalizado correctamente. El workflow vuelve a comprobar
+la autoría, la rama de destino y el SHA exacto antes de fusionar.
 
 ## Decisiones de seguridad
 
