@@ -1,0 +1,96 @@
+name: Dependabot Auto-merge
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+
+permissions:
+  checks: read
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: dependabot-auto-merge-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+
+jobs:
+  merge:
+    name: Merge
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+    steps:
+      - name: Merge the verified Dependabot pull request
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          pull_requests="$(gh api \
+            "repos/${GITHUB_REPOSITORY}/commits/${HEAD_SHA}/pulls")"
+
+          pr_number="$(jq -r \
+            --arg head_sha "$HEAD_SHA" \
+            --arg repository "$GITHUB_REPOSITORY" \
+            '[
+              .[]
+              | select(
+                  .state == "open"
+                  and .draft == false
+                  and .base.ref == "main"
+                  and .head.sha == $head_sha
+                  and .head.repo.full_name == $repository
+                  and .user.login == "dependabot[bot]"
+                )
+            ]
+            | if length == 1 then .[0].number else empty end' \
+            <<<"$pull_requests")"
+
+          if [[ -z "$pr_number" ]]; then
+            echo "No unique open Dependabot pull request matches ${HEAD_SHA}."
+            exit 0
+          fi
+
+          required_result="$(gh api \
+            "repos/${GITHUB_REPOSITORY}/commits/${HEAD_SHA}/check-runs?per_page=100" \
+            --jq '[
+              .check_runs[]
+              | select(
+                  .name == "Required"
+                  and .app.slug == "github-actions"
+                )
+            ]
+            | sort_by(.completed_at)
+            | last
+            | .conclusion // empty')"
+
+          if [[ "$required_result" != "success" ]]; then
+            echo "CI / Required is not successful for ${HEAD_SHA}."
+            exit 1
+          fi
+
+          current_pr="$(gh api \
+            "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}")"
+
+          jq -e \
+            --arg head_sha "$HEAD_SHA" \
+            --arg repository "$GITHUB_REPOSITORY" \
+            '
+              .state == "open"
+              and .draft == false
+              and .base.ref == "main"
+              and .head.sha == $head_sha
+              and .head.repo.full_name == $repository
+              and .user.login == "dependabot[bot]"
+            ' \
+            <<<"$current_pr" >/dev/null
+
+          gh pr merge "$pr_number" \
+            --repo "$GITHUB_REPOSITORY" \
+            --squash \
+            --delete-branch

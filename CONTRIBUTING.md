@@ -35,13 +35,10 @@ supabase stop --project-id marta-moreno --no-backup
 No se deben incluir archivos `.env`, claves de Supabase, tokens de GitHub,
 credenciales de Vercel, PDFs privados ni datos personales.
 
-## Limitación de GitHub Free
+## Actualizaciones de dependencias
 
-GitHub Free no permite aplicar reglas de protección a ramas privadas. Hasta
-cambiar a GitHub Pro, el flujo mediante pull request es una política operativa:
-GitHub Actions informa si un cambio es válido, pero la cuenta administradora
-todavía puede hacer push directo o fusionar con checks fallidos.
-
-Al habilitar GitHub Pro se configurará `main` con pull request obligatorio,
-`CI / Required` obligatorio, rama actualizada, conversaciones resueltas,
-historial lineal y bloqueo de force-push y eliminación.
+Dependabot abre pull requests semanales para dependencias de pnpm y GitHub
+Actions. Estas pull requests se fusionan automáticamente mediante squash solo
+cuando la ejecución completa de CI termina correctamente y `CI / Required`
+está verde. Un fallo, cancelación, check omitido, cambio de SHA o una PR que no
+pertenezca a Dependabot impiden el merge automático.
