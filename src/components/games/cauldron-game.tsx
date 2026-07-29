@@ -258,13 +258,15 @@ export function CauldronGame() {
           <div className="magic-cauldron__body">
             <span className="magic-cauldron__glint" />
           </div>
-          <div className="magic-cauldron__foot magic-cauldron__foot--left" />
-          <div className="magic-cauldron__foot magic-cauldron__foot--right" />
         </div>
         <div className="magic-fire">
           <span />
           <span />
           <span />
+          <i />
+          <i />
+          <i />
+          <i />
         </div>
         <div className="magic-workbench__shadow" />
       </div>
