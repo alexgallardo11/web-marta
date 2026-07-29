@@ -29,6 +29,26 @@ test("el juego de vasos mezcla y reinicia", async ({ page }) => {
   await expect(firstCup).toContainText("Toca para mezclar");
 });
 
+test("el juego de vasos exporta la combinación para Stories", async ({
+  page,
+}, testInfo) => {
+  await page.goto("/juegos/personajes-locos");
+  await page.getByRole("button", { name: "Mezclar los cuatro" }).click();
+
+  const downloadButton = page.getByRole("button", {
+    name: "Descargar para Stories",
+  });
+  await expect(downloadButton).toBeEnabled({ timeout: 3_000 });
+
+  const downloadPromise = page.waitForEvent("download");
+  await downloadButton.click();
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toBe(
+    "personaje-loco-marta-moreno.png",
+  );
+  await download.saveAs(testInfo.outputPath("story-preview.png"));
+});
+
 test("el Caldero Mágico crea un resultado y habilita la exportación", async ({
   page,
 }) => {
@@ -38,6 +58,26 @@ test("el Caldero Mágico crea un resultado y habilita la exportación", async ({
   await expect(
     page.getByRole("button", { name: "Descargar para Stories" }),
   ).toBeEnabled();
+});
+
+test("los juegos respetan la preferencia de movimiento reducido", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+
+  await page.goto("/juegos/personajes-locos");
+  await page.getByRole("button", { name: "Mezclar personaje" }).click();
+  await expect(page.locator(".idea-cup__object").first()).toHaveCSS(
+    "animation-name",
+    "none",
+  );
+
+  await page.goto("/juegos/caldero-magico");
+  await page.getByRole("button", { name: "Invocar personaje" }).click();
+  await expect(page.locator(".magic-cauldron")).toHaveCSS(
+    "animation-name",
+    "none",
+  );
 });
 
 test("las páginas públicas no tienen infracciones críticas de accesibilidad", async ({

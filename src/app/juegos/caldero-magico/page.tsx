@@ -14,7 +14,13 @@ export default function MagicCauldronPage() {
   return (
     <GameShell active="caldero">
       <main id="contenido" className="paper-grain">
-        <section className="site-container flex flex-col items-center gap-5 py-14 text-center sm:py-20">
+        <section className="game-hero site-container">
+          <span className="game-hero__doodle game-hero__doodle--one" aria-hidden="true">
+            ☾
+          </span>
+          <span className="game-hero__doodle game-hero__doodle--two" aria-hidden="true">
+            ✦
+          </span>
           <p className="eyebrow text-[var(--pink)]">
             <Sparkles className="size-4" aria-hidden="true" />
             Tres ingredientes, miles de historias
