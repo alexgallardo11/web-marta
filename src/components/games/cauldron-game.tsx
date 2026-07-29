@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Download, Dices, RefreshCw, Sparkles } from "lucide-react";
 import {
   BIO_TEMPLATES,
@@ -46,6 +46,8 @@ export function CauldronGame() {
   const hydrated = useHydrated();
   const [result, setResult] = useState<Result | null>(null);
   const [exporting, setExporting] = useState(false);
+  const [brewing, setBrewing] = useState(false);
+  const brewTimer = useRef<number | null>(null);
   const ideas = useMemo(
     () =>
       quickIdeas.map(([character, personality, context]) => ({
@@ -55,6 +57,21 @@ export function CauldronGame() {
       })),
     [],
   );
+
+  useEffect(() => {
+    return () => {
+      if (brewTimer.current) clearTimeout(brewTimer.current);
+    };
+  }, []);
+
+  function invokeResult(nextResult = createResult()) {
+    if (brewing) return;
+    setBrewing(true);
+    brewTimer.current = window.setTimeout(() => {
+      setResult(nextResult);
+      setBrewing(false);
+    }, 480);
+  }
 
   function cycleSlot(
     slot: "character" | "personality" | "context",
@@ -185,39 +202,82 @@ export function CauldronGame() {
   ];
 
   return (
-    <div className="site-container flex flex-col gap-12 pb-20">
-      <div className="grid gap-4 lg:grid-cols-3">
+    <div className="magic-lab site-container">
+      <div className="magic-ingredients">
         {slots.map((slot) => (
           <button
             type="button"
             key={slot.key}
             onClick={() => cycleSlot(slot.key)}
-            disabled={!hydrated}
-            className="group min-h-48 border-2 border-foreground p-5 text-left shadow-[0.32rem_0.32rem_0_var(--ink)] transition-transform hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
+            disabled={!hydrated || brewing}
+            className="magic-ingredient group"
             style={{ background: slot.color }}
             aria-label={`Cambiar ${slot.label.toLowerCase()}`}
           >
-            <span className="flex items-center justify-between text-xs font-black uppercase tracking-[0.14em]">
-              {slot.number} · {slot.label}
-              <RefreshCw className="size-4 transition-transform group-hover:rotate-90" aria-hidden="true" />
+            <span className="magic-ingredient__topline">
+              <span>
+                {slot.number} · {slot.label}
+              </span>
+              <RefreshCw
+                className="size-4 transition-transform group-hover:rotate-90"
+                aria-hidden="true"
+              />
             </span>
-            <span className="mt-10 flex items-center gap-3 font-display text-4xl leading-none">
-              <span aria-hidden="true">{slot.value?.emoji ?? "?"}</span>
-              {slot.value?.name ?? "Toca para elegir"}
+            <span className="magic-ingredient__value">
+              <span className="magic-ingredient__emoji" aria-hidden="true">
+                {slot.value?.emoji ?? "?"}
+              </span>
+              <span>{slot.value?.name ?? "Toca para elegir"}</span>
             </span>
           </button>
         ))}
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <div
+        className={`magic-workbench ${brewing ? "is-brewing" : ""}`}
+        aria-hidden="true"
+      >
+        <span className="magic-workbench__scribble">mezcla · imagina · dibuja</span>
+        <div className="magic-cauldron">
+          <div className="magic-cauldron__steam">
+            <span />
+            <span />
+            <span />
+          </div>
+          <div className="magic-cauldron__bubbles">
+            <span>✦</span>
+            <span>●</span>
+            <span>✦</span>
+            <span>●</span>
+          </div>
+          <div className="magic-cauldron__rim">
+            <span />
+          </div>
+          <div className="magic-cauldron__handle magic-cauldron__handle--left" />
+          <div className="magic-cauldron__handle magic-cauldron__handle--right" />
+          <div className="magic-cauldron__body">
+            <span className="magic-cauldron__glint" />
+          </div>
+          <div className="magic-cauldron__foot magic-cauldron__foot--left" />
+          <div className="magic-cauldron__foot magic-cauldron__foot--right" />
+        </div>
+        <div className="magic-fire">
+          <span />
+          <span />
+          <span />
+        </div>
+        <div className="magic-workbench__shadow" />
+      </div>
+
+      <div className="magic-lab__controls">
         <button
           type="button"
-          onClick={() => setResult(createResult())}
-          disabled={!hydrated}
+          onClick={() => invokeResult()}
+          disabled={!hydrated || brewing}
           className="btn-primary w-full disabled:cursor-wait disabled:opacity-60 sm:w-auto"
         >
           <Dices className="size-5" aria-hidden="true" />
-          Invocar personaje
+          {brewing ? "Mezclando ingredientes…" : "Invocar personaje"}
         </button>
         <button
           type="button"
@@ -228,14 +288,17 @@ export function CauldronGame() {
           <Download className="size-5" aria-hidden="true" />
           {exporting ? "Preparando imagen…" : "Descargar para Stories"}
         </button>
+        <span className="sr-only" aria-live="polite">
+          {brewing ? "El caldero está mezclando los ingredientes" : ""}
+        </span>
       </div>
 
       {result ? (
         <section
           aria-live="polite"
-          className="relative mx-auto w-full max-w-4xl rotate-[-0.5deg] border-2 border-foreground bg-[var(--paper)] p-6 shadow-[0.75rem_0.75rem_0_var(--yellow)] sm:p-10"
+          className="magic-result"
         >
-          <span className="absolute right-5 top-5 text-5xl" aria-hidden="true">
+          <span className="magic-result__emoji" aria-hidden="true">
             {result.character.emoji}
           </span>
           <p className="text-xs font-black uppercase tracking-[0.16em] text-[var(--pink)]">
@@ -262,7 +325,7 @@ export function CauldronGame() {
           </p>
         </section>
       ) : (
-        <div className="mx-auto max-w-2xl border-y-2 border-foreground py-10 text-center">
+        <div className="magic-empty">
           <Sparkles className="mx-auto size-9 text-[var(--pink)]" aria-hidden="true" />
           <p className="mt-4 font-display text-3xl">
             El caldero está esperando sus ingredientes.
@@ -283,9 +346,9 @@ export function CauldronGame() {
             <button
               key={`${idea.character.name}-${idea.context.name}`}
               type="button"
-              disabled={!hydrated}
+              disabled={!hydrated || brewing}
               onClick={() =>
-                setResult(
+                invokeResult(
                   createResult(
                     idea.character,
                     idea.personality,
