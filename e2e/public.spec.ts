@@ -6,9 +6,13 @@ test("la landing comunica la propuesta y enlaza los juegos", async ({
 }) => {
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: /dibujar bonito/i }),
+    page.getByRole("heading", {
+      name: /crea personajes que emocionen y conecten/i,
+    }),
   ).toBeVisible();
-  await expect(page.getByRole("link", { name: /recibir ideas/i })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /recibir la newsletter/i }),
+  ).toBeVisible();
   await page.getByRole("link", { name: /personajes locos/i }).first().click();
   await expect(page).toHaveURL(/\/juegos\/personajes-locos$/);
 });
