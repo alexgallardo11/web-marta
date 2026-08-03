@@ -19,6 +19,25 @@ type Result = {
   bio: string;
 };
 
+type CauldronSelection = {
+  character: CauldronOption | null;
+  personality: CauldronOption | null;
+  context: CauldronOption | null;
+};
+
+type CompleteSelection = Omit<Result, "bio">;
+
+type CauldronState = {
+  selection: CauldronSelection;
+  bio: string | null;
+};
+
+const emptySelection: CauldronSelection = {
+  character: null,
+  personality: null,
+  context: null,
+};
+
 const quickIdeas = [
   [0, 3, 14],
   [5, 11, 7],
@@ -42,9 +61,20 @@ function createResult(
   };
 }
 
+function isCompleteSelection(
+  selection: CauldronSelection,
+): selection is CompleteSelection {
+  return Boolean(
+    selection.character && selection.personality && selection.context,
+  );
+}
+
 export function CauldronGame() {
   const hydrated = useHydrated();
-  const [result, setResult] = useState<Result | null>(null);
+  const [cauldron, setCauldron] = useState<CauldronState>({
+    selection: emptySelection,
+    bio: null,
+  });
   const [exporting, setExporting] = useState(false);
   const [brewing, setBrewing] = useState(false);
   const brewTimer = useRef<number | null>(null);
@@ -57,6 +87,11 @@ export function CauldronGame() {
       })),
     [],
   );
+  const result = useMemo<Result | null>(() => {
+    if (!isCompleteSelection(cauldron.selection) || !cauldron.bio) return null;
+    return { ...cauldron.selection, bio: cauldron.bio };
+  }, [cauldron]);
+  const selectedCount = Object.values(cauldron.selection).filter(Boolean).length;
 
   useEffect(() => {
     return () => {
@@ -68,7 +103,14 @@ export function CauldronGame() {
     if (brewing) return;
     setBrewing(true);
     brewTimer.current = window.setTimeout(() => {
-      setResult(nextResult);
+      setCauldron({
+        selection: {
+          character: nextResult.character,
+          personality: nextResult.personality,
+          context: nextResult.context,
+        },
+        bio: nextResult.bio,
+      });
       setBrewing(false);
     }, 480);
   }
@@ -76,15 +118,27 @@ export function CauldronGame() {
   function cycleSlot(
     slot: "character" | "personality" | "context",
   ) {
-    const current = result ?? createResult();
-    setResult({
-      ...current,
-      [slot]:
+    setCauldron((current) => {
+      const selection = {
+        ...current.selection,
+        [slot]:
         slot === "character"
           ? pickRandom(CHARACTERS)
           : slot === "personality"
             ? pickRandom(PERSONALITIES)
             : pickRandom(CONTEXTS),
+      };
+
+      return {
+        selection,
+        bio: isCompleteSelection(selection)
+          ? createResult(
+              selection.character,
+              selection.personality,
+              selection.context,
+            ).bio
+          : null,
+      };
     });
   }
 
@@ -182,27 +236,35 @@ export function CauldronGame() {
       key: "character" as const,
       number: "01",
       label: "Ingrediente base",
-      value: result?.character,
+      value: cauldron.selection.character,
       color: "var(--yellow)",
     },
     {
       key: "personality" as const,
       number: "02",
       label: "Especia secreta",
-      value: result?.personality,
+      value: cauldron.selection.personality,
       color: "var(--pink-soft)",
     },
     {
       key: "context" as const,
       number: "03",
       label: "Poción transformadora",
-      value: result?.context,
+      value: cauldron.selection.context,
       color: "var(--turquoise)",
     },
   ];
 
   return (
     <div className="magic-lab site-container">
+      <header className="game-section-intro game-section-intro--magic">
+        <span aria-hidden="true">01</span>
+        <div>
+          <p>Prepara la receta</p>
+          <h2>Elige tres ingredientes para tu historia.</h2>
+        </div>
+      </header>
+
       <div className="magic-ingredients">
         {slots.map((slot) => (
           <button
@@ -210,9 +272,10 @@ export function CauldronGame() {
             key={slot.key}
             onClick={() => cycleSlot(slot.key)}
             disabled={!hydrated || brewing}
-            className="magic-ingredient group"
+            className={`magic-ingredient group ${slot.value ? "is-selected" : ""}`}
             style={{ background: slot.color }}
             aria-label={`Cambiar ${slot.label.toLowerCase()}`}
+            aria-pressed={Boolean(slot.value)}
           >
             <span className="magic-ingredient__topline">
               <span>
@@ -229,9 +292,21 @@ export function CauldronGame() {
               </span>
               <span>{slot.value?.name ?? "Toca para elegir"}</span>
             </span>
+            <span className="magic-ingredient__status">
+              {slot.value ? "Elegido · toca para cambiar" : "Aún vacío"}
+            </span>
           </button>
         ))}
       </div>
+
+      <p className="magic-progress" aria-live="polite">
+        <span>{selectedCount}/3</span>
+        {selectedCount === 0
+          ? "El caldero espera tus ingredientes."
+          : selectedCount < 3
+            ? "Ya huele a historia. Sigue eligiendo."
+            : "¡La mezcla está lista!"}
+      </p>
 
       <div
         className={`magic-workbench ${brewing ? "is-brewing" : ""}`}
@@ -276,7 +351,7 @@ export function CauldronGame() {
           type="button"
           onClick={() => invokeResult()}
           disabled={!hydrated || brewing}
-          className="btn-primary w-full disabled:cursor-wait disabled:opacity-60 sm:w-auto"
+          className="game-action game-action--primary"
         >
           <Dices className="size-5" aria-hidden="true" />
           {brewing ? "Mezclando ingredientes…" : "Invocar personaje"}
@@ -285,7 +360,7 @@ export function CauldronGame() {
           type="button"
           onClick={exportStory}
           disabled={!hydrated || !result || exporting}
-          className="btn-secondary w-full disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
+          className="game-action game-action--secondary"
         >
           <Download className="size-5" aria-hidden="true" />
           {exporting ? "Preparando imagen…" : "Descargar para Stories"}
@@ -303,18 +378,18 @@ export function CauldronGame() {
           <span className="magic-result__emoji" aria-hidden="true">
             {result.character.emoji}
           </span>
-          <p className="text-xs font-black uppercase tracking-[0.16em] text-[var(--pink)]">
+          <p className="magic-result__eyebrow">
             Personaje invocado
           </p>
-          <h2 className="mt-4 max-w-[15ch] font-display text-5xl leading-none sm:text-7xl">
+          <h2 className="magic-result__title">
             {result.character.name} {result.personality.name}
           </h2>
-          <div className="mt-6 flex flex-wrap gap-2 text-sm font-bold">
+          <div className="magic-result__ingredients">
             {[result.character, result.personality, result.context].map(
               (item) => (
                 <span
                   key={`${item.name}-${item.emoji}`}
-                  className="border-2 border-foreground px-3 py-1.5"
+                  className="magic-result__ingredient"
                   style={{ background: `${item.color}22` }}
                 >
                   {item.emoji} {item.name}
@@ -322,28 +397,31 @@ export function CauldronGame() {
               ),
             )}
           </div>
-          <p className="mt-7 max-w-[58ch] text-xl leading-relaxed text-foreground/75">
+          <p className="magic-result__bio">
             {result.bio}
           </p>
         </section>
       ) : (
         <div className="magic-empty">
-          <Sparkles className="mx-auto size-9 text-[var(--pink)]" aria-hidden="true" />
-          <p className="mt-4 font-display text-3xl">
-            El caldero está esperando sus ingredientes.
+          <Sparkles aria-hidden="true" />
+          <p>
+            {selectedCount === 0
+              ? "Empieza tu receta."
+              : `Te faltan ${3 - selectedCount} ${3 - selectedCount === 1 ? "ingrediente" : "ingredientes"}.`}
           </p>
-          <p className="mt-2 text-foreground/65">
-            Invoca una combinación completa o toca cada casilla para elegirla.
+          <p>
+            Toca las tarjetas que quieras elegir o deja que el botón «Invocar
+            personaje» complete la mezcla.
           </p>
         </div>
       )}
 
-      <section className="mt-4">
-        <div className="mb-6 flex items-center gap-3">
-          <span className="font-display text-3xl">Ideas rápidas</span>
-          <span className="h-0.5 flex-1 bg-foreground" aria-hidden="true" />
+      <section className="magic-quick" aria-labelledby="ideas-rapidas-title">
+        <div className="magic-quick__heading">
+          <span id="ideas-rapidas-title">Recetas rápidas</span>
+          <span aria-hidden="true" />
         </div>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="magic-quick__grid">
           {ideas.map((idea) => (
             <button
               key={`${idea.character.name}-${idea.context.name}`}
@@ -358,7 +436,7 @@ export function CauldronGame() {
                   ),
                 )
               }
-              className="flex min-h-24 items-center gap-3 border-2 border-foreground bg-[var(--paper)] p-4 text-left font-bold transition-colors hover:bg-[var(--yellow)] disabled:cursor-wait disabled:opacity-70"
+              className="magic-quick__idea"
             >
               <span className="text-3xl" aria-hidden="true">
                 {idea.character.emoji}

@@ -13,6 +13,18 @@ import { useHydrated } from "@/lib/use-hydrated";
 const emptyValues = CUP_CATEGORIES.map(() => "Toca para mezclar");
 const storyColors = ["#f2d45f", "#efbfd0", "#70c3bc", "#72b8e8"];
 
+function getCupTextClass(value: string) {
+  if (value === "Toca para mezclar") return "is-empty is-long";
+
+  const characters = value.trim().length;
+  const words = value.trim().split(/\s+/).length;
+
+  if (characters > 38 || words > 6) return "is-extra-long";
+  if (characters > 27 || words > 4) return "is-long";
+  if (characters > 17 || words > 2) return "is-medium";
+  return "is-short";
+}
+
 function loadCanvasImage(src: string) {
   return new Promise<HTMLImageElement | null>((resolve) => {
     const image = new Image();
@@ -311,10 +323,13 @@ export function CupsGame() {
 
   return (
     <div className="cups-lab site-container">
-      <div className="cups-lab__instructions">
-        <span aria-hidden="true">↙</span>
-        Toca un vaso para agitarlo
-      </div>
+      <header className="game-section-intro">
+        <span aria-hidden="true">01</span>
+        <div>
+          <p>Tu mesa de mezclas</p>
+          <h2>Agita una pista o déjate sorprender.</h2>
+        </div>
+      </header>
 
       <div className="cups-grid">
         {CUP_CATEGORIES.map((category, index) => (
@@ -357,11 +372,9 @@ export function CupsGame() {
                     ✦
                   </span>
                   <span
-                    className={`idea-cup__value ${
-                      displayValues[index] === "Toca para mezclar"
-                        ? "is-empty"
-                        : ""
-                    }`}
+                    className={`idea-cup__value ${getCupTextClass(
+                      displayValues[index]!,
+                    )}`}
                   >
                     {displayValues[index]}
                   </span>
@@ -389,7 +402,7 @@ export function CupsGame() {
           type="button"
           onClick={spinAll}
           disabled={!hydrated || spinning.some(Boolean)}
-          className="btn-primary w-full disabled:cursor-wait disabled:opacity-60 sm:w-auto"
+          className="game-action game-action--primary"
         >
           <Dices className="size-5" aria-hidden="true" />
           Mezclar los cuatro
@@ -398,7 +411,7 @@ export function CupsGame() {
           type="button"
           onClick={reset}
           disabled={!hydrated || !hasResult}
-          className="btn-secondary w-full disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
+          className="game-action game-action--secondary"
         >
           <RotateCcw className="size-5" aria-hidden="true" />
           Empezar de nuevo
@@ -407,7 +420,7 @@ export function CupsGame() {
           type="button"
           onClick={exportStory}
           disabled={!hydrated || !hasCompleteResult || exporting}
-          className="btn-secondary w-full disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
+          className="game-action game-action--secondary"
         >
           <Download className="size-5" aria-hidden="true" />
           {exporting ? "Preparando imagen…" : "Descargar para Stories"}
@@ -420,10 +433,10 @@ export function CupsGame() {
           aria-live="polite"
         >
           <span className="cups-result__pin" aria-hidden="true" />
-          <p className="text-xs font-black uppercase tracking-[0.16em] text-[var(--pink)]">
+          <p className="cups-result__eyebrow">
             Tu reto de dibujo
           </p>
-          <p className="mt-2 font-display text-3xl leading-tight sm:text-5xl">
+          <p className="cups-result__text">
             {displayValues.join(" · ")}
           </p>
         </div>

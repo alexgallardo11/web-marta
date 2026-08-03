@@ -60,6 +60,36 @@ test("el Caldero Mágico crea un resultado y habilita la exportación", async ({
   ).toBeEnabled();
 });
 
+test("el caldero permite elegir cada ingrediente de forma independiente", async ({
+  page,
+}) => {
+  await page.goto("/juegos/caldero-magico");
+
+  const ingredient = page.getByRole("button", {
+    name: "Cambiar ingrediente base",
+  });
+  const personality = page.getByRole("button", {
+    name: "Cambiar especia secreta",
+  });
+  const context = page.getByRole("button", {
+    name: "Cambiar poción transformadora",
+  });
+
+  await ingredient.click();
+
+  await expect(ingredient).toHaveAttribute("aria-pressed", "true");
+  await expect(personality).toHaveAttribute("aria-pressed", "false");
+  await expect(context).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByText("1/3")).toBeVisible();
+  await expect(page.getByText("Personaje invocado")).toHaveCount(0);
+
+  await personality.click();
+  await context.click();
+
+  await expect(page.getByText("3/3")).toBeVisible();
+  await expect(page.getByText("Personaje invocado")).toBeVisible();
+});
+
 test("los juegos respetan la preferencia de movimiento reducido", async ({
   page,
 }) => {
