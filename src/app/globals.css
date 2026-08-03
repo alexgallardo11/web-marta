@@ -3916,6 +3916,12 @@ a {
   background: var(--paper);
 }
 
+.game-action--camera {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+
 .game-action:disabled {
   cursor: not-allowed;
   opacity: 0.42;
@@ -3935,10 +3941,273 @@ a {
   .game-action--secondary:not(:disabled):hover {
     background: color-mix(in oklch, var(--turquoise) 18%, var(--paper));
   }
+
+  .game-action--camera:not(:disabled):hover {
+    border-color: var(--turquoise);
+    background: var(--turquoise);
+    color: var(--ink);
+  }
 }
 
 .game-action:active:not(:disabled) {
   transform: translateY(0.08rem) scale(0.99);
+}
+
+/* Camera flow: a mobile-first darkroom for turning a drawing into a Story. */
+
+.drawing-share {
+  width: min(calc(100% - 2rem), 58rem);
+  max-width: none;
+  height: min(90dvh, 58rem);
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: 2rem;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 2rem 5rem color-mix(in oklch, var(--ink) 28%, transparent);
+}
+
+.drawing-share::backdrop {
+  background: color-mix(in oklch, var(--ink) 72%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.drawing-share__shell {
+  display: grid;
+  height: 100%;
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+  gap: var(--space-md);
+  padding: clamp(0.9rem, 2.4vw, 1.5rem);
+}
+
+.drawing-share__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.drawing-share__header p {
+  color: var(--pink);
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.drawing-share__header h2 {
+  margin-top: 0.2rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+.drawing-share__header > button {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  flex: none;
+  place-items: center;
+  border: 1px solid color-mix(in oklch, var(--ink) 30%, transparent);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.drawing-share__header > button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.drawing-share__stage {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background:
+    radial-gradient(circle at 88% 12%, color-mix(in oklch, var(--turquoise) 36%, transparent) 0 5rem, transparent 5.1rem),
+    var(--ink);
+}
+
+.drawing-share__stage > img,
+.drawing-share__camera,
+.drawing-share__camera video {
+  width: 100%;
+  height: 100%;
+}
+
+.drawing-share__stage > img {
+  display: block;
+  object-fit: contain;
+}
+
+.drawing-share__camera {
+  position: relative;
+}
+
+.drawing-share__camera video {
+  display: block;
+  background: color-mix(in oklch, var(--ink) 82%, black);
+  object-fit: cover;
+}
+
+.drawing-share__camera > p {
+  position: absolute;
+  right: var(--space-lg);
+  bottom: var(--space-lg);
+  left: var(--space-lg);
+  z-index: 3;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--ink) 82%, transparent);
+  color: var(--paper);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.drawing-share__frame {
+  position: absolute;
+  inset: 6%;
+  z-index: 2;
+  border: 2px dashed color-mix(in oklch, var(--paper) 78%, transparent);
+  border-radius: 1.25rem;
+  pointer-events: none;
+}
+
+.drawing-share__frame::before,
+.drawing-share__frame::after {
+  content: "";
+  position: absolute;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-color: var(--yellow);
+}
+
+.drawing-share__frame::before {
+  top: -0.2rem;
+  left: -0.2rem;
+  border-top: 0.45rem solid var(--yellow);
+  border-left: 0.45rem solid var(--yellow);
+  border-radius: 1rem 0 0;
+}
+
+.drawing-share__frame::after {
+  right: -0.2rem;
+  bottom: -0.2rem;
+  border-right: 0.45rem solid var(--yellow);
+  border-bottom: 0.45rem solid var(--yellow);
+  border-radius: 0 0 1rem;
+}
+
+.drawing-share__message {
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.9rem;
+  background: color-mix(in oklch, var(--yellow) 20%, var(--paper));
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 750;
+  text-align: center;
+}
+
+.drawing-share__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+}
+
+.drawing-share__actions .game-action {
+  width: auto;
+  flex: 1 1 13rem;
+}
+
+.drawing-share__actions label {
+  cursor: pointer;
+}
+
+.drawing-share__actions label:focus-within {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.drawing-share__actions input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.drawing-share__native-input {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.drawing-share__shutter {
+  display: grid;
+  width: 4.6rem;
+  height: 4.6rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper);
+}
+
+.drawing-share__shutter > span:first-child {
+  width: 3.35rem;
+  height: 3.35rem;
+  border-radius: 50%;
+  background: var(--pink);
+  transition: transform 140ms var(--ease-out-expo);
+}
+
+.drawing-share__shutter:active > span:first-child {
+  transform: scale(0.84);
+}
+
+.drawing-share__hint {
+  color: color-mix(in oklch, var(--ink) 65%, transparent);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 39.99rem) {
+  .drawing-share {
+    width: 100%;
+    height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .drawing-share__shell {
+    padding: max(0.8rem, env(safe-area-inset-top)) 0.8rem max(0.8rem, env(safe-area-inset-bottom));
+  }
+
+  .drawing-share__stage {
+    border-radius: 1.15rem;
+  }
+
+  .drawing-share__actions {
+    gap: var(--space-sm);
+  }
+
+  .drawing-share__actions .game-action {
+    min-height: 3.35rem;
+    padding-inline: 0.9rem;
+    font-size: 0.87rem;
+  }
 }
 
 .cups-result {

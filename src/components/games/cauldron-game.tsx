@@ -11,6 +11,7 @@ import {
 } from "@/lib/games-data";
 import { pickRandom, wrapCanvasText } from "@/lib/game-utils";
 import { useHydrated } from "@/lib/use-hydrated";
+import { DrawingCameraShare } from "@/components/games/drawing-camera-share";
 
 type Result = {
   character: CauldronOption;
@@ -617,6 +618,25 @@ export function CauldronGame() {
           <Download className="size-5" aria-hidden="true" />
           {exporting ? "Preparando imagen…" : "Descargar para Stories"}
         </button>
+        <DrawingCameraShare
+          enabled={hydrated && Boolean(result)}
+          game="cauldron"
+          challengeTitle={
+            result ? `${result.character.name} ${result.personality.name}` : ""
+          }
+          details={
+            result
+              ? [
+                  { label: "Ingrediente base", value: result.character.name },
+                  { label: "Especia secreta", value: result.personality.name },
+                  {
+                    label: "Poción transformadora",
+                    value: result.context.name,
+                  },
+                ]
+              : []
+          }
+        />
         <span className="sr-only" aria-live="polite">
           {brewing ? "El caldero está mezclando los ingredientes" : ""}
         </span>

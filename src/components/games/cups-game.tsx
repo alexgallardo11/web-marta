@@ -9,6 +9,7 @@ import {
   wrapCanvasText,
 } from "@/lib/game-utils";
 import { useHydrated } from "@/lib/use-hydrated";
+import { DrawingCameraShare } from "@/components/games/drawing-camera-share";
 
 const emptyValues = CUP_CATEGORIES.map(() => "Toca para mezclar");
 const storyColors = ["#f2d45f", "#efbfd0", "#70c3bc", "#72b8e8"];
@@ -425,6 +426,15 @@ export function CupsGame() {
           <Download className="size-5" aria-hidden="true" />
           {exporting ? "Preparando imagen…" : "Descargar para Stories"}
         </button>
+        <DrawingCameraShare
+          enabled={hydrated && hasCompleteResult}
+          game="cups"
+          challengeTitle={`${displayValues[0]} ${displayValues[1]}`}
+          details={CUP_CATEGORIES.map((category, index) => ({
+            label: category.label,
+            value: displayValues[index]!,
+          }))}
+        />
       </div>
 
       {hasResult && (

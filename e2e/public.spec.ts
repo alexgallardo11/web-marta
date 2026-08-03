@@ -90,6 +90,80 @@ test("el caldero permite elegir cada ingrediente de forma independiente", async 
   await expect(page.getByText("Personaje invocado")).toBeVisible();
 });
 
+test("los dos juegos convierten una foto del dibujo en una Story compartible", async ({
+  page,
+}) => {
+  for (const game of ["personajes-locos", "caldero-magico"] as const) {
+    await page.goto(`/juegos/${game}`);
+    if (game === "personajes-locos") {
+      await page.getByRole("button", { name: "Mezclar los cuatro" }).click();
+    } else {
+      await page.getByRole("button", { name: "Invocar personaje" }).click();
+    }
+
+    const cameraButton = page.getByRole("button", {
+      name: "Fotografiar mi dibujo",
+    });
+    await expect(cameraButton).toBeEnabled({ timeout: 3_000 });
+    await cameraButton.click();
+    await expect(
+      page.getByRole("heading", { name: "Encuadra tu creación" }),
+    ).toBeVisible();
+
+    await page
+      .getByLabel("Elegir una foto de la galería")
+      .setInputFiles("public/images/web-2026/marta-illustration.png");
+    await expect(
+      page.getByRole("heading", { name: "¿Te gusta esta foto?" }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Usar esta foto" }).click();
+
+    await expect(
+      page.getByRole("heading", { name: "Tu Story está lista" }),
+    ).toBeVisible({ timeout: 3_000 });
+    await expect(
+      page.getByRole("button", { name: "Compartir en redes" }),
+    ).toBeVisible();
+    const saveButton = page.getByRole("button", { name: "Guardar" });
+    await expect(saveButton).toBeVisible();
+    const downloadPromise = page.waitForEvent("download");
+    await saveButton.click();
+    const download = await downloadPromise;
+    expect(download.suggestedFilename()).toBe(
+      game === "personajes-locos"
+        ? "mi-dibujo-personajes-locos-marta-moreno.png"
+        : "mi-dibujo-caldero-magico-marta-moreno.png",
+    );
+    await page.getByRole("button", { name: "Cerrar cámara" }).click();
+  }
+});
+
+test("abre directamente la cámara nativa cuando no hay cámara en directo", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "mediaDevices", {
+      configurable: true,
+      value: undefined,
+    });
+  });
+  await page.goto("/juegos/caldero-magico");
+  await page.getByRole("button", { name: "Invocar personaje" }).click();
+  const chooserPromise = page.waitForEvent("filechooser");
+  await page.getByRole("button", { name: "Fotografiar mi dibujo" }).click();
+  const chooser = await chooserPromise;
+  expect(chooser.isMultiple()).toBe(false);
+  await chooser.setFiles("public/images/web-2026/marta-illustration.png");
+
+  await expect(
+    page.getByRole("heading", { name: "¿Te gusta esta foto?" }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Abrir cámara del dispositivo")).toHaveAttribute(
+    "capture",
+    "environment",
+  );
+});
+
 test("los juegos respetan la preferencia de movimiento reducido", async ({
   page,
 }) => {
