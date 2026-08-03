@@ -341,7 +341,11 @@ export default function Home() {
               </CharacterGuide>
             </header>
           </div>
-          <div className="brand-testimonials__rail" aria-label="Testimonios de alumnas">
+          <div
+            className="brand-testimonials__rail"
+            aria-label="Testimonios de alumnas"
+            tabIndex={0}
+          >
             {testimonials.map((testimonial, index) => (
               <figure key={testimonial.name} className="brand-testimonial">
                 <span aria-hidden="true">“</span>

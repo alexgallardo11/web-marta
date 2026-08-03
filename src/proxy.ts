@@ -26,13 +26,17 @@ export async function proxy(request: NextRequest) {
     },
   });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data: claims } = await supabase.auth.getClaims();
+  const hasSession = Boolean(claims?.claims?.sub);
+  const pathname = request.nextUrl.pathname;
+  const isPublicAdminRoute =
+    pathname === "/admin/login" ||
+    pathname === "/admin/recuperar" ||
+    pathname === "/admin/nueva-contrasena";
 
-  if (request.nextUrl.pathname.startsWith("/admin/documentos") && !user) {
+  if (pathname.startsWith("/admin/") && !isPublicAdminRoute && !hasSession) {
     const loginUrl = new URL("/admin/login", request.url);
-    loginUrl.searchParams.set("next", request.nextUrl.pathname);
+    loginUrl.searchParams.set("next", pathname);
     return NextResponse.redirect(loginUrl);
   }
 

@@ -44,6 +44,7 @@ export async function loginAction(
     .from("admin_users")
     .select("user_id")
     .eq("user_id", data.user.id)
+    .eq("is_active", true)
     .maybeSingle();
   if (!admin) {
     await supabase.auth.signOut();

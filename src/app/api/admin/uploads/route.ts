@@ -1,7 +1,11 @@
 import { randomUUID } from "node:crypto";
 import { requireAdmin } from "@/lib/auth";
 import { handleRouteError, jsonError, requireSameOrigin } from "@/lib/api";
-import { uploadRequestSchema, isPdfFilename } from "@/lib/document-validation";
+import {
+  isPdfFilename,
+  isPdfMimeType,
+  uploadRequestSchema,
+} from "@/lib/document-validation";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function POST(request: Request) {
@@ -12,7 +16,7 @@ export async function POST(request: Request) {
     if (!parsed.success) {
       return jsonError("Revisa el nombre y el tamaño del PDF.");
     }
-    if (!isPdfFilename(parsed.data.filename)) {
+    if (!isPdfFilename(parsed.data.filename) || !isPdfMimeType(parsed.data.mimeType)) {
       return jsonError("El archivo debe tener extensión .pdf.");
     }
 

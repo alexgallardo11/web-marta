@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Atkinson_Hyperlegible_Next, Outfit } from "next/font/google";
+import { AuthSessionRedirect } from "@/components/auth-session-redirect";
 import "./globals.css";
 
 const bodyFont = Atkinson_Hyperlegible_Next({
@@ -67,6 +68,7 @@ export default function RootLayout({
       className={`${bodyFont.variable} ${displayFont.variable}`}
     >
       <body>
+        <AuthSessionRedirect />
         <a className="skip-link" href="#contenido">
           Saltar al contenido
         </a>

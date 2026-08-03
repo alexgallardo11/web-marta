@@ -35,7 +35,7 @@
 }
 
 :root {
-  --brand-red: #f82e2e;
+  --brand-red: #b42334;
   --brand-orange: #f99a2e;
   --brand-cyan: #2ed9f7;
   --brand-lime: #64e41f;
@@ -314,6 +314,594 @@ a {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Admin workspace: the landing keeps its expressive language; the workspace
+   uses the same type and paper palette with a calmer information hierarchy. */
+.admin-app {
+  min-height: 100vh;
+  background: color-mix(in oklch, var(--background) 84%, var(--paper));
+}
+
+.admin-sidebar {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid color-mix(in oklch, var(--ink) 15%, transparent);
+  background: var(--paper);
+}
+
+.admin-sidebar-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid color-mix(in oklch, var(--ink) 12%, transparent);
+}
+
+.admin-workspace-label,
+.admin-topbar-kicker,
+.admin-eyebrow {
+  color: color-mix(in oklch, var(--ink) 58%, transparent);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.admin-nav {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1.25rem 0.85rem;
+}
+
+.admin-nav a {
+  display: flex;
+  min-height: 2.8rem;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65rem 0.75rem;
+  border-left: 2px solid transparent;
+  color: color-mix(in oklch, var(--ink) 68%, transparent);
+  font-size: 0.9rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.admin-nav a svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.admin-nav a:hover,
+.admin-nav a.is-active {
+  border-left-color: var(--brand-red);
+  background: color-mix(in oklch, var(--brand-red) 8%, transparent);
+  color: var(--ink);
+}
+
+.admin-sidebar-footer {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: auto;
+  padding: 1.25rem 1.5rem 1.5rem;
+  border-top: 1px solid color-mix(in oklch, var(--ink) 12%, transparent);
+}
+
+.admin-role-badge,
+.admin-status,
+.admin-count-badge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border: 1px solid color-mix(in oklch, var(--ink) 18%, transparent);
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.admin-role-badge {
+  background: color-mix(in oklch, var(--brand-cyan) 20%, var(--paper));
+}
+
+.admin-sidebar-email {
+  overflow: hidden;
+  color: color-mix(in oklch, var(--ink) 55%, transparent);
+  font-size: 0.75rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-content {
+  min-width: 0;
+}
+
+.admin-topbar {
+  display: flex;
+  min-height: 4.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem clamp(1rem, 4vw, 3rem);
+  border-bottom: 1px solid color-mix(in oklch, var(--ink) 14%, transparent);
+  background: color-mix(in oklch, var(--paper) 92%, transparent);
+}
+
+.admin-topbar-title {
+  margin-top: 0.12rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.admin-logout-button,
+.admin-small-button,
+.admin-primary-button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--ink);
+  padding: 0.6rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  transition: background-color 150ms ease, color 150ms ease, opacity 150ms ease;
+}
+
+.admin-logout-button {
+  border-color: color-mix(in oklch, var(--ink) 20%, transparent);
+  color: color-mix(in oklch, var(--ink) 68%, transparent);
+}
+
+.admin-logout-button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.admin-logout-button:hover,
+.admin-small-button:hover {
+  background: color-mix(in oklch, var(--ink) 8%, transparent);
+  color: var(--ink);
+}
+
+.admin-primary-button {
+  border-color: var(--brand-red);
+  background: var(--brand-red);
+  color: white;
+}
+
+.admin-primary-button:hover {
+  background: color-mix(in oklch, var(--brand-red) 84%, var(--ink));
+}
+
+.admin-primary-button:disabled,
+.admin-small-button:disabled,
+.admin-logout-button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.admin-main {
+  width: min(100%, 74rem);
+  margin-inline: auto;
+  padding: clamp(1.5rem, 4vw, 3.25rem);
+}
+
+.admin-main .btn-primary,
+.admin-main .btn-secondary {
+  border-radius: 0.25rem;
+  box-shadow: none;
+}
+
+.admin-main .btn-primary:hover,
+.admin-main .btn-secondary:hover {
+  transform: none;
+}
+
+.admin-main .admin-feedback.fixed {
+  z-index: 50;
+}
+
+.admin-page-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.admin-page-heading h1 {
+  margin-top: 0.45rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.4rem, 5vw, 4.25rem);
+  line-height: 0.95;
+}
+
+.admin-page-heading p:not(.admin-eyebrow) {
+  max-width: 42rem;
+  margin-top: 0.8rem;
+  color: color-mix(in oklch, var(--ink) 60%, transparent);
+}
+
+.admin-stat-card {
+  display: grid;
+  min-width: 8rem;
+  gap: 0.2rem;
+  border-left: 3px solid var(--brand-red);
+  padding: 0.4rem 0 0.4rem 1rem;
+}
+
+.admin-stat-card strong {
+  font-family: var(--font-display), sans-serif;
+  font-size: 2.3rem;
+  line-height: 1;
+}
+
+.admin-stat-card span {
+  color: color-mix(in oklch, var(--ink) 56%, transparent);
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.admin-module-stack {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.admin-feedback {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid color-mix(in oklch, var(--ink) 17%, transparent);
+  padding: 0.85rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 750;
+}
+
+.admin-feedback svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: none;
+}
+
+.admin-feedback.success {
+  background: color-mix(in oklch, var(--brand-cyan) 15%, var(--paper));
+}
+
+.admin-feedback.error {
+  border-color: color-mix(in oklch, var(--brand-red) 35%, transparent);
+  color: color-mix(in oklch, var(--brand-red) 78%, var(--ink));
+}
+
+.admin-invite-card,
+.admin-list-card {
+  border: 1px solid color-mix(in oklch, var(--ink) 16%, transparent);
+  background: var(--paper);
+}
+
+.admin-invite-card {
+  display: grid;
+  grid-template-columns: 1fr minmax(18rem, 1fr);
+  gap: 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.admin-invite-card h2,
+.admin-list-heading h2 {
+  margin-top: 0.35rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.85rem;
+  line-height: 1;
+}
+
+.admin-invite-card p:not(.admin-eyebrow) {
+  max-width: 28rem;
+  margin-top: 0.7rem;
+  color: color-mix(in oklch, var(--ink) 58%, transparent);
+  font-size: 0.88rem;
+}
+
+.admin-invite-fields {
+  display: flex;
+  align-items: end;
+  gap: 0.7rem;
+}
+
+.admin-invite-fields label,
+.admin-input-with-icon {
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.admin-input-with-icon {
+  position: relative;
+}
+
+.admin-input-with-icon svg {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.75rem;
+  width: 1rem;
+  height: 1rem;
+  color: color-mix(in oklch, var(--ink) 45%, transparent);
+}
+
+.admin-input-with-icon input {
+  min-height: 2.75rem;
+  min-width: 0;
+  border: 1px solid color-mix(in oklch, var(--ink) 24%, transparent);
+  background: var(--background);
+  padding: 0.6rem 0.75rem 0.6rem 2.25rem;
+  font: inherit;
+  font-weight: 500;
+}
+
+.admin-list-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid color-mix(in oklch, var(--ink) 13%, transparent);
+}
+
+.admin-count-badge {
+  background: color-mix(in oklch, var(--brand-orange) 22%, var(--paper));
+}
+
+.admin-account-list {
+  display: grid;
+}
+
+.admin-account-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid color-mix(in oklch, var(--ink) 10%, transparent);
+}
+
+.admin-account-row:last-child {
+  border-bottom: 0;
+}
+
+.admin-account-icon {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  background: color-mix(in oklch, var(--brand-cyan) 18%, var(--paper));
+}
+
+.admin-account-icon svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.admin-account-details {
+  display: grid;
+  min-width: 0;
+  gap: 0.2rem;
+}
+
+.admin-account-details strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-account-details span,
+.admin-owner-note {
+  color: color-mix(in oklch, var(--ink) 53%, transparent);
+  font-size: 0.78rem;
+}
+
+.admin-status.active {
+  border-color: color-mix(in oklch, #188c64 40%, transparent);
+  background: color-mix(in oklch, #34c991 18%, var(--paper));
+  color: #146849;
+}
+
+.admin-status.inactive {
+  background: color-mix(in oklch, var(--ink) 8%, transparent);
+  color: color-mix(in oklch, var(--ink) 55%, transparent);
+}
+
+.admin-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: color-mix(in oklch, var(--ink) 60%, transparent);
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.admin-pagination a {
+  border-bottom: 1px solid currentColor;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.admin-pagination a.is-disabled {
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+.admin-auth-page {
+  background: color-mix(in oklch, var(--background) 86%, var(--paper));
+}
+
+.admin-auth-card {
+  border-radius: 0.25rem;
+  box-shadow: 0 1rem 2.5rem oklch(0.3 0.035 335 / 0.08);
+}
+
+.admin-auth-card .btn-primary,
+.admin-auth-card .btn-secondary {
+  border-radius: 0.25rem;
+  box-shadow: none;
+}
+
+.admin-auth-card .btn-primary:hover,
+.admin-auth-card .btn-secondary:hover {
+  transform: none;
+}
+
+.admin-auth-card input {
+  border-width: 1px;
+}
+
+.admin-denied-page {
+  display: grid;
+  min-height: 100vh;
+  place-content: center;
+  gap: 0.8rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.admin-denied-page h1 {
+  font-family: var(--font-display), sans-serif;
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.resource-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 1.5rem;
+  background: color-mix(in oklch, var(--background) 86%, var(--paper));
+}
+
+.resource-card {
+  width: min(100%, 35rem);
+  border: 1px solid color-mix(in oklch, var(--ink) 18%, transparent);
+  background: var(--paper);
+  padding: clamp(1.5rem, 5vw, 3rem);
+  box-shadow: 0 1rem 2.5rem oklch(0.3 0.035 335 / 0.09);
+}
+
+.resource-kicker {
+  color: var(--brand-red);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.resource-card h1 {
+  margin-top: 1rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.3rem, 7vw, 4.2rem);
+  line-height: 0.95;
+  overflow-wrap: anywhere;
+}
+
+.resource-card p:not(.resource-kicker):not(.resource-note) {
+  margin-top: 1.25rem;
+  color: color-mix(in oklch, var(--ink) 65%, transparent);
+}
+
+.resource-download-button {
+  width: 100%;
+  min-height: 3.25rem;
+  margin-top: 2rem;
+  border: 1px solid var(--brand-red);
+  background: var(--brand-red);
+  color: white;
+  font-weight: 850;
+}
+
+.resource-download-button:hover {
+  background: color-mix(in oklch, var(--brand-red) 82%, var(--ink));
+}
+
+.resource-note {
+  margin-top: 1rem;
+  color: color-mix(in oklch, var(--ink) 46%, transparent);
+  font-size: 0.78rem;
+}
+
+.resource-back-link {
+  display: inline-block;
+  margin-top: 1.75rem;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+@media (min-width: 60rem) {
+  .admin-app {
+    display: grid;
+    grid-template-columns: 15rem minmax(0, 1fr);
+  }
+
+  .admin-sidebar {
+    min-height: 100vh;
+  }
+}
+
+@media (max-width: 59.99rem) {
+  .admin-sidebar-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .admin-sidebar-footer {
+    display: none;
+  }
+
+  .admin-nav {
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid color-mix(in oklch, var(--ink) 12%, transparent);
+    padding: 0.5rem 0.75rem;
+  }
+
+  .admin-nav a {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 43rem) {
+  .admin-page-heading,
+  .admin-invite-card {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .admin-stat-card {
+    border-top: 1px solid color-mix(in oklch, var(--ink) 14%, transparent);
+    border-left: 0;
+    padding: 0.8rem 0 0;
+  }
+
+  .admin-invite-fields {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-account-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .admin-account-row .admin-status,
+  .admin-account-row .admin-owner-note {
+    grid-column: 2;
+  }
+
+  .admin-account-row .admin-small-button {
+    grid-column: 3;
+    grid-row: 2;
   }
 }
 
@@ -1098,7 +1686,7 @@ a {
 }
 
 .brand-testimonial figcaption small {
-  color: color-mix(in srgb, var(--brand-ink) 58%, transparent);
+  color: color-mix(in srgb, var(--brand-ink) 78%, transparent);
   font-size: 0.72rem;
   font-weight: 750;
   letter-spacing: 0.07em;
