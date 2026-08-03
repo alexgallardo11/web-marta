@@ -4,9 +4,10 @@ import { ArrowUpRight, Menu, Sparkles } from "lucide-react";
 import { InstagramIcon } from "@/components/icons/instagram-icon";
 
 const navItems = [
-  { href: "/#formacion", label: "Cómo puedo ayudarte" },
-  { href: "/juegos/personajes-locos", label: "Juegos" },
-  { href: "/#sobre-mi", label: "Sobre mí" },
+  { href: "/", label: "Inicio" },
+  { href: "/#libros", label: "Mis libros" },
+  { href: "/#club", label: "Mi Club de Ilustración" },
+  { href: "/#contacto", label: "Contacto" },
 ];
 
 export function SiteHeader() {
@@ -19,23 +20,23 @@ export function SiteHeader() {
           className="site-header__brand"
         >
           <Image
-            src="/images/marta-moreno-logo.png"
-            alt="Marta Moreno"
-            width={226}
-            height={60}
-            priority
-            className="h-auto w-[10rem] sm:w-[11.5rem]"
+            src="/images/web-2026/marta-illustration.png"
+            alt=""
+            width={1525}
+            height={1576}
+            preload
+            className="site-header__mark"
+            sizes="48px"
           />
-          <span>Ilustradora infantil</span>
+          <span className="site-header__wordmark">
+            <strong>Marta Moreno</strong>
+            <small>Ilustradora infantil</small>
+          </span>
         </Link>
 
         <nav aria-label="Navegación principal" className="site-header__nav">
           {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="site-header__link"
-            >
+            <Link key={item.href} href={item.href} className="site-header__link">
               {item.label}
             </Link>
           ))}
@@ -54,7 +55,7 @@ export function SiteHeader() {
             rel="noreferrer"
             className="site-header__cta"
           >
-            Newsletter
+            Ideas cada martes
             <ArrowUpRight aria-hidden="true" />
           </a>
         </nav>
@@ -66,10 +67,7 @@ export function SiteHeader() {
           </summary>
           <nav aria-label="Navegación móvil">
             {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-              >
+              <Link key={item.href} href={item.href}>
                 {item.label}
               </Link>
             ))}
@@ -80,7 +78,7 @@ export function SiteHeader() {
               className="site-header__mobile-cta"
             >
               <Sparkles aria-hidden="true" className="size-5" />
-              Newsletter
+              Recibir ideas cada martes
             </a>
           </nav>
         </details>
