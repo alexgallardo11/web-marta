@@ -2,11 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Menu, Sparkles } from "lucide-react";
 import { InstagramIcon } from "@/components/icons/instagram-icon";
+import { CLUB_URL } from "@/lib/site-links";
 
 const navItems = [
   { href: "/", label: "Inicio" },
   { href: "/#libros", label: "Mis libros" },
-  { href: "/#club", label: "Mi Club de Ilustración" },
+  { href: CLUB_URL, label: "Mi Club de Ilustración", external: true },
   { href: "/#contacto", label: "Contacto" },
 ];
 
@@ -35,11 +36,23 @@ export function SiteHeader() {
         </Link>
 
         <nav aria-label="Navegación principal" className="site-header__nav">
-          {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="site-header__link">
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) =>
+            item.external ? (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                className="site-header__link"
+              >
+                {item.label}
+              </a>
+            ) : (
+              <Link key={item.href} href={item.href} className="site-header__link">
+                {item.label}
+              </Link>
+            ),
+          )}
           <a
             href="https://www.instagram.com/martamoreno.art/"
             target="_blank"
@@ -66,11 +79,22 @@ export function SiteHeader() {
             <span className="sr-only">Abrir menú</span>
           </summary>
           <nav aria-label="Navegación móvil">
-            {navItems.map((item) => (
-              <Link key={item.href} href={item.href}>
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) =>
+              item.external ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link key={item.href} href={item.href}>
+                  {item.label}
+                </Link>
+              ),
+            )}
             <a
               href="https://marta-moreno.systeme.io/guiacreativa"
               target="_blank"

@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { CLUB_URL } from "@/lib/site-links";
 
 const newsletterUrl = "https://marta-moreno.systeme.io/guiacreativa";
 
@@ -138,7 +139,12 @@ export default function Home() {
                   <Mail aria-hidden="true" />
                   Recibir ideas cada martes
                 </a>
-                <a className="brand-button brand-button--secondary" href="#club">
+                <a
+                  className="brand-button brand-button--secondary"
+                  href={CLUB_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Conocer Mi Club
                   <ArrowRight aria-hidden="true" />
                 </a>
@@ -208,7 +214,7 @@ export default function Home() {
                   tu ritmo, tanto si sueñas con dedicarte a la ilustración como
                   si simplemente quieres regalarte tiempo para crear.
                 </p>
-                <a href="mailto:mm@martamoreno.com?subject=Mi%20Club%20de%20Ilustración">
+                <a href={CLUB_URL} target="_blank" rel="noreferrer">
                   Quiero saber más <ArrowRight aria-hidden="true" />
                 </a>
                 <CharacterGuide character="gatita">
@@ -279,7 +285,9 @@ export default function Home() {
               </div>
               <a
                 className="brand-button brand-button--light"
-                href="mailto:mm@martamoreno.com?subject=Mi%20Club%20de%20Ilustración"
+                href={CLUB_URL}
+                target="_blank"
+                rel="noreferrer"
               >
                 Cuéntame sobre el Club <ArrowRight aria-hidden="true" />
               </a>
@@ -467,7 +475,9 @@ export default function Home() {
               </p>
               <a
                 className="brand-button brand-button--dark"
-                href="mailto:mm@martamoreno.com?subject=Mi%20Club%20de%20Ilustración"
+                href={CLUB_URL}
+                target="_blank"
+                rel="noreferrer"
               >
                 Quiero conocer el Club <ArrowRight aria-hidden="true" />
               </a>

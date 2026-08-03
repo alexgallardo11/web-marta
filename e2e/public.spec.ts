@@ -7,14 +7,25 @@ test("la landing comunica la propuesta y enlaza los juegos", async ({
   await page.goto("/");
   await expect(
     page.getByRole("heading", {
-      name: /crea personajes que emocionen y conecten/i,
+      name: /dibuja lo que todavía no sabes que imaginas/i,
     }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: /recibir la newsletter/i }),
+    page.getByRole("link", { name: /recibir ideas cada martes/i }).first(),
   ).toBeVisible();
   await page.getByRole("link", { name: /personajes locos/i }).first().click();
   await expect(page).toHaveURL(/\/juegos\/personajes-locos$/);
+});
+
+test("todos los accesos del Club llevan a Skool", async ({ page }) => {
+  const clubUrl =
+    "https://www.skool.com/mi-club-de-ilustracion-3724/about";
+  await page.goto("/");
+
+  await expect(page.locator(`a[href="${clubUrl}"]`)).toHaveCount(7);
+  await expect(
+    page.locator('a[href="#club"], a[href="/#club"], a[href^="mailto:"][href*="Club"]'),
+  ).toHaveCount(0);
 });
 
 test("el juego de vasos mezcla y reinicia", async ({ page }) => {
