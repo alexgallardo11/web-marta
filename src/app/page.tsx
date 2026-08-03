@@ -6,9 +6,6 @@ import {
   Gamepad2,
   Heart,
   Mail,
-  Palette,
-  Sparkles,
-  Users,
 } from "lucide-react";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -59,10 +56,12 @@ const testimonials = [
 ];
 
 type CharacterName =
+  | "anton-pinon"
   | "cocodrilo"
   | "gatita"
   | "girafa"
   | "leon"
+  | "martina-futbolista"
   | "mono"
   | "perro-cocinero";
 
@@ -234,17 +233,50 @@ export default function Home() {
             <div className="brand-club__copy">
               <p className="brand-kicker">Mi Club de Ilustración</p>
               <h2 id="club-title">Tu espacio para probar, aprender y disfrutar.</h2>
-              <p>
-                No necesitas llegar con una gran idea ni saber dibujar de una
-                manera concreta. El Club es un lugar donde crecer, encontrar tu
-                estilo y compartir el camino con personas que sienten la misma
-                pasión por crear.
-              </p>
-              <ul>
-                <li><Sparkles aria-hidden="true" /> Retos que despiertan ideas</li>
-                <li><Palette aria-hidden="true" /> Formación y clases en directo</li>
-                <li><Users aria-hidden="true" /> Una comunidad que acompaña</li>
-              </ul>
+              <div
+                className="brand-club__voices"
+                aria-label="Los personajes explican cómo es el Club"
+              >
+                <div className="brand-club-voice">
+                  <Image
+                    src="/images/web-2026/characters/mono.png"
+                    alt=""
+                    width={709}
+                    height={709}
+                    sizes="80px"
+                  />
+                  <p>
+                    Marta prepara retos para que nunca te quedes demasiado
+                    tiempo mirando el papel en blanco.
+                  </p>
+                </div>
+                <div className="brand-club-voice brand-club-voice--reverse">
+                  <Image
+                    src="/images/web-2026/characters/gatita.png"
+                    alt=""
+                    width={709}
+                    height={709}
+                    sizes="80px"
+                  />
+                  <p>
+                    En las clases en directo puedes verla trabajar, preguntar
+                    y probar nuevas formas de dibujar a tu ritmo.
+                  </p>
+                </div>
+                <div className="brand-club-voice">
+                  <Image
+                    src="/images/web-2026/characters/perro-cocinero.png"
+                    alt=""
+                    width={709}
+                    height={709}
+                    sizes="80px"
+                  />
+                  <p>
+                    Y no dibujas sola: compartimos procesos, dudas y esos
+                    pequeños avances que merece la pena celebrar.
+                  </p>
+                </div>
+              </div>
               <a
                 className="brand-button brand-button--light"
                 href="mailto:mm@martamoreno.com?subject=Mi%20Club%20de%20Ilustración"
@@ -282,8 +314,8 @@ export default function Home() {
                 height={1200}
                 sizes="(max-width: 900px) 90vw, 41vw"
               />
-              <CharacterGuide character="cocodrilo">
-                Los demás personajes están preparando su entrada.
+              <CharacterGuide character="anton-pinon">
+                Soy Antón Piñón. Marta ya me ha metido en un montón de líos.
               </CharacterGuide>
             </div>
           </div>
@@ -348,6 +380,20 @@ export default function Home() {
                 </div>
                 <div className="brand-bio-beat brand-bio-beat--reverse">
                   <Image
+                    src="/images/web-2026/characters/cocodrilo.png"
+                    alt=""
+                    width={709}
+                    height={709}
+                    sizes="96px"
+                  />
+                  <p>
+                    Ha dado vida a más de 25 libros, como <em>El hilo invisible</em>,
+                    <em> Antón Piñón</em>, <em>Martina Futbolista</em> y
+                    <em> Gracias, Profe</em>.
+                  </p>
+                </div>
+                <div className="brand-bio-beat brand-bio-beat--middle">
+                  <Image
                     src="/images/web-2026/characters/girafa.png"
                     alt=""
                     width={531}
@@ -359,7 +405,7 @@ export default function Home() {
                     aprendió cómo sienten, imaginan y cuentan los niños.
                   </p>
                 </div>
-                <div className="brand-bio-beat brand-bio-beat--finish">
+                <div className="brand-bio-beat brand-bio-beat--reverse brand-bio-beat--finish">
                   <Image
                     src="/images/web-2026/characters/leon.png"
                     alt=""
@@ -368,8 +414,9 @@ export default function Home() {
                     sizes="96px"
                   />
                   <p>
-                    Hoy crea libros y acompaña a otras personas a encontrar su
-                    voz, su estilo y el placer de dibujar. ¡Ya van más de 25 libros!
+                    Hoy acompaña a quien quiere hacer de la ilustración su oficio
+                    y a quien dibuja por placer, para encontrar voz, estilo y
+                    comunidad.
                   </p>
                 </div>
               </div>
@@ -395,8 +442,8 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            <CharacterGuide character="perro-cocinero">
-              Tengo la receta: una idea, dos garabatos y cero miedo.
+            <CharacterGuide character="martina-futbolista">
+              Si una idea se escapa, corremos detrás de ella.
             </CharacterGuide>
           </div>
         </section>
