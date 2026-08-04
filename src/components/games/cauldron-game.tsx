@@ -11,12 +11,32 @@ import {
 } from "@/lib/games-data";
 import { pickRandom, wrapCanvasText } from "@/lib/game-utils";
 import { useHydrated } from "@/lib/use-hydrated";
+import { DrawingCameraShare } from "@/components/games/drawing-camera-share";
 
 type Result = {
   character: CauldronOption;
   personality: CauldronOption;
   context: CauldronOption;
   bio: string;
+};
+
+type CauldronSelection = {
+  character: CauldronOption | null;
+  personality: CauldronOption | null;
+  context: CauldronOption | null;
+};
+
+type CompleteSelection = Omit<Result, "bio">;
+
+type CauldronState = {
+  selection: CauldronSelection;
+  bio: string | null;
+};
+
+const emptySelection: CauldronSelection = {
+  character: null,
+  personality: null,
+  context: null,
 };
 
 const quickIdeas = [
@@ -42,9 +62,185 @@ function createResult(
   };
 }
 
+function isCompleteSelection(
+  selection: CauldronSelection,
+): selection is CompleteSelection {
+  return Boolean(
+    selection.character && selection.personality && selection.context,
+  );
+}
+
+function ensureConsistentBio(selection: CompleteSelection, bio: string) {
+  const normalizedBio = bio.toLocaleLowerCase("es");
+  const mentionsCurrentSelection = [
+    selection.character.name,
+    selection.personality.name,
+    selection.context.name,
+  ].every((value) =>
+    normalizedBio.includes(value.toLocaleLowerCase("es")),
+  );
+
+  return mentionsCurrentSelection
+    ? bio
+    : BIO_TEMPLATES[0](
+        selection.character.name,
+        selection.personality.name,
+        selection.context.name,
+      );
+}
+
+function loadCanvasImage(src: string) {
+  return new Promise<HTMLImageElement | null>((resolve) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => resolve(null);
+    image.src = src;
+  });
+}
+
+function drawStoryCauldron(
+  context: CanvasRenderingContext2D,
+  centerX: number,
+  centerY: number,
+) {
+  context.save();
+
+  context.strokeStyle = "#272029";
+  context.lineWidth = 16;
+  context.beginPath();
+  context.ellipse(centerX - 205, centerY + 28, 58, 72, 0, 0, Math.PI * 2);
+  context.stroke();
+  context.beginPath();
+  context.ellipse(centerX + 205, centerY + 28, 58, 72, 0, 0, Math.PI * 2);
+  context.stroke();
+
+  const bodyGradient = context.createLinearGradient(
+    centerX - 210,
+    centerY,
+    centerX + 210,
+    centerY,
+  );
+  bodyGradient.addColorStop(0, "#7d1e3e");
+  bodyGradient.addColorStop(0.28, "#f82e2e");
+  bodyGradient.addColorStop(0.52, "#ff6a58");
+  bodyGradient.addColorStop(0.76, "#f82e2e");
+  bodyGradient.addColorStop(1, "#731d3a");
+
+  context.fillStyle = bodyGradient;
+  context.beginPath();
+  context.roundRect(centerX - 215, centerY - 20, 430, 230, [32, 32, 110, 110]);
+  context.fill();
+  context.strokeStyle = "#272029";
+  context.lineWidth = 7;
+  context.stroke();
+
+  context.fillStyle = "rgba(255, 253, 247, 0.28)";
+  context.beginPath();
+  context.ellipse(centerX - 112, centerY + 64, 27, 78, 0.15, 0, Math.PI * 2);
+  context.fill();
+
+  context.fillStyle = "#f82e2e";
+  context.strokeStyle = "#272029";
+  context.lineWidth = 7;
+  context.beginPath();
+  context.ellipse(centerX, centerY - 24, 245, 60, 0, 0, Math.PI * 2);
+  context.fill();
+  context.stroke();
+
+  context.fillStyle = "#272029";
+  context.beginPath();
+  context.ellipse(centerX, centerY - 24, 205, 38, 0, 0, Math.PI * 2);
+  context.fill();
+
+  [
+    { x: -115, y: -95, radius: 14, color: "#f99a2e" },
+    { x: -28, y: -132, radius: 18, color: "#2ed9f7" },
+    { x: 72, y: -105, radius: 12, color: "#fee0e8" },
+    { x: 142, y: -154, radius: 10, color: "#64e41f" },
+  ].forEach((bubble) => {
+    context.fillStyle = bubble.color;
+    context.strokeStyle = "#272029";
+    context.lineWidth = 4;
+    context.beginPath();
+    context.arc(
+      centerX + bubble.x,
+      centerY + bubble.y,
+      bubble.radius,
+      0,
+      Math.PI * 2,
+    );
+    context.fill();
+    context.stroke();
+  });
+
+  const flames = [
+    { x: -72, height: 104, color: "#f99a2e", tilt: -0.1 },
+    { x: 0, height: 132, color: "#f82e2e", tilt: 0 },
+    { x: 72, height: 96, color: "#f99a2e", tilt: 0.12 },
+  ];
+  flames.forEach((flame) => {
+    context.save();
+    context.translate(centerX + flame.x, centerY + 245);
+    context.rotate(flame.tilt);
+    context.fillStyle = flame.color;
+    context.strokeStyle = "#272029";
+    context.lineWidth = 5;
+    context.beginPath();
+    context.moveTo(0, -flame.height);
+    context.bezierCurveTo(52, -56, 42, -4, 0, 8);
+    context.bezierCurveTo(-42, -4, -52, -56, 0, -flame.height);
+    context.fill();
+    context.stroke();
+    context.restore();
+  });
+
+  context.restore();
+}
+
+function drawStoryIngredient({
+  context,
+  y,
+  color,
+  number,
+  label,
+  value,
+  emoji,
+  bodyFont,
+  displayFont,
+}: {
+  context: CanvasRenderingContext2D;
+  y: number;
+  color: string;
+  number: string;
+  label: string;
+  value: string;
+  emoji: string;
+  bodyFont: string;
+  displayFont: string;
+}) {
+  context.fillStyle = color;
+  context.strokeStyle = "#272029";
+  context.lineWidth = 4;
+  context.beginPath();
+  context.roundRect(70, y, 940, 108, 30);
+  context.fill();
+  context.stroke();
+
+  context.fillStyle = "#272029";
+  context.textAlign = "left";
+  context.font = `900 20px ${bodyFont}`;
+  context.fillText(`${number} · ${label.toUpperCase()}`, 100, y + 36);
+
+  context.font = `400 ${value.length > 28 ? 34 : 42}px ${displayFont}`;
+  context.fillText(`${emoji}  ${value}`, 100, y + 83);
+}
+
 export function CauldronGame() {
   const hydrated = useHydrated();
-  const [result, setResult] = useState<Result | null>(null);
+  const [cauldron, setCauldron] = useState<CauldronState>({
+    selection: emptySelection,
+    bio: null,
+  });
   const [exporting, setExporting] = useState(false);
   const [brewing, setBrewing] = useState(false);
   const brewTimer = useRef<number | null>(null);
@@ -57,6 +253,14 @@ export function CauldronGame() {
       })),
     [],
   );
+  const result = useMemo<Result | null>(() => {
+    if (!isCompleteSelection(cauldron.selection) || !cauldron.bio) return null;
+    return {
+      ...cauldron.selection,
+      bio: ensureConsistentBio(cauldron.selection, cauldron.bio),
+    };
+  }, [cauldron]);
+  const selectedCount = Object.values(cauldron.selection).filter(Boolean).length;
 
   useEffect(() => {
     return () => {
@@ -68,7 +272,14 @@ export function CauldronGame() {
     if (brewing) return;
     setBrewing(true);
     brewTimer.current = window.setTimeout(() => {
-      setResult(nextResult);
+      setCauldron({
+        selection: {
+          character: nextResult.character,
+          personality: nextResult.personality,
+          context: nextResult.context,
+        },
+        bio: nextResult.bio,
+      });
       setBrewing(false);
     }, 480);
   }
@@ -76,91 +287,187 @@ export function CauldronGame() {
   function cycleSlot(
     slot: "character" | "personality" | "context",
   ) {
-    const current = result ?? createResult();
-    setResult({
-      ...current,
-      [slot]:
+    setCauldron((current) => {
+      const selection = {
+        ...current.selection,
+        [slot]:
         slot === "character"
           ? pickRandom(CHARACTERS)
           : slot === "personality"
             ? pickRandom(PERSONALITIES)
             : pickRandom(CONTEXTS),
+      };
+
+      return {
+        selection,
+        bio: isCompleteSelection(selection)
+          ? createResult(
+              selection.character,
+              selection.personality,
+              selection.context,
+            ).bio
+          : null,
+      };
     });
   }
 
   async function exportStory() {
     if (!result) return;
+    const storyResult: Result = {
+      character: result.character,
+      personality: result.personality,
+      context: result.context,
+      bio: result.bio,
+    };
     setExporting(true);
 
     try {
       await document.fonts.ready;
+      const [brandMark, narrator] = await Promise.all([
+        loadCanvasImage("/images/web-2026/marta-illustration.png"),
+        loadCanvasImage("/images/web-2026/characters/perro-cocinero.png"),
+      ]);
       const canvas = document.createElement("canvas");
       canvas.width = 1080;
       canvas.height = 1920;
       const context = canvas.getContext("2d");
       if (!context) return;
+      const rootStyle = getComputedStyle(document.documentElement);
+      const bodyFont =
+        rootStyle.getPropertyValue("--font-body").trim() || "sans-serif";
+      const displayFont =
+        rootStyle.getPropertyValue("--font-display").trim() || "sans-serif";
 
-      context.fillStyle = "#f8f0e3";
+      context.fillStyle = "#fffdf7";
       context.fillRect(0, 0, canvas.width, canvas.height);
 
-      context.fillStyle = "#f1cd43";
+      context.fillStyle = "rgba(39, 32, 41, 0.08)";
+      for (let index = 0; index < 180; index += 1) {
+        const x = (index * 83) % canvas.width;
+        const y = (index * 137) % canvas.height;
+        context.beginPath();
+        context.arc(x, y, index % 3 === 0 ? 1.4 : 0.8, 0, Math.PI * 2);
+        context.fill();
+      }
+
+      context.fillStyle = "#2ed9f7";
       context.beginPath();
-      context.arc(920, 170, 250, 0, Math.PI * 2);
+      context.ellipse(1010, 190, 255, 330, -0.18, 0, Math.PI * 2);
       context.fill();
 
-      context.fillStyle = "#dd3f74";
+      context.fillStyle = "#f99a2e";
       context.beginPath();
-      context.arc(100, 1740, 290, 0, Math.PI * 2);
+      context.arc(-35, 830, 185, 0, Math.PI * 2);
       context.fill();
 
-      context.strokeStyle = "#2f2630";
-      context.lineWidth = 6;
-      context.strokeRect(62, 62, 956, 1796);
+      if (brandMark) {
+        context.drawImage(brandMark, 70, 52, 78, 78);
+      }
 
-      context.fillStyle = "#2f2630";
-      context.font = "700 34px sans-serif";
+      context.fillStyle = "#272029";
+      context.textAlign = "left";
+      context.font = `800 31px ${displayFont}`;
+      context.fillText("Marta Moreno", 165, 88);
+      context.font = `900 17px ${bodyFont}`;
+      context.letterSpacing = "2px";
+      context.fillText("ILUSTRADORA INFANTIL", 166, 116);
+      context.letterSpacing = "0px";
+
+      context.fillStyle = "#f82e2e";
+      context.font = `900 21px ${bodyFont}`;
+      context.fillText("CALDERO MÁGICO · RETO CREATIVO", 70, 205);
+
+      context.fillStyle = "#272029";
+      context.font = `400 82px ${displayFont}`;
+      context.fillText("Tu próxima historia", 70, 300);
+      context.fillStyle = "#f82e2e";
+      context.fillText("ya está hirviendo.", 70, 382);
+
+      drawStoryCauldron(context, 540, 610);
+
+      context.fillStyle = "#272029";
       context.textAlign = "center";
-      context.fillText("MARTA MORENO · RETO CREATIVO", 540, 150);
+      const resultTitle = `${storyResult.character.name} ${storyResult.personality.name}`;
+      const resultTitleSize = resultTitle.length > 30 ? 53 : 64;
+      context.font = `400 ${resultTitleSize}px ${displayFont}`;
+      const titleLines = wrapCanvasText(context, resultTitle, 870).slice(0, 2);
+      titleLines.forEach((line, lineIndex) => {
+        context.fillText(line, 540, 930 + lineIndex * resultTitleSize * 0.94);
+      });
 
-      context.font = "160px sans-serif";
-      context.fillText(result.character.emoji, 540, 410);
-
-      context.font = "700 80px sans-serif";
-      const titleLines = wrapCanvasText(
+      drawStoryIngredient({
         context,
-        `${result.character.name} ${result.personality.name}`,
-        820,
-      );
-      titleLines.slice(0, 2).forEach((line, index) => {
-        context.fillText(line, 540, 590 + index * 90);
+        y: 1040,
+        color: "#f99a2e",
+        number: "01",
+        label: "Ingrediente base",
+        value: storyResult.character.name,
+        emoji: storyResult.character.emoji,
+        bodyFont,
+        displayFont,
+      });
+      drawStoryIngredient({
+        context,
+        y: 1165,
+        color: "#fee0e8",
+        number: "02",
+        label: "Especia secreta",
+        value: storyResult.personality.name,
+        emoji: storyResult.personality.emoji,
+        bodyFont,
+        displayFont,
+      });
+      drawStoryIngredient({
+        context,
+        y: 1290,
+        color: "#2ed9f7",
+        number: "03",
+        label: "Poción transformadora",
+        value: storyResult.context.name,
+        emoji: storyResult.context.emoji,
+        bodyFont,
+        displayFont,
       });
 
-      const badgeValues = [
-        result.character.name,
-        result.personality.name,
-        result.context.name,
-      ];
-      let badgeY = 820;
-      context.font = "700 35px sans-serif";
-      badgeValues.forEach((value, index) => {
-        context.fillStyle = ["#f1cd43", "#e8b3c7", "#8dcfc9"][index]!;
-        context.fillRect(130, badgeY - 50, 820, 78);
-        context.fillStyle = "#2f2630";
-        context.fillText(value, 540, badgeY);
-        badgeY += 105;
+      context.fillStyle = "#fffdf7";
+      context.strokeStyle = "#272029";
+      context.lineWidth = 5;
+      context.beginPath();
+      context.roundRect(70, 1440, 735, 265, 36);
+      context.fill();
+      context.stroke();
+      context.beginPath();
+      context.moveTo(800, 1580);
+      context.lineTo(850, 1610);
+      context.lineTo(800, 1632);
+      context.closePath();
+      context.fill();
+      context.stroke();
+
+      context.fillStyle = "#f82e2e";
+      context.textAlign = "left";
+      context.font = `900 19px ${bodyFont}`;
+      context.fillText("EL PERRO COCINERO TE CUENTA…", 105, 1488);
+      context.fillStyle = "#272029";
+      const bioSize = storyResult.bio.length > 175 ? 27 : 31;
+      context.font = `700 ${bioSize}px ${bodyFont}`;
+      const bioLines = wrapCanvasText(context, storyResult.bio, 650).slice(0, 5);
+      bioLines.forEach((line, lineIndex) => {
+        context.fillText(line, 105, 1540 + lineIndex * bioSize * 1.35);
       });
 
-      context.font = "42px sans-serif";
-      const bioLines = wrapCanvasText(context, result.bio, 760);
-      context.fillStyle = "#2f2630";
-      bioLines.slice(0, 7).forEach((line, index) => {
-        context.fillText(line, 540, 1230 + index * 58);
-      });
+      if (narrator) {
+        context.drawImage(narrator, 810, 1465, 235, 235);
+      }
 
-      context.font = "700 34px sans-serif";
-      context.fillText("¿Y si lo dibujas a tu manera?", 540, 1755);
-      context.font = "28px sans-serif";
-      context.fillText("@martamoreno.art", 540, 1810);
+      context.fillStyle = "#f82e2e";
+      context.fillRect(0, 1750, 1080, 170);
+      context.fillStyle = "#fffdf7";
+      context.textAlign = "center";
+      context.font = `400 46px ${displayFont}`;
+      context.fillText("Ahora dibújalo a tu manera", 540, 1820);
+      context.font = `900 24px ${bodyFont}`;
+      context.fillText("Compártelo con @martamoreno.art", 540, 1872);
 
       const blob = await new Promise<Blob | null>((resolve) =>
         canvas.toBlob(resolve, "image/png"),
@@ -182,27 +489,35 @@ export function CauldronGame() {
       key: "character" as const,
       number: "01",
       label: "Ingrediente base",
-      value: result?.character,
+      value: cauldron.selection.character,
       color: "var(--yellow)",
     },
     {
       key: "personality" as const,
       number: "02",
       label: "Especia secreta",
-      value: result?.personality,
+      value: cauldron.selection.personality,
       color: "var(--pink-soft)",
     },
     {
       key: "context" as const,
       number: "03",
       label: "Poción transformadora",
-      value: result?.context,
+      value: cauldron.selection.context,
       color: "var(--turquoise)",
     },
   ];
 
   return (
     <div className="magic-lab site-container">
+      <header className="game-section-intro game-section-intro--magic">
+        <span aria-hidden="true">01</span>
+        <div>
+          <p>Prepara la receta</p>
+          <h2>Elige tres ingredientes para tu historia.</h2>
+        </div>
+      </header>
+
       <div className="magic-ingredients">
         {slots.map((slot) => (
           <button
@@ -210,9 +525,10 @@ export function CauldronGame() {
             key={slot.key}
             onClick={() => cycleSlot(slot.key)}
             disabled={!hydrated || brewing}
-            className="magic-ingredient group"
+            className={`magic-ingredient group ${slot.value ? "is-selected" : ""}`}
             style={{ background: slot.color }}
             aria-label={`Cambiar ${slot.label.toLowerCase()}`}
+            aria-pressed={Boolean(slot.value)}
           >
             <span className="magic-ingredient__topline">
               <span>
@@ -229,9 +545,21 @@ export function CauldronGame() {
               </span>
               <span>{slot.value?.name ?? "Toca para elegir"}</span>
             </span>
+            <span className="magic-ingredient__status">
+              {slot.value ? "Elegido · toca para cambiar" : "Aún vacío"}
+            </span>
           </button>
         ))}
       </div>
+
+      <p className="magic-progress" aria-live="polite">
+        <span>{selectedCount}/3</span>
+        {selectedCount === 0
+          ? "El caldero espera tus ingredientes."
+          : selectedCount < 3
+            ? "Ya huele a historia. Sigue eligiendo."
+            : "¡La mezcla está lista!"}
+      </p>
 
       <div
         className={`magic-workbench ${brewing ? "is-brewing" : ""}`}
@@ -276,7 +604,7 @@ export function CauldronGame() {
           type="button"
           onClick={() => invokeResult()}
           disabled={!hydrated || brewing}
-          className="btn-primary w-full disabled:cursor-wait disabled:opacity-60 sm:w-auto"
+          className="game-action game-action--primary"
         >
           <Dices className="size-5" aria-hidden="true" />
           {brewing ? "Mezclando ingredientes…" : "Invocar personaje"}
@@ -285,11 +613,30 @@ export function CauldronGame() {
           type="button"
           onClick={exportStory}
           disabled={!hydrated || !result || exporting}
-          className="btn-secondary w-full disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
+          className="game-action game-action--secondary"
         >
           <Download className="size-5" aria-hidden="true" />
           {exporting ? "Preparando imagen…" : "Descargar para Stories"}
         </button>
+        <DrawingCameraShare
+          enabled={hydrated && Boolean(result)}
+          game="cauldron"
+          challengeTitle={
+            result ? `${result.character.name} ${result.personality.name}` : ""
+          }
+          details={
+            result
+              ? [
+                  { label: "Ingrediente base", value: result.character.name },
+                  { label: "Especia secreta", value: result.personality.name },
+                  {
+                    label: "Poción transformadora",
+                    value: result.context.name,
+                  },
+                ]
+              : []
+          }
+        />
         <span className="sr-only" aria-live="polite">
           {brewing ? "El caldero está mezclando los ingredientes" : ""}
         </span>
@@ -303,18 +650,18 @@ export function CauldronGame() {
           <span className="magic-result__emoji" aria-hidden="true">
             {result.character.emoji}
           </span>
-          <p className="text-xs font-black uppercase tracking-[0.16em] text-[var(--pink)]">
+          <p className="magic-result__eyebrow">
             Personaje invocado
           </p>
-          <h2 className="mt-4 max-w-[15ch] font-display text-5xl leading-none sm:text-7xl">
+          <h2 className="magic-result__title">
             {result.character.name} {result.personality.name}
           </h2>
-          <div className="mt-6 flex flex-wrap gap-2 text-sm font-bold">
+          <div className="magic-result__ingredients">
             {[result.character, result.personality, result.context].map(
               (item) => (
                 <span
                   key={`${item.name}-${item.emoji}`}
-                  className="border-2 border-foreground px-3 py-1.5"
+                  className="magic-result__ingredient"
                   style={{ background: `${item.color}22` }}
                 >
                   {item.emoji} {item.name}
@@ -322,28 +669,31 @@ export function CauldronGame() {
               ),
             )}
           </div>
-          <p className="mt-7 max-w-[58ch] text-xl leading-relaxed text-foreground/75">
+          <p className="magic-result__bio">
             {result.bio}
           </p>
         </section>
       ) : (
         <div className="magic-empty">
-          <Sparkles className="mx-auto size-9 text-[var(--pink)]" aria-hidden="true" />
-          <p className="mt-4 font-display text-3xl">
-            El caldero está esperando sus ingredientes.
+          <Sparkles aria-hidden="true" />
+          <p>
+            {selectedCount === 0
+              ? "Empieza tu receta."
+              : `Te faltan ${3 - selectedCount} ${3 - selectedCount === 1 ? "ingrediente" : "ingredientes"}.`}
           </p>
-          <p className="mt-2 text-foreground/65">
-            Invoca una combinación completa o toca cada casilla para elegirla.
+          <p>
+            Toca las tarjetas que quieras elegir o deja que el botón «Invocar
+            personaje» complete la mezcla.
           </p>
         </div>
       )}
 
-      <section className="mt-4">
-        <div className="mb-6 flex items-center gap-3">
-          <span className="font-display text-3xl">Ideas rápidas</span>
-          <span className="h-0.5 flex-1 bg-foreground" aria-hidden="true" />
+      <section className="magic-quick" aria-labelledby="ideas-rapidas-title">
+        <div className="magic-quick__heading">
+          <span id="ideas-rapidas-title">Recetas rápidas</span>
+          <span aria-hidden="true" />
         </div>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="magic-quick__grid">
           {ideas.map((idea) => (
             <button
               key={`${idea.character.name}-${idea.context.name}`}
@@ -358,7 +708,7 @@ export function CauldronGame() {
                   ),
                 )
               }
-              className="flex min-h-24 items-center gap-3 border-2 border-foreground bg-[var(--paper)] p-4 text-left font-bold transition-colors hover:bg-[var(--yellow)] disabled:cursor-wait disabled:opacity-70"
+              className="magic-quick__idea"
             >
               <span className="text-3xl" aria-hidden="true">
                 {idea.character.emoji}

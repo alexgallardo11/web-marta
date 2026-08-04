@@ -56,14 +56,25 @@ export async function DELETE(request: Request, context: Context) {
       .is("revoked_at", null);
     if (revokeError) throw revokeError;
 
-    const { error: storageError } = await admin.storage
+    const { data: objectExists, error: existsError } = await admin.storage
       .from("documents")
-      .remove([document.storage_path]);
-    if (storageError) {
+      .exists(document.storage_path);
+    if (existsError) {
       return jsonError(
-        "Los enlaces ya están revocados, pero no se pudo borrar el archivo. Vuelve a intentarlo.",
+        "Los enlaces ya están revocados, pero no se pudo comprobar el archivo. Vuelve a intentarlo.",
         502,
       );
+    }
+    if (objectExists) {
+      const { error: storageError } = await admin.storage
+        .from("documents")
+        .remove([document.storage_path]);
+      if (storageError) {
+        return jsonError(
+          "Los enlaces ya están revocados, pero no se pudo borrar el archivo. Vuelve a intentarlo.",
+          502,
+        );
+      }
     }
 
     const { error: deleteError } = await admin

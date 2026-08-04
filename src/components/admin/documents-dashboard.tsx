@@ -2,7 +2,6 @@
 
 import {
   useEffect,
-  useMemo,
   useRef,
   useState,
   type DragEvent,
@@ -14,6 +13,7 @@ import {
   Clock3,
   Copy,
   Download,
+  Eye,
   FileText,
   Link2,
   Pencil,
@@ -72,7 +72,7 @@ function ConfirmDeleteDialog({
     <dialog
       ref={ref}
       onClose={onCancel}
-      className="m-auto w-[min(92vw,31rem)] border-2 border-foreground bg-[var(--paper)] p-0 text-foreground shadow-[0.6rem_0.6rem_0_var(--pink)] backdrop:bg-foreground/45"
+      className="admin-confirm-dialog m-auto w-[min(92vw,31rem)] border border-foreground bg-[var(--paper)] p-0 text-foreground backdrop:bg-foreground/45"
     >
       <div className="p-6 sm:p-8">
         <p className="text-xs font-black uppercase tracking-[0.15em] text-destructive">
@@ -106,12 +106,22 @@ function ConfirmDeleteDialog({
 
 export function DocumentsDashboard({
   initialDocuments,
+  query: initialQuery,
+  sort: initialSort,
+  page,
+  totalPages,
+  total,
 }: {
   initialDocuments: AdminDocument[];
+  query: string;
+  sort: "updated" | "title";
+  page: number;
+  totalPages: number;
+  total: number;
 }) {
   const router = useRouter();
-  const [query, setQuery] = useState("");
-  const [sort, setSort] = useState<"updated" | "title">("updated");
+  const [query, setQuery] = useState(initialQuery);
+  const [sort, setSort] = useState<"updated" | "title">(initialSort);
   const [newFile, setNewFile] = useState<File | null>(null);
   const [newTitle, setNewTitle] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
@@ -122,25 +132,16 @@ export function DocumentsDashboard({
   const [editing, setEditing] = useState<string | null>(null);
   const [editingTitle, setEditingTitle] = useState("");
   const [deleteTarget, setDeleteTarget] = useState<AdminDocument | null>(null);
-  const [expiryByDocument, setExpiryByDocument] = useState<
+  const [expiryChoiceByDocument, setExpiryChoiceByDocument] = useState<
+    Record<string, string>
+  >({});
+  const [customExpiryByDocument, setCustomExpiryByDocument] = useState<
     Record<string, string>
   >({});
   const [createdLinks, setCreatedLinks] = useState<Record<string, string>>({});
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const visibleDocuments = useMemo(() => {
-    const filtered = initialDocuments.filter((document) =>
-      `${document.title} ${document.originalFilename}`
-        .toLowerCase()
-        .includes(query.trim().toLowerCase()),
-    );
-    return [...filtered].sort((left, right) =>
-      sort === "title"
-        ? left.title.localeCompare(right.title, "es")
-        : new Date(right.updatedAt).getTime() -
-          new Date(left.updatedAt).getTime(),
-    );
-  }, [initialDocuments, query, sort]);
+  const visibleDocuments = initialDocuments;
 
   function chooseFile(file: File | undefined) {
     if (!file) return;
@@ -184,11 +185,12 @@ export function DocumentsDashboard({
 
       const signedResponse = await fetch("/api/admin/uploads", {
         method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          filename: file.name,
-          sizeBytes: file.size,
-          documentId,
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            filename: file.name,
+            sizeBytes: file.size,
+            mimeType: file.type || "application/pdf",
+            documentId,
         }),
       });
       if (!signedResponse.ok) throw new Error(await readError(signedResponse));
@@ -292,10 +294,28 @@ export function DocumentsDashboard({
 
   async function createLink(documentId: string) {
     setBusy(`link:${documentId}`);
-    const expiry = expiryByDocument[documentId];
-    const expiresAt = expiry
-      ? new Date(`${expiry}T23:59:59`).toISOString()
-      : null;
+    const choice = expiryChoiceByDocument[documentId] ?? "24h";
+    let expiresAt: string;
+    if (choice === "custom") {
+      const customExpiry = customExpiryByDocument[documentId];
+      if (!customExpiry) {
+        setBusy(null);
+        setMessage({ kind: "error", text: "Elige una fecha de caducidad." });
+        return;
+      }
+      const customDate = new Date(customExpiry);
+      if (Number.isNaN(customDate.getTime())) {
+        setBusy(null);
+        setMessage({ kind: "error", text: "La fecha de caducidad no es válida." });
+        return;
+      }
+      expiresAt = customDate.toISOString();
+    } else {
+      expiresAt = new Date(
+        Date.now() +
+          Number.parseInt(choice.replace("h", ""), 10) * 60 * 60 * 1000,
+      ).toISOString();
+    }
     const response = await fetch(
       `/api/admin/documents/${documentId}/links`,
       {
@@ -345,15 +365,11 @@ export function DocumentsDashboard({
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="admin-documents-stack">
       {message && (
         <div
           role={message.kind === "error" ? "alert" : "status"}
-          className={`fixed right-4 top-4 z-50 flex max-w-md items-start gap-3 border-2 p-4 font-bold shadow-[0.35rem_0.35rem_0_var(--ink)] ${
-            message.kind === "success"
-              ? "border-foreground bg-[var(--yellow)]"
-              : "border-destructive bg-[var(--paper)] text-destructive"
-          }`}
+          className={`admin-feedback ${message.kind} fixed right-4 top-4 z-50 max-w-md`}
         >
           {message.kind === "success" ? (
             <Check className="mt-0.5 size-5 shrink-0" />
@@ -374,13 +390,13 @@ export function DocumentsDashboard({
 
       <form
         onSubmit={createDocument}
-        className="grid gap-6 border-2 border-foreground bg-[var(--paper)] p-5 shadow-[0.45rem_0.45rem_0_var(--yellow)] lg:grid-cols-[1fr_.9fr] lg:p-7"
+        className="admin-upload-card grid gap-6 border border-foreground bg-[var(--paper)] p-5 lg:grid-cols-[1fr_.9fr] lg:p-7"
       >
         <label
           htmlFor="new-pdf"
           onDragOver={(event) => event.preventDefault()}
           onDrop={handleDrop}
-          className="flex min-h-48 cursor-pointer flex-col items-center justify-center border-2 border-dashed border-foreground bg-background p-6 text-center transition-colors hover:bg-[var(--yellow)]/30"
+          className="admin-dropzone flex min-h-48 cursor-pointer flex-col items-center justify-center border-2 border-dashed border-foreground bg-background p-6 text-center transition-colors"
         >
           <UploadCloud className="size-10 text-[var(--pink)]" aria-hidden="true" />
           <strong className="mt-3 text-lg">
@@ -398,7 +414,12 @@ export function DocumentsDashboard({
             onChange={(event) => chooseFile(event.target.files?.[0])}
           />
         </label>
-        <div className="flex flex-col justify-center gap-4">
+        <div className="admin-upload-form-content flex flex-col justify-center gap-4">
+          <div className="admin-upload-heading">
+            <p className="admin-eyebrow">Nuevo recurso</p>
+            <h2>Subir documento</h2>
+            <p>Selecciona el archivo y define el nombre que verá quien lo reciba.</p>
+          </div>
           <div>
             <label htmlFor="new-title" className="mb-2 block font-bold">
               Nombre que verá la alumna
@@ -425,11 +446,16 @@ export function DocumentsDashboard({
         </div>
       </form>
 
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <form
+        action="/admin/documentos"
+        method="get"
+        className="admin-library-toolbar flex flex-col gap-3 border-y border-foreground/20 py-4 md:flex-row md:items-end md:justify-between"
+      >
         <label className="relative block w-full max-w-md">
           <span className="sr-only">Buscar documentos</span>
           <Search className="pointer-events-none absolute left-4 top-3.5 size-5 text-foreground/45" />
           <input
+            name="q"
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -440,6 +466,7 @@ export function DocumentsDashboard({
         <label className="flex items-center gap-3 text-sm font-bold">
           Ordenar
           <select
+            name="sort"
             value={sort}
             onChange={(event) =>
               setSort(event.target.value as "updated" | "title")
@@ -450,18 +477,21 @@ export function DocumentsDashboard({
             <option value="title">Nombre</option>
           </select>
         </label>
-      </div>
+        <button type="submit" className="admin-small-button">
+          Buscar
+        </button>
+      </form>
 
       {visibleDocuments.length === 0 ? (
-        <div className="border-y-2 border-foreground py-14 text-center">
+        <div className="admin-empty-state border-y-2 border-foreground py-14 text-center">
           <FileText className="mx-auto size-12 text-[var(--pink)]" aria-hidden="true" />
           <h2 className="mt-4 font-display text-4xl">
-            {initialDocuments.length === 0
+            {total === 0
               ? "Tu biblioteca empieza aquí"
               : "No hay coincidencias"}
           </h2>
           <p className="mx-auto mt-2 max-w-md text-foreground/60">
-            {initialDocuments.length === 0
+            {total === 0
               ? "Sube el primer PDF para crear un enlace privado y compartirlo con tus alumnas."
               : "Prueba con otra palabra o borra el texto de búsqueda."}
           </p>
@@ -472,13 +502,13 @@ export function DocumentsDashboard({
             const activeLinks = document.links.filter(
               (link) =>
                 !link.revokedAt &&
-                (!link.expiresAt ||
-                  new Date(link.expiresAt).getTime() > Date.now()),
+                !link.usedAt &&
+                new Date(link.expiresAt).getTime() > Date.now(),
             );
             return (
               <article
                 key={document.id}
-                className="border-2 border-foreground bg-[var(--paper)]"
+                className="admin-document-card border border-foreground bg-[var(--paper)]"
               >
                 <div className="grid gap-5 p-5 lg:grid-cols-[1fr_auto] lg:items-center lg:p-6">
                   <div className="flex min-w-0 gap-4">
@@ -535,7 +565,17 @@ export function DocumentsDashboard({
                       </p>
                     </div>
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="admin-document-actions flex flex-wrap gap-2">
+                    <a
+                      href={`/api/admin/documents/${document.id}/preview`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-11 items-center gap-2 border-2 border-foreground bg-[var(--yellow)] px-3 font-bold hover:bg-[var(--yellow)]/70"
+                      aria-label={`Ver el PDF ${document.title}`}
+                    >
+                      <Eye className="size-4" aria-hidden="true" />
+                      Ver PDF
+                    </a>
                     <button
                       type="button"
                       onClick={() => {
@@ -575,7 +615,7 @@ export function DocumentsDashboard({
                   </div>
                 </div>
 
-                <details className="group border-t-2 border-foreground">
+                <details className="group border-t border-foreground">
                   <summary className="flex min-h-14 cursor-pointer list-none items-center gap-3 px-5 font-black [&::-webkit-details-marker]:hidden lg:px-6">
                     <Link2 className="size-5 text-[var(--pink)]" aria-hidden="true" />
                     Enlaces de descarga
@@ -587,24 +627,44 @@ export function DocumentsDashboard({
                     <div>
                       <h3 className="font-black">Crear un enlace nuevo</h3>
                       <p className="mt-1 text-sm text-foreground/60">
-                        El enlace se muestra una sola vez. Si no eliges fecha,
-                        funcionará hasta que lo revoques.
+                        El enlace se muestra una sola vez y siempre caduca.
                       </p>
                       <div className="mt-4 flex flex-col gap-3">
                         <label className="text-sm font-bold">
-                          Caducidad opcional
-                          <input
-                            type="date"
-                            value={expiryByDocument[document.id] ?? ""}
+                          Caducidad obligatoria
+                          <select
+                            value={expiryChoiceByDocument[document.id] ?? "24h"}
                             onChange={(event) =>
-                              setExpiryByDocument((current) => ({
+                              setExpiryChoiceByDocument((current) => ({
                                 ...current,
                                 [document.id]: event.target.value,
                               }))
                             }
                             className="mt-2 min-h-11 w-full border-2 border-foreground bg-[var(--paper)] px-3"
-                          />
+                          >
+                            <option value="24h">24 horas (recomendado)</option>
+                            <option value="168h">7 días</option>
+                            <option value="720h">30 días</option>
+                            <option value="custom">Fecha personalizada</option>
+                          </select>
                         </label>
+                        {(expiryChoiceByDocument[document.id] ?? "24h") ===
+                          "custom" && (
+                          <label className="text-sm font-bold">
+                            Fecha y hora de caducidad
+                            <input
+                              type="datetime-local"
+                              value={customExpiryByDocument[document.id] ?? ""}
+                              onChange={(event) =>
+                                setCustomExpiryByDocument((current) => ({
+                                  ...current,
+                                  [document.id]: event.target.value,
+                                }))
+                              }
+                              className="mt-2 min-h-11 w-full border-2 border-foreground bg-[var(--paper)] px-3"
+                            />
+                          </label>
+                        )}
                         <button
                           type="button"
                           onClick={() => createLink(document.id)}
@@ -647,9 +707,9 @@ export function DocumentsDashboard({
                         <ul className="mt-3 divide-y divide-foreground/20 border-y border-foreground/20">
                           {document.links.map((link) => {
                             const expired =
-                              link.expiresAt &&
                               new Date(link.expiresAt).getTime() <= Date.now();
-                            const active = !link.revokedAt && !expired;
+                            const active =
+                              !link.revokedAt && !link.usedAt && !expired;
                             return (
                               <li
                                 key={link.id}
@@ -672,7 +732,9 @@ export function DocumentsDashboard({
                                   <p className="font-black">
                                     {active
                                       ? "Enlace activo"
-                                      : link.revokedAt
+                                      : link.usedAt
+                                        ? "Enlace utilizado"
+                                        : link.revokedAt
                                         ? "Enlace revocado"
                                         : "Enlace caducado"}
                                   </p>
@@ -683,9 +745,7 @@ export function DocumentsDashboard({
                                     </span>
                                     <span className="inline-flex items-center gap-1">
                                       <Clock3 className="size-3.5" />
-                                      {link.expiresAt
-                                        ? `Caduca ${formatDate(link.expiresAt)}`
-                                        : "Sin caducidad"}
+                                      {`Caduca ${formatDate(link.expiresAt)}`}
                                     </span>
                                   </p>
                                 </div>
@@ -713,6 +773,26 @@ export function DocumentsDashboard({
             );
           })}
         </div>
+      )}
+
+      {totalPages > 1 && (
+        <nav className="admin-pagination" aria-label="Paginación de documentos">
+          <a
+            href={`/admin/documentos?q=${encodeURIComponent(initialQuery)}&sort=${initialSort}&page=${Math.max(page - 1, 1)}`}
+            aria-disabled={page === 1}
+            className={page === 1 ? "is-disabled" : undefined}
+          >
+            Anterior
+          </a>
+          <span>Página {page} de {totalPages}</span>
+          <a
+            href={`/admin/documentos?q=${encodeURIComponent(initialQuery)}&sort=${initialSort}&page=${Math.min(page + 1, totalPages)}`}
+            aria-disabled={page === totalPages}
+            className={page === totalPages ? "is-disabled" : undefined}
+          >
+            Siguiente
+          </a>
+        </nav>
       )}
 
       {deleteTarget && (

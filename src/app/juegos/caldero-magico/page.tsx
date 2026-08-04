@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Sparkles } from "lucide-react";
 import { CauldronGame } from "@/components/games/cauldron-game";
-import { GameShell } from "@/components/games/game-shell";
+import { GameNarrator, GameShell } from "@/components/games/game-shell";
 
 export const metadata: Metadata = {
   title: "Caldero mágico",
@@ -14,22 +14,31 @@ export default function MagicCauldronPage() {
   return (
     <GameShell active="caldero">
       <main id="contenido" className="paper-grain">
-        <section className="game-hero site-container">
+        <section className="game-hero game-hero--cauldron site-container">
           <span className="game-hero__doodle game-hero__doodle--one" aria-hidden="true">
             ☾
           </span>
           <span className="game-hero__doodle game-hero__doodle--two" aria-hidden="true">
             ✦
           </span>
-          <p className="eyebrow text-[var(--pink)]">
-            <Sparkles className="size-4" aria-hidden="true" />
-            Tres ingredientes, miles de historias
-          </p>
-          <h1 className="display-title max-w-[11ch]">Caldero mágico</h1>
-          <p className="max-w-[48rem] text-lg text-foreground/70 sm:text-xl">
-            Toca cada ingrediente para cambiarlo o deja que el azar cocine una
-            combinación completa. Después, llévatela a Stories y dibújala.
-          </p>
+          <div className="game-hero__copy">
+            <p className="eyebrow text-[var(--pink)]">
+              <Sparkles className="size-4" aria-hidden="true" />
+              Tres ingredientes, miles de historias
+            </p>
+            <h1 className="display-title">Caldero <em>mágico</em></h1>
+            <p className="game-hero__lead">
+              Mezcla un personaje, una forma de ser y una situación imposible.
+              El resto lo pone tu imaginación.
+            </p>
+          </div>
+          <GameNarrator
+            image="/images/web-2026/characters/perro-cocinero.png"
+            name="el Perro Cocinero"
+          >
+            Elige los ingredientes uno a uno tocando cada tarjeta. O invoca un
+            personaje y yo los echaré todos al caldero de golpe.
+          </GameNarrator>
         </section>
         <CauldronGame />
       </main>
