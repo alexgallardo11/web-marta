@@ -47,7 +47,7 @@ export function SiteFooter() {
 
         <div className="site-footer__links">
           <Link href="/">Inicio</Link>
-          <Link href="/#libros">Mis libros</Link>
+          <Link href="/mis-libros">Mis libros</Link>
           <a href={CLUB_URL} target="_blank" rel="noreferrer">
             Mi Club de Ilustración
           </a>
