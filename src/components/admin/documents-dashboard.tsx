@@ -365,7 +365,7 @@ export function DocumentsDashboard({
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="admin-documents-stack">
       {message && (
         <div
           role={message.kind === "error" ? "alert" : "status"}
@@ -396,7 +396,7 @@ export function DocumentsDashboard({
           htmlFor="new-pdf"
           onDragOver={(event) => event.preventDefault()}
           onDrop={handleDrop}
-          className="flex min-h-48 cursor-pointer flex-col items-center justify-center border-2 border-dashed border-foreground bg-background p-6 text-center transition-colors hover:bg-[var(--yellow)]/30"
+          className="admin-dropzone flex min-h-48 cursor-pointer flex-col items-center justify-center border-2 border-dashed border-foreground bg-background p-6 text-center transition-colors"
         >
           <UploadCloud className="size-10 text-[var(--pink)]" aria-hidden="true" />
           <strong className="mt-3 text-lg">
@@ -414,7 +414,12 @@ export function DocumentsDashboard({
             onChange={(event) => chooseFile(event.target.files?.[0])}
           />
         </label>
-        <div className="flex flex-col justify-center gap-4">
+        <div className="admin-upload-form-content flex flex-col justify-center gap-4">
+          <div className="admin-upload-heading">
+            <p className="admin-eyebrow">Nuevo recurso</p>
+            <h2>Subir documento</h2>
+            <p>Selecciona el archivo y define el nombre que verá quien lo reciba.</p>
+          </div>
           <div>
             <label htmlFor="new-title" className="mb-2 block font-bold">
               Nombre que verá la alumna
@@ -444,7 +449,7 @@ export function DocumentsDashboard({
       <form
         action="/admin/documentos"
         method="get"
-        className="flex flex-col gap-3 border-y border-foreground/20 py-4 md:flex-row md:items-end md:justify-between"
+        className="admin-library-toolbar flex flex-col gap-3 border-y border-foreground/20 py-4 md:flex-row md:items-end md:justify-between"
       >
         <label className="relative block w-full max-w-md">
           <span className="sr-only">Buscar documentos</span>
@@ -478,7 +483,7 @@ export function DocumentsDashboard({
       </form>
 
       {visibleDocuments.length === 0 ? (
-        <div className="border-y-2 border-foreground py-14 text-center">
+        <div className="admin-empty-state border-y-2 border-foreground py-14 text-center">
           <FileText className="mx-auto size-12 text-[var(--pink)]" aria-hidden="true" />
           <h2 className="mt-4 font-display text-4xl">
             {total === 0
@@ -560,7 +565,7 @@ export function DocumentsDashboard({
                       </p>
                     </div>
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="admin-document-actions flex flex-wrap gap-2">
                     <a
                       href={`/api/admin/documents/${document.id}/preview`}
                       target="_blank"

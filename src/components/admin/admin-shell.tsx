@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
-import { FileText, LogOut, Users } from "lucide-react";
+import { FileText, LogOut, ShieldCheck, Users } from "lucide-react";
 import type { ReactNode } from "react";
 import { logoutAction } from "@/app/admin/actions";
+import { BrandLockup } from "@/components/brand-lockup";
 import type { AdminRole } from "@/types/database";
 
 export function AdminShell({
@@ -20,18 +20,17 @@ export function AdminShell({
     <div className="admin-app">
       <aside className="admin-sidebar">
         <div className="admin-sidebar-header">
-          <Link href="/admin/documentos" aria-label="Panel de Marta Moreno">
-            <Image
-              src="/images/marta-moreno-logo.png"
-              alt="Marta Moreno"
-              width={226}
-              height={60}
-              className="h-auto w-36"
-            />
+          <Link
+            href="/admin/documentos"
+            className="admin-brand-lockup"
+            aria-label="Panel de Marta Moreno"
+          >
+            <BrandLockup />
           </Link>
           <span className="admin-workspace-label">Área de trabajo</span>
         </div>
         <nav className="admin-nav" aria-label="Navegación del panel">
+          <span className="admin-nav-label">Gestión</span>
           <Link
             href="/admin/documentos"
             className={section === "documents" ? "is-active" : undefined}
@@ -52,10 +51,15 @@ export function AdminShell({
           )}
         </nav>
         <div className="admin-sidebar-footer">
-          <span className="admin-role-badge">
-            {role === "owner" ? "Propietaria" : "Administradora"}
-          </span>
-          <span className="admin-sidebar-email">{email}</span>
+          <div className="admin-account-mark" aria-hidden="true">
+            <ShieldCheck />
+          </div>
+          <div className="admin-sidebar-account">
+            <span className="admin-role-badge">
+              {role === "owner" ? "Propietaria" : "Administradora"}
+            </span>
+            <span className="admin-sidebar-email">{email}</span>
+          </div>
         </div>
       </aside>
 

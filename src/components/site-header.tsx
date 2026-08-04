@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Menu, Sparkles } from "lucide-react";
+import { BrandLockup } from "@/components/brand-lockup";
 import { InstagramIcon } from "@/components/icons/instagram-icon";
 import { CLUB_URL } from "@/lib/site-links";
 
@@ -20,19 +20,7 @@ export function SiteHeader() {
           aria-label="Marta Moreno, inicio"
           className="site-header__brand"
         >
-          <Image
-            src="/images/web-2026/marta-illustration.png"
-            alt=""
-            width={1525}
-            height={1576}
-            preload
-            className="site-header__mark"
-            sizes="48px"
-          />
-          <span className="site-header__wordmark">
-            <strong>Marta Moreno</strong>
-            <small>Ilustradora infantil</small>
-          </span>
+          <BrandLockup preload />
         </Link>
 
         <nav aria-label="Navegación principal" className="site-header__nav">

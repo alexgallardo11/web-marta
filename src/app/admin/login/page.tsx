@@ -15,8 +15,8 @@ export default async function LoginPage({
 
   return (
     <AuthShell
-      title="Hola, Marta"
-      description="Accede para subir recursos, sustituir archivos y controlar sus enlaces."
+      title="Acceso al panel"
+      description="Gestiona documentos, versiones y enlaces desde un espacio privado."
     >
       {access.status === "unconfigured" ? (
         <div className="flex flex-col gap-4">
