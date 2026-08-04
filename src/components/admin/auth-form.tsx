@@ -12,36 +12,35 @@ import {
 
 const initialState: AuthFormState = { message: "" };
 
-const inputClass =
-  "min-h-12 w-full border-2 border-foreground bg-[var(--paper)] px-4 text-base outline-none transition-shadow focus-visible:shadow-[0.25rem_0.25rem_0_var(--yellow)]";
+const inputClass = "admin-auth-input";
 
 export function LoginForm() {
   const [state, action, pending] = useActionState(loginAction, initialState);
 
   return (
-    <form action={action} className="flex flex-col gap-5">
-      <div>
-        <label htmlFor="email" className="mb-2 block font-bold">
+    <form action={action} className="admin-auth-form">
+      <div className="admin-auth-field">
+        <label htmlFor="email">
           Email
         </label>
-        <div className="relative">
-          <Mail className="pointer-events-none absolute left-4 top-3.5 size-5 text-foreground/50" />
+        <div className="admin-auth-input-wrap">
+          <Mail aria-hidden="true" />
           <input
             id="email"
             name="email"
             type="email"
             autoComplete="email"
             required
-            className={`${inputClass} pl-12`}
+            className={inputClass}
           />
         </div>
       </div>
-      <div>
-        <label htmlFor="password" className="mb-2 block font-bold">
+      <div className="admin-auth-field">
+        <label htmlFor="password">
           Contraseña
         </label>
-        <div className="relative">
-          <LockKeyhole className="pointer-events-none absolute left-4 top-3.5 size-5 text-foreground/50" />
+        <div className="admin-auth-input-wrap">
+          <LockKeyhole aria-hidden="true" />
           <input
             id="password"
             name="password"
@@ -49,24 +48,24 @@ export function LoginForm() {
             autoComplete="current-password"
             minLength={10}
             required
-            className={`${inputClass} pl-12`}
+            className={inputClass}
           />
         </div>
       </div>
       {state.message && (
         <p
           role="alert"
-          className="border-2 border-destructive bg-destructive/10 p-3 text-sm font-bold text-destructive"
+          className="admin-auth-message error"
         >
           {state.message}
         </p>
       )}
-      <button className="btn-primary mt-1" disabled={pending}>
+      <button className="admin-auth-submit" disabled={pending}>
         {pending ? "Comprobando acceso…" : "Entrar al panel"}
       </button>
       <Link
         href="/admin/recuperar"
-        className="text-center text-sm font-bold underline underline-offset-4"
+        className="admin-auth-link"
       >
         He olvidado mi contraseña
       </Link>
@@ -78,9 +77,9 @@ export function RecoveryForm() {
   const [state, action, pending] = useActionState(recoveryAction, initialState);
 
   return (
-    <form action={action} className="flex flex-col gap-5">
-      <div>
-        <label htmlFor="email" className="mb-2 block font-bold">
+    <form action={action} className="admin-auth-form">
+      <div className="admin-auth-field">
+        <label htmlFor="email">
           Email de administradora
         </label>
         <input
@@ -95,21 +94,17 @@ export function RecoveryForm() {
       {state.message && (
         <p
           role="status"
-          className={`border-2 p-3 text-sm font-bold ${
-            state.success
-              ? "border-[var(--turquoise)] bg-[var(--turquoise)]/20"
-              : "border-destructive bg-destructive/10 text-destructive"
-          }`}
+          className={`admin-auth-message ${state.success ? "success" : "error"}`}
         >
           {state.message}
         </p>
       )}
-      <button className="btn-primary" disabled={pending}>
+      <button className="admin-auth-submit" disabled={pending}>
         {pending ? "Enviando correo…" : "Enviar enlace de recuperación"}
       </button>
       <Link
         href="/admin/login"
-        className="text-center text-sm font-bold underline underline-offset-4"
+        className="admin-auth-link"
       >
         Volver al acceso
       </Link>
@@ -124,9 +119,9 @@ export function NewPasswordForm() {
   );
 
   return (
-    <form action={action} className="flex flex-col gap-5">
-      <div>
-        <label htmlFor="password" className="mb-2 block font-bold">
+    <form action={action} className="admin-auth-form">
+      <div className="admin-auth-field">
+        <label htmlFor="password">
           Contraseña nueva
         </label>
         <input
@@ -138,12 +133,12 @@ export function NewPasswordForm() {
           required
           className={inputClass}
         />
-        <p className="mt-2 text-sm text-foreground/60">
+        <p className="admin-auth-help">
           Al menos 10 caracteres.
         </p>
       </div>
-      <div>
-        <label htmlFor="confirmation" className="mb-2 block font-bold">
+      <div className="admin-auth-field">
+        <label htmlFor="confirmation">
           Repite la contraseña
         </label>
         <input
@@ -159,12 +154,12 @@ export function NewPasswordForm() {
       {state.message && (
         <p
           role="alert"
-          className="border-2 border-destructive bg-destructive/10 p-3 text-sm font-bold text-destructive"
+          className="admin-auth-message error"
         >
           {state.message}
         </p>
       )}
-      <button className="btn-primary" disabled={pending}>
+      <button className="admin-auth-submit" disabled={pending}>
         {pending ? "Guardando contraseña…" : "Guardar contraseña nueva"}
       </button>
     </form>

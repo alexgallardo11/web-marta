@@ -1,4 +1,8 @@
-import { completeDocumentSchema, isPdfFilename } from "@/lib/document-validation";
+import {
+  completeDocumentSchema,
+  isPdfFilename,
+  isPdfMimeType,
+} from "@/lib/document-validation";
 import { requireAdmin } from "@/lib/auth";
 import { handleRouteError, jsonError, requireSameOrigin } from "@/lib/api";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -13,7 +17,10 @@ export async function POST(request: Request) {
     if (!parsed.success) {
       return jsonError("Faltan datos para guardar el documento.");
     }
-    if (!isPdfFilename(parsed.data.originalFilename)) {
+    if (
+      !isPdfFilename(parsed.data.originalFilename) ||
+      !isPdfMimeType(parsed.data.mimeType)
+    ) {
       return jsonError("El archivo debe ser un PDF.");
     }
     if (!/^[0-9a-f-]{36}\/v\d+\.pdf$/i.test(parsed.data.storagePath)) {
@@ -22,12 +29,17 @@ export async function POST(request: Request) {
     uploadedPath = parsed.data.storagePath;
 
     const admin = createAdminClient();
-    const { data: exists, error: existsError } = await admin.storage
+    const { data: storageInfo, error: infoError } = await admin.storage
       .from("documents")
-      .exists(uploadedPath);
-    if (existsError || !exists) {
+      .info(uploadedPath);
+    if (
+      infoError ||
+      !storageInfo ||
+      storageInfo.contentType !== "application/pdf" ||
+      storageInfo.size !== parsed.data.sizeBytes
+    ) {
       return jsonError(
-        "La subida no se ha completado. Vuelve a seleccionar el archivo.",
+        "El PDF no supera las comprobaciones de seguridad. Vuelve a seleccionarlo.",
       );
     }
 

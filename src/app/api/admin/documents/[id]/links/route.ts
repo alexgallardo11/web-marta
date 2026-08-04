@@ -1,7 +1,11 @@
 import { createHash, randomBytes } from "node:crypto";
 import { requireAdmin } from "@/lib/auth";
 import { handleRouteError, jsonError, requireSameOrigin } from "@/lib/api";
-import { createLinkSchema, uuidSchema } from "@/lib/document-validation";
+import {
+  createLinkSchema,
+  isValidLinkExpiry,
+  uuidSchema,
+} from "@/lib/document-validation";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 type Context = { params: Promise<{ id: string }> };
@@ -17,9 +21,11 @@ export async function POST(request: Request, context: Context) {
     const parsed = createLinkSchema.safeParse(await request.json());
     if (!parsed.success) return jsonError("La fecha de caducidad no es válida.");
 
-    const expiresAt = parsed.data.expiresAt ?? null;
-    if (expiresAt && new Date(expiresAt).getTime() <= Date.now()) {
-      return jsonError("La fecha de caducidad debe estar en el futuro.");
+    const expiresAt = parsed.data.expiresAt;
+    if (!isValidLinkExpiry(expiresAt)) {
+      return jsonError(
+        "La caducidad debe estar en el futuro y como máximo a 365 días.",
+      );
     }
 
     const admin = createAdminClient();

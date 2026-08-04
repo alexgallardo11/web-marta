@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ["127.0.0.1"],
+  // Let phones and tablets on the same Wi-Fi load Next's development assets.
+  // Without the LAN hostname, the page renders but Client Components never
+  // hydrate, leaving every game control disabled.
+  allowedDevOrigins: ["127.0.0.1", "192.168.1.30"],
   async headers() {
     return [
       {
@@ -21,7 +24,7 @@ const nextConfig: NextConfig = {
           {
             key: "Permissions-Policy",
             value:
-              "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+              "camera=(self), microphone=(), geolocation=(), payment=(), usb=()",
           },
         ],
       },

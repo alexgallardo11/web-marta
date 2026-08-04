@@ -1,23 +1,39 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Mail } from "lucide-react";
 import { InstagramIcon } from "@/components/icons/instagram-icon";
+import { CLUB_URL } from "@/lib/site-links";
 
 export function SiteFooter() {
   return (
-    <footer className="site-footer">
+    <footer id="contacto" className="site-footer">
       <div className="site-container site-footer__main">
         <div className="site-footer__brand">
-          <Image
-            src="/images/marta-moreno-logo.png"
-            alt="Marta Moreno"
-            width={226}
-            height={60}
-            className="h-auto w-48 brightness-0 invert"
-          />
+          <div className="site-footer__brand-lockup">
+            <Image
+              src="/images/web-2026/marta-illustration.png"
+              alt=""
+              width={1525}
+              height={1576}
+              sizes="88px"
+            />
+            <div>
+              <strong>Marta Moreno</strong>
+              <span>Ilustradora infantil y maestra</span>
+            </div>
+          </div>
           <p>
-            Ilustradora infantil y maestra. Te acompaño a crear personajes que
-            emocionen y conecten.
+            Historias, personajes y espacios para volver a disfrutar dibujando
+            con emoción y a tu manera.
           </p>
+        </div>
+
+        <div className="site-footer__contact">
+          <p className="eyebrow">¿Hablamos?</p>
+          <a href="mailto:mm@martamoreno.com" className="site-footer__email">
+            <Mail aria-hidden="true" />
+            mm@martamoreno.com
+          </a>
           <a
             href="https://www.instagram.com/martamoreno.art/"
             target="_blank"
@@ -29,19 +45,14 @@ export function SiteFooter() {
           </a>
         </div>
 
-        <div className="site-footer__line" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
-
         <div className="site-footer__links">
-          <Link href="/#formacion">Formación</Link>
+          <Link href="/">Inicio</Link>
+          <Link href="/#libros">Mis libros</Link>
+          <a href={CLUB_URL} target="_blank" rel="noreferrer">
+            Mi Club de Ilustración
+          </a>
           <Link href="/juegos/personajes-locos">Juegos creativos</Link>
-          <Link href="/#sobre-mi">Sobre mí</Link>
-          <Link href="/aviso-legal">
-            Aviso legal
-          </Link>
+          <Link href="/aviso-legal">Aviso legal</Link>
           <Link href="/privacidad">Privacidad</Link>
           <Link href="/cookies">Cookies</Link>
           <Link href="/admin/login">Acceso</Link>

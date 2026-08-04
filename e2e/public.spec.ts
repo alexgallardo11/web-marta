@@ -7,14 +7,25 @@ test("la landing comunica la propuesta y enlaza los juegos", async ({
   await page.goto("/");
   await expect(
     page.getByRole("heading", {
-      name: /crea personajes que emocionen y conecten/i,
+      name: /dibuja lo que todavía no sabes que imaginas/i,
     }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: /recibir la newsletter/i }),
+    page.getByRole("link", { name: /recibir ideas cada martes/i }).first(),
   ).toBeVisible();
   await page.getByRole("link", { name: /personajes locos/i }).first().click();
   await expect(page).toHaveURL(/\/juegos\/personajes-locos$/);
+});
+
+test("todos los accesos del Club llevan a Skool", async ({ page }) => {
+  const clubUrl =
+    "https://www.skool.com/mi-club-de-ilustracion-3724/about";
+  await page.goto("/");
+
+  await expect(page.locator(`a[href="${clubUrl}"]`)).toHaveCount(7);
+  await expect(
+    page.locator('a[href="#club"], a[href="/#club"], a[href^="mailto:"][href*="Club"]'),
+  ).toHaveCount(0);
 });
 
 test("el juego de vasos mezcla y reinicia", async ({ page }) => {
@@ -58,6 +69,110 @@ test("el Caldero Mágico crea un resultado y habilita la exportación", async ({
   await expect(
     page.getByRole("button", { name: "Descargar para Stories" }),
   ).toBeEnabled();
+});
+
+test("el caldero permite elegir cada ingrediente de forma independiente", async ({
+  page,
+}) => {
+  await page.goto("/juegos/caldero-magico");
+
+  const ingredient = page.getByRole("button", {
+    name: "Cambiar ingrediente base",
+  });
+  const personality = page.getByRole("button", {
+    name: "Cambiar especia secreta",
+  });
+  const context = page.getByRole("button", {
+    name: "Cambiar poción transformadora",
+  });
+
+  await ingredient.click();
+
+  await expect(ingredient).toHaveAttribute("aria-pressed", "true");
+  await expect(personality).toHaveAttribute("aria-pressed", "false");
+  await expect(context).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByText("1/3")).toBeVisible();
+  await expect(page.getByText("Personaje invocado")).toHaveCount(0);
+
+  await personality.click();
+  await context.click();
+
+  await expect(page.getByText("3/3")).toBeVisible();
+  await expect(page.getByText("Personaje invocado")).toBeVisible();
+});
+
+test("los dos juegos convierten una foto del dibujo en una Story compartible", async ({
+  page,
+}) => {
+  for (const game of ["personajes-locos", "caldero-magico"] as const) {
+    await page.goto(`/juegos/${game}`);
+    if (game === "personajes-locos") {
+      await page.getByRole("button", { name: "Mezclar los cuatro" }).click();
+    } else {
+      await page.getByRole("button", { name: "Invocar personaje" }).click();
+    }
+
+    const cameraButton = page.getByRole("button", {
+      name: "Fotografiar mi dibujo",
+    });
+    await expect(cameraButton).toBeEnabled({ timeout: 3_000 });
+    await cameraButton.click();
+    await expect(
+      page.getByRole("heading", { name: "Encuadra tu creación" }),
+    ).toBeVisible();
+
+    await page
+      .getByLabel("Elegir una foto de la galería")
+      .setInputFiles("public/images/web-2026/marta-illustration.png");
+    await expect(
+      page.getByRole("heading", { name: "¿Te gusta esta foto?" }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Usar esta foto" }).click();
+
+    await expect(
+      page.getByRole("heading", { name: "Tu Story está lista" }),
+    ).toBeVisible({ timeout: 3_000 });
+    await expect(
+      page.getByRole("button", { name: "Compartir en redes" }),
+    ).toBeVisible();
+    const saveButton = page.getByRole("button", { name: "Guardar" });
+    await expect(saveButton).toBeVisible();
+    const downloadPromise = page.waitForEvent("download");
+    await saveButton.click();
+    const download = await downloadPromise;
+    expect(download.suggestedFilename()).toBe(
+      game === "personajes-locos"
+        ? "mi-dibujo-personajes-locos-marta-moreno.png"
+        : "mi-dibujo-caldero-magico-marta-moreno.png",
+    );
+    await page.getByRole("button", { name: "Cerrar cámara" }).click();
+  }
+});
+
+test("abre directamente la cámara nativa cuando no hay cámara en directo", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "mediaDevices", {
+      configurable: true,
+      value: undefined,
+    });
+  });
+  await page.goto("/juegos/caldero-magico");
+  await page.getByRole("button", { name: "Invocar personaje" }).click();
+  const chooserPromise = page.waitForEvent("filechooser");
+  await page.getByRole("button", { name: "Fotografiar mi dibujo" }).click();
+  const chooser = await chooserPromise;
+  expect(chooser.isMultiple()).toBe(false);
+  await chooser.setFiles("public/images/web-2026/marta-illustration.png");
+
+  await expect(
+    page.getByRole("heading", { name: "¿Te gusta esta foto?" }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Abrir cámara del dispositivo")).toHaveAttribute(
+    "capture",
+    "environment",
+  );
 });
 
 test("los juegos respetan la preferencia de movimiento reducido", async ({
