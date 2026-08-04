@@ -7,6 +7,7 @@ import {
   Heart,
   Mail,
 } from "lucide-react";
+import { CharacterGuide } from "@/components/character-guide";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { CLUB_URL } from "@/lib/site-links";
@@ -55,40 +56,6 @@ const testimonials = [
     text: "Con esta clase me lo he pasado muy bien. ¡Qué emoción comenzar la semana con tu curso!",
   },
 ];
-
-type CharacterName =
-  | "anton-pinon"
-  | "cocodrilo"
-  | "gatita"
-  | "girafa"
-  | "leon"
-  | "martina-futbolista"
-  | "mono"
-  | "perro-cocinero";
-
-function CharacterGuide({
-  character,
-  children,
-  className = "",
-}: {
-  character: CharacterName;
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div className={`brand-guide brand-guide--${character} ${className}`}>
-      <p className="brand-guide__bubble">{children}</p>
-      <Image
-        src={`/images/web-2026/characters/${character}.png`}
-        alt=""
-        width={709}
-        height={709}
-        sizes="(max-width: 768px) 130px, 190px"
-        className="brand-guide__character"
-      />
-    </div>
-  );
-}
 
 export default function Home() {
   const jsonLd = {
@@ -309,8 +276,11 @@ export default function Home() {
               <div className="brand-books__note">
                 <BookOpen aria-hidden="true" />
                 <span>
-                  Estamos preparando un rincón dedicado para descubrir todos
-                  sus libros, sus personajes y lo que hay detrás de cada historia.
+                  Descubre todos sus libros, sus personajes y lo que hay detrás
+                  de cada historia en la biblioteca ilustrada.
+                  <Link href="/mis-libros">
+                    Entrar en Mis libros <ArrowRight aria-hidden="true" />
+                  </Link>
                 </span>
               </div>
             </div>

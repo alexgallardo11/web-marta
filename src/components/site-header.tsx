@@ -6,7 +6,7 @@ import { CLUB_URL } from "@/lib/site-links";
 
 const navItems = [
   { href: "/", label: "Inicio" },
-  { href: "/#libros", label: "Mis libros" },
+  { href: "/mis-libros", label: "Mis libros" },
   { href: CLUB_URL, label: "Mi Club de Ilustración", external: true },
   { href: "/#contacto", label: "Contacto" },
 ];
