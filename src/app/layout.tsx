@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Atkinson_Hyperlegible_Next, Outfit } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AuthSessionRedirect } from "@/components/auth-session-redirect";
 import "./globals.css";
 
@@ -73,6 +75,8 @@ export default function RootLayout({
           Saltar al contenido
         </a>
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
