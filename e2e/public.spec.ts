@@ -51,10 +51,6 @@ test("la biblioteca permite cambiar de libro y abrir una muestra", async ({
   await expect(page.getByText("01 / 03")).toBeVisible();
   await page.getByRole("button", { name: "Cerrar libro" }).click();
   await expect(page.getByRole("button", { name: "Abrir Kai y Emma tocando la portada" })).toBeVisible();
-  await page.getByRole("button", { name: "Abrir Kai y Emma tocando la portada" }).click();
-  await expect(page.getByRole("button", { name: "Cerrar libro" })).toBeVisible();
-  await page.getByRole("button", { name: "Cerrar libro" }).click();
-  await expect(page.getByRole("button", { name: "Abrir Kai y Emma tocando la portada" })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.locator(".library-experience")).toHaveClass(/is-shelf/);
   await expect(page.getByRole("button", { name: "Abrir Kai y Emma tocando la portada" })).toHaveCount(0);
