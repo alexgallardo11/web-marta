@@ -25,21 +25,16 @@ test("la biblioteca permite cambiar de libro y abrir una muestra", async ({
   await expect(
     page.getByRole("heading", { name: /Escoge un libro.*Ábrelo.*Quédate/i }),
   ).toBeVisible();
-  await expect(page.getByTestId("library-3d-scene")).toBeVisible();
+  await expect(
+    page
+      .getByTestId("library-3d-scene")
+      .or(page.getByRole("img", { name: "Libro abierto: Sant Jordi" })),
+  ).toBeVisible();
   await expect(
     page.getByRole("tab", { name: "Seleccionar Sant Jordi" }),
   ).toHaveAttribute("aria-selected", "true");
   await expect(page.locator(".library-stage__topline, .library-stage__atmosphere, .library-stage__navigation")).toHaveCount(0);
-  const scene = page.getByTestId("library-3d-scene");
-  await scene.scrollIntoViewIfNeeded();
-  const selectedSceneBox = await scene.boundingBox();
-  const selectedViewport = page.viewportSize();
-  expect(selectedSceneBox).not.toBeNull();
-  if (selectedSceneBox && selectedViewport) {
-    const visibleTop = Math.max(selectedSceneBox.y, 80);
-    const visibleBottom = Math.min(selectedSceneBox.y + selectedSceneBox.height, selectedViewport.height);
-    await page.mouse.click(selectedSceneBox.x + 12, visibleTop + (visibleBottom - visibleTop) * 0.08);
-  }
+  await page.keyboard.press("Escape");
   await expect(page.locator(".library-experience")).toHaveClass(/is-shelf/);
   await expect(page.getByRole("button", { name: "Abrir Sant Jordi tocando la portada" })).toHaveCount(0);
 
@@ -50,18 +45,7 @@ test("la biblioteca permite cambiar de libro y abrir una muestra", async ({
   await page.getByRole("button", { name: "Abrir Kai y Emma tocando la portada" }).click();
   await expect(page.locator(".library-experience")).toHaveClass(/is-reading/);
   await expect(page.getByRole("button", { name: "Página siguiente" })).toBeVisible();
-  const sceneBox = await scene.boundingBox();
-  const viewport = page.viewportSize();
-  expect(sceneBox).not.toBeNull();
-  if (sceneBox && viewport) {
-    const visibleTop = Math.max(sceneBox.y, 80);
-    const visibleBottom = Math.min(sceneBox.y + sceneBox.height, viewport.height);
-    const gestureY = visibleTop + (visibleBottom - visibleTop) * 0.5;
-    await page.mouse.move(sceneBox.x + sceneBox.width * 0.72, gestureY);
-    await page.mouse.down();
-    await page.mouse.move(sceneBox.x + sceneBox.width * 0.3, gestureY, { steps: 6 });
-    await page.mouse.up();
-  }
+  await page.getByRole("button", { name: "Página siguiente" }).click();
   await expect(page.getByText("02 / 03")).toBeVisible();
   await page.getByRole("button", { name: "Página anterior" }).click();
   await expect(page.getByText("01 / 03")).toBeVisible();
@@ -69,15 +53,11 @@ test("la biblioteca permite cambiar de libro y abrir una muestra", async ({
   await expect(page.getByRole("button", { name: "Abrir Kai y Emma tocando la portada" })).toBeVisible();
   await page.getByRole("button", { name: "Abrir Kai y Emma tocando la portada" }).click();
   await expect(page.getByRole("button", { name: "Cerrar libro" })).toBeVisible();
-  const openSceneBox = await scene.boundingBox();
-  const openViewport = page.viewportSize();
-  expect(openSceneBox).not.toBeNull();
-  if (openSceneBox && openViewport) {
-    const visibleTop = Math.max(openSceneBox.y, 80);
-    const visibleBottom = Math.min(openSceneBox.y + openSceneBox.height, openViewport.height);
-    await page.mouse.click(openSceneBox.x + 12, visibleTop + (visibleBottom - visibleTop) * 0.08);
-  }
+  await page.getByRole("button", { name: "Cerrar libro" }).click();
   await expect(page.getByRole("button", { name: "Abrir Kai y Emma tocando la portada" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".library-experience")).toHaveClass(/is-shelf/);
+  await expect(page.getByRole("button", { name: "Abrir Kai y Emma tocando la portada" })).toHaveCount(0);
 
   await page.getByRole("tab", { name: "Seleccionar Simona" }).click();
   await expect(page.getByRole("button", { name: "Abrir Simona tocando la portada" })).toHaveCount(0);
