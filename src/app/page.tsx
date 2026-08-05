@@ -10,6 +10,7 @@ import {
 import { CharacterGuide } from "@/components/character-guide";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { books } from "@/lib/books-data";
 import { CLUB_URL } from "@/lib/site-links";
 
 const newsletterUrl = "https://marta-moreno.systeme.io/guiacreativa";
@@ -263,39 +264,40 @@ export default function Home() {
         </section>
 
         <section id="libros" className="brand-books" aria-labelledby="books-title">
-          <div className="site-container brand-books__grid">
-            <div className="brand-books__copy">
-              <p className="brand-kicker">Mis libros</p>
-              <h2 id="books-title">Historias para mirar, sentir y volver a abrir.</h2>
-              <p>
-                Marta es autora e ilustradora de álbumes infantiles que han
-                emocionado a miles de lectores, entre ellos <em>El hilo invisible</em>,
-                la colección <em>Antón Piñón</em>, <em>Martina Futbolista</em>,
-                <em> Gracias, Profe</em> y <em>¿Dónde está mi escoba?</em>.
-              </p>
-              <div className="brand-books__note">
-                <BookOpen aria-hidden="true" />
-                <span>
-                  Descubre todos sus libros, sus personajes y lo que hay detrás
-                  de cada historia en la biblioteca ilustrada.
-                  <Link href="/mis-libros">
-                    Entrar en Mis libros <ArrowRight aria-hidden="true" />
+          <div className="site-container">
+            <div className="brand-books__grid">
+              <div className="brand-books__copy">
+                <p className="brand-kicker">Mis libros</p>
+                <h2 id="books-title">Historias para mirar, sentir y volver a abrir.</h2>
+                <p>
+                  Marta es autora e ilustradora de álbumes infantiles que han
+                  emocionado a miles de lectores, entre ellos <em>El hilo invisible</em>,
+                  la colección <em>Antón Piñón</em>, <em>Martina Futbolista</em>,
+                  <em> Gracias, Profe</em> y <em>¿Dónde está mi escoba?</em>.
+                </p>
+                <div className="brand-books__actions">
+                  <Link className="brand-button brand-button--primary" href="/mis-libros">
+                    <BookOpen aria-hidden="true" />
+                    Entrar en la biblioteca
+                    <ArrowRight aria-hidden="true" />
                   </Link>
-                </span>
+                  <span>{books.length} historias ilustradas para curiosear</span>
+                </div>
+              </div>
+              <div className="brand-books__visual">
+                <Image
+                  src="/images/web-2026/photos/marta-trabajando.jpg"
+                  alt="Marta trabajando en una ilustración en su mesa de estudio"
+                  width={1200}
+                  height={1200}
+                  sizes="(max-width: 900px) 90vw, 41vw"
+                />
+                <CharacterGuide character="anton-pinon">
+                  Yo ya estoy dentro. ¿Vienes a curiosear nuestras historias?
+                </CharacterGuide>
               </div>
             </div>
-            <div className="brand-books__visual">
-              <Image
-                src="/images/web-2026/photos/marta-trabajando.jpg"
-                alt="Marta trabajando en una ilustración en su mesa de estudio"
-                width={1200}
-                height={1200}
-                sizes="(max-width: 900px) 90vw, 41vw"
-              />
-              <CharacterGuide character="anton-pinon">
-                Soy Antón Piñón. Marta ya me ha metido en un montón de líos.
-              </CharacterGuide>
-            </div>
+
           </div>
         </section>
 

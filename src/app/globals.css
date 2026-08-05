@@ -3301,7 +3301,8 @@ a {
 /* Books */
 
 .brand-books {
-  padding-block: clamp(5rem, 10vw, 9rem);
+  overflow: hidden;
+  padding-block: clamp(5rem, 9vw, 8rem) clamp(4rem, 8vw, 7rem);
 }
 
 .brand-books__grid {
@@ -3323,37 +3324,30 @@ a {
   line-height: 1.7;
 }
 
-.brand-books__note {
+.brand-books__actions {
   display: flex;
-  max-width: 39rem;
-  align-items: flex-start;
-  gap: 0.9rem;
-  margin-top: 2rem;
-  padding: 1.2rem;
-  border: 2px solid color-mix(in srgb, var(--brand-lime) 65%, var(--brand-ink));
-  border-radius: 1rem;
-  background: color-mix(in srgb, var(--brand-lime) 13%, var(--brand-paper));
-  font-weight: 750;
-}
-
-.brand-books__note svg {
-  width: 1.5rem;
-  flex: none;
-}
-
-.brand-books__note a {
-  display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  margin-top: 0.7rem;
-  color: var(--brand-red);
-  font-weight: 850;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.18em;
+  flex-wrap: wrap;
+  gap: 1rem 1.25rem;
+  margin-top: 2.25rem;
 }
 
-.brand-books__note a svg {
-  width: 1rem;
+.brand-books__actions .brand-button {
+  min-width: 17rem;
+}
+
+.brand-books__actions .brand-button svg:first-child {
+  width: 1.15rem;
+}
+
+.brand-books__actions > span {
+  max-width: 12rem;
+  color: color-mix(in srgb, var(--brand-ink) 62%, transparent);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: uppercase;
 }
 
 .brand-books__visual {
@@ -3851,6 +3845,23 @@ a {
   .brand-play .brand-guide {
     margin-top: 1rem;
   }
+}
+
+@media (max-width: 30rem) {
+  .brand-books__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .brand-books__actions .brand-button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .brand-books__actions > span {
+    max-width: none;
+  }
+
 }
 
 @media (min-width: 44rem) and (max-width: 51.99rem) {
