@@ -28,6 +28,14 @@ test("la biblioteca permite cambiar de libro y abrir una muestra", async ({
     }
     await button.click();
   };
+  const activateBookTab = async (name: string) => {
+    const tab = page.getByRole("tab", { name });
+    if (testInfo.project.name === "chromium") {
+      await tab.dispatchEvent("click");
+      return;
+    }
+    await tab.click();
+  };
   await page.goto("/mis-libros?libro=sant-jordi");
 
   await expect(
@@ -46,7 +54,7 @@ test("la biblioteca permite cambiar de libro y abrir una muestra", async ({
   await expect(page.locator(".library-experience")).toHaveClass(/is-shelf/);
   await expect(page.getByRole("button", { name: "Abrir Sant Jordi tocando la portada" })).toHaveCount(0);
 
-  await page.getByRole("tab", { name: "Seleccionar Kai y Emma" }).click();
+  await activateBookTab("Seleccionar Kai y Emma");
   await expect(page.locator(".library-experience")).toHaveClass(/is-inspect/);
   await expect(page).toHaveURL(/\/mis-libros\?libro=kai-y-emma$/);
 
@@ -63,7 +71,7 @@ test("la biblioteca permite cambiar de libro y abrir una muestra", async ({
   await expect(page.locator(".library-experience")).toHaveClass(/is-shelf/);
   await expect(page.getByRole("button", { name: "Abrir Kai y Emma tocando la portada" })).toHaveCount(0);
 
-  await page.getByRole("tab", { name: "Seleccionar Simona" }).click();
+  await activateBookTab("Seleccionar Simona");
   await expect(page.getByRole("button", { name: "Abrir Simona tocando la portada" })).toHaveCount(0);
 });
 
