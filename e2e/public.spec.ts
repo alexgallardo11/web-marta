@@ -7,7 +7,7 @@ test("la landing comunica la propuesta y enlaza los juegos", async ({
   await page.goto("/");
   await expect(
     page.getByRole("heading", {
-      name: /dibuja lo que todavía no sabes que imaginas/i,
+      name: /aprende a dibujar y encuentra tu propia voz/i,
     }),
   ).toBeVisible();
   await expect(
@@ -75,12 +75,13 @@ test("la biblioteca permite cambiar de libro y abrir una muestra", async ({
   await expect(page.getByRole("button", { name: "Abrir Simona tocando la portada" })).toHaveCount(0);
 });
 
-test("todos los accesos del Club llevan a Skool", async ({ page }) => {
+test("los accesos del Club distinguen la página informativa de Skool", async ({ page }) => {
   const clubUrl =
     "https://www.skool.com/mi-club-de-ilustracion-3724/about";
   await page.goto("/");
 
-  await expect(page.locator(`a[href="${clubUrl}"]`)).toHaveCount(7);
+  await expect(page.locator(`a[href="${clubUrl}"]`)).toHaveCount(1);
+  await expect(page.locator('a[href="/mi-club-de-ilustracion"]')).toHaveCount(6);
   await expect(
     page.locator('a[href="#club"], a[href="/#club"], a[href^="mailto:"][href*="Club"]'),
   ).toHaveCount(0);
