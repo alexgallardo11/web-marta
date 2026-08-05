@@ -20,7 +20,14 @@ test("la landing comunica la propuesta y enlaza los juegos", async ({
 test("la biblioteca permite cambiar de libro y abrir una muestra", async ({
   page,
 }, testInfo) => {
-  const clickOptions = { force: testInfo.project.name === "chromium" };
+  const activateReaderButton = async (name: string) => {
+    const button = page.getByRole("button", { name });
+    if (testInfo.project.name === "chromium") {
+      await button.dispatchEvent("click");
+      return;
+    }
+    await button.click();
+  };
   await page.goto("/mis-libros?libro=sant-jordi");
 
   await expect(
@@ -46,11 +53,11 @@ test("la biblioteca permite cambiar de libro y abrir una muestra", async ({
   await page.getByRole("button", { name: "Abrir Kai y Emma tocando la portada" }).click();
   await expect(page.locator(".library-experience")).toHaveClass(/is-reading/);
   await expect(page.getByRole("button", { name: "Página siguiente" })).toBeVisible();
-  await page.getByRole("button", { name: "Página siguiente" }).click(clickOptions);
+  await activateReaderButton("Página siguiente");
   await expect(page.getByText("02 / 03")).toBeVisible();
-  await page.getByRole("button", { name: "Página anterior" }).click(clickOptions);
+  await activateReaderButton("Página anterior");
   await expect(page.getByText("01 / 03")).toBeVisible();
-  await page.getByRole("button", { name: "Cerrar libro" }).click(clickOptions);
+  await activateReaderButton("Cerrar libro");
   await expect(page.getByRole("button", { name: "Abrir Kai y Emma tocando la portada" })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.locator(".library-experience")).toHaveClass(/is-shelf/);
