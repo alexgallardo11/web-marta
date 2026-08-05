@@ -2,12 +2,12 @@ import Link from "next/link";
 import { ArrowUpRight, Menu, Sparkles } from "lucide-react";
 import { BrandLockup } from "@/components/brand-lockup";
 import { InstagramIcon } from "@/components/icons/instagram-icon";
-import { CLUB_URL } from "@/lib/site-links";
+import { NEWSLETTER_URL } from "@/lib/site-links";
 
-const navItems = [
+const navItems: Array<{ href: string; label: string; external?: boolean }> = [
   { href: "/", label: "Inicio" },
   { href: "/mis-libros", label: "Mis libros" },
-  { href: CLUB_URL, label: "Mi Club de Ilustración", external: true },
+  { href: "/mi-club-de-ilustracion", label: "Mi Club de Ilustración" },
   { href: "/#contacto", label: "Contacto" },
 ];
 
@@ -51,7 +51,7 @@ export function SiteHeader() {
             <InstagramIcon aria-hidden="true" className="size-5" />
           </a>
           <a
-            href="https://marta-moreno.systeme.io/guiacreativa"
+            href={NEWSLETTER_URL}
             target="_blank"
             rel="noreferrer"
             className="site-header__cta"
@@ -84,7 +84,7 @@ export function SiteHeader() {
               ),
             )}
             <a
-              href="https://marta-moreno.systeme.io/guiacreativa"
+              href={NEWSLETTER_URL}
               target="_blank"
               rel="noreferrer"
               className="site-header__mobile-cta"

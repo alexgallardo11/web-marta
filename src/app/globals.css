@@ -2650,7 +2650,7 @@ a {
 /* Nueva web 2026 --------------------------------------------------------- */
 
 .brand-2026 {
-  overflow: clip;
+  overflow-x: clip;
   background: var(--brand-paper);
   color: var(--brand-ink);
 }
@@ -3793,6 +3793,28 @@ a {
 
   .brand-books__visual .brand-guide {
     right: 0;
+  }
+}
+
+@media (max-width: 63.99rem) {
+  .seo-club-audience .seo-page__split-copy {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .seo-club-audience .seo-page__split-copy > div:first-child {
+    max-width: 46rem;
+  }
+
+  .seo-club-audience h2 {
+    max-width: 18ch;
+    font-size: clamp(2.8rem, 7vw, 4.5rem);
+  }
+
+  .seo-club-audience .seo-page__prose {
+    max-width: 46rem;
+    padding-top: 0;
   }
 }
 
@@ -8624,5 +8646,707 @@ a {
   .books-icon-button,
   .books-detail__open {
     transition-duration: 0.01ms;
+  }
+}
+
+/* SEO landing pages ------------------------------------------------------ */
+
+.seo-page {
+  overflow: clip;
+}
+
+.seo-page__hero,
+.seo-club-hero,
+.seo-newsletter-hero,
+.seo-book-hero {
+  border-bottom: 1px solid color-mix(in srgb, var(--brand-ink) 14%, transparent);
+}
+
+.seo-page__hero {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.seo-page__hero-grid,
+.seo-club-hero__grid,
+.seo-newsletter-hero__grid,
+.seo-book-hero__grid {
+  display: grid;
+  align-items: center;
+  gap: clamp(2.5rem, 7vw, 7rem);
+}
+
+.seo-page__hero-copy,
+.seo-club-hero__copy {
+  max-width: 48rem;
+}
+
+.seo-page__hero h1,
+.seo-club-hero h1,
+.seo-newsletter-hero h1,
+.seo-book-hero h1 {
+  max-width: 12ch;
+  margin-top: 1.1rem;
+  font-size: clamp(3.3rem, 7vw, 7rem);
+  line-height: 0.9;
+}
+
+.seo-page__lead {
+  max-width: 42rem;
+  margin-top: 1.5rem;
+  color: color-mix(in srgb, var(--brand-ink) 78%, transparent);
+  font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+  line-height: 1.55;
+}
+
+.seo-page__hero .brand-actions,
+.seo-club-hero .brand-actions {
+  margin-top: 2rem;
+}
+
+.seo-page__hero-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 25rem;
+}
+
+.seo-page__hero-art-circle {
+  position: absolute;
+  width: min(28rem, 90%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--brand-orange);
+  box-shadow: 1rem 1rem 0 var(--brand-cyan);
+}
+
+.seo-page__hero-art img {
+  position: relative;
+  z-index: 1;
+  width: min(28rem, 88%);
+  height: auto;
+  filter: drop-shadow(0 1rem 0.8rem rgb(39 32 41 / 0.14));
+}
+
+.seo-page__section {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.seo-page__section--tinted {
+  background: color-mix(in srgb, var(--brand-cyan) 16%, var(--brand-paper));
+}
+
+.seo-page__narrow-copy {
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
+.seo-page__narrow-copy h2,
+.seo-page__split-copy h2,
+.seo-faq h2 {
+  max-width: 15ch;
+  margin-top: 1rem;
+}
+
+.seo-page__narrow-copy > p:not(.brand-kicker),
+.seo-page__prose p {
+  margin-top: 1.25rem;
+  color: color-mix(in srgb, var(--brand-ink) 78%, transparent);
+  font-size: 1.08rem;
+  line-height: 1.72;
+}
+
+.seo-page__section-heading,
+.seo-page__split-copy,
+.seo-page__cta-inner,
+.seo-book-next__inner {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.seo-page__section-heading {
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.seo-page__section-heading > div {
+  max-width: 52rem;
+}
+
+.seo-page__section-icon {
+  width: 4.5rem;
+  height: 4.5rem;
+  flex: none;
+  color: var(--brand-red);
+  stroke-width: 1.25;
+}
+
+.seo-page__section-icon--orange {
+  color: var(--brand-orange);
+}
+
+.seo-route-list {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.seo-route-list li {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  align-items: start;
+  gap: 1rem;
+  padding-block: 1.3rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--brand-ink) 22%, transparent);
+}
+
+.seo-route-list li > span {
+  color: var(--brand-red);
+  font-family: var(--font-display), sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.seo-route-list h3 {
+  margin: 0;
+  font-size: clamp(1.55rem, 2.4vw, 2.4rem);
+}
+
+.seo-route-list p {
+  max-width: 55rem;
+  margin-top: 0.45rem;
+  color: color-mix(in srgb, var(--brand-ink) 76%, transparent);
+}
+
+.seo-exercise-grid,
+.seo-club-benefits {
+  display: grid;
+  gap: 1rem;
+}
+
+.seo-exercise-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 18rem;
+  padding: clamp(1.4rem, 3vw, 2.25rem);
+  border: 2px solid var(--brand-ink);
+  border-radius: 1.5rem;
+}
+
+.seo-exercise-card svg {
+  width: 2rem;
+  height: 2rem;
+  color: var(--brand-red);
+}
+
+.seo-exercise-card h3 {
+  max-width: 15ch;
+  margin-top: 2.2rem;
+  font-size: clamp(1.7rem, 2.8vw, 2.8rem);
+}
+
+.seo-exercise-card p {
+  margin-top: 0.9rem;
+  color: color-mix(in srgb, var(--brand-ink) 76%, transparent);
+}
+
+.seo-exercise-card--orange {
+  background: color-mix(in srgb, var(--brand-orange) 24%, var(--brand-paper));
+}
+
+.seo-exercise-card--cyan {
+  background: color-mix(in srgb, var(--brand-cyan) 22%, var(--brand-paper));
+}
+
+.seo-exercise-card--lime {
+  background: color-mix(in srgb, var(--brand-lime) 20%, var(--brand-paper));
+}
+
+.seo-page__cta {
+  padding-block: clamp(3.5rem, 7vw, 6rem);
+  background: var(--brand-red);
+  color: white;
+}
+
+.seo-page__cta--orange {
+  background: var(--brand-orange);
+  color: var(--brand-ink);
+}
+
+.seo-page__cta-inner > div {
+  max-width: 50rem;
+}
+
+.seo-page__cta h2 {
+  max-width: 13ch;
+  margin-top: 1rem;
+}
+
+.seo-page__cta p:not(.brand-kicker) {
+  max-width: 42rem;
+  margin-top: 1rem;
+  font-size: 1.08rem;
+}
+
+.seo-page__cta .brand-kicker {
+  color: white;
+}
+
+.seo-page__cta--orange .brand-kicker {
+  color: var(--brand-ink);
+}
+
+.seo-club-hero {
+  padding-block: clamp(3.5rem, 7vw, 6.5rem);
+  background: var(--brand-cyan);
+}
+
+.seo-club-hero__visual {
+  display: flex;
+  flex-direction: column;
+}
+
+.seo-club-hero__visual > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 2px solid var(--brand-ink);
+  border-radius: 50% 50% 1.5rem 1.5rem;
+  box-shadow: 0.8rem 0.8rem 0 var(--brand-ink);
+  transform: rotate(1.3deg);
+}
+
+.seo-club-hero__guide {
+  position: relative;
+  align-self: flex-end;
+  width: min(21rem, 90%);
+  margin-top: 1.4rem;
+  transform: rotate(-3deg);
+}
+
+.seo-club-benefits-section {
+  padding-block: 0;
+  background: var(--brand-paper);
+  color: var(--brand-ink);
+}
+
+.seo-club-benefits-section .seo-page__section-heading {
+  margin-bottom: 0;
+  padding-block: clamp(3.5rem, 6vw, 5.5rem) clamp(2rem, 3.5vw, 3rem);
+}
+
+.seo-club-benefits-section .seo-page__section-heading > div {
+  max-width: 58rem;
+}
+
+.seo-club-benefits-section .brand-kicker {
+  color: var(--brand-red);
+}
+
+.seo-club-benefits-section .seo-page__section-heading h2 {
+  max-width: none;
+  color: var(--brand-ink);
+}
+
+.seo-club-benefits {
+  width: 100%;
+  gap: 0;
+}
+
+.seo-club-benefits article {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(17rem, 0.85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  min-height: 0;
+  overflow: hidden;
+  padding-block: clamp(2.4rem, 4.5vw, 4rem);
+  color: var(--brand-ink);
+}
+
+.seo-club-benefits article::before {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 2%;
+  width: min(38%, 27rem);
+  height: 78%;
+  border-radius: 44% 56% 48% 52% / 55% 42% 58% 45%;
+  background: color-mix(in srgb, var(--brand-orange) 20%, var(--brand-paper));
+  content: "";
+  transform: translateY(-50%) rotate(-2deg);
+}
+
+.seo-club-benefit-guide {
+  width: min(22rem, 100%);
+  margin-inline: auto;
+}
+
+.seo-club-benefit-copy {
+  max-width: 34rem;
+}
+
+.seo-club-benefit-copy h3 {
+  max-width: 18ch;
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 0.98;
+}
+
+.seo-club-benefit-copy p {
+  max-width: 38rem;
+  margin-top: 1rem;
+  color: color-mix(in srgb, var(--brand-ink) 76%, transparent);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.seo-club-benefits article:nth-child(2) .seo-club-benefit-guide {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.seo-club-benefits article:nth-child(2) .seo-club-benefit-copy {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.seo-club-benefits article:nth-child(2)::before {
+  right: 2%;
+  left: auto;
+  background: color-mix(in srgb, var(--brand-cyan) 18%, var(--brand-paper));
+  transform: translateY(-50%) rotate(2deg);
+}
+
+.seo-club-benefits article:nth-child(3)::before {
+  background: color-mix(in srgb, var(--brand-lime) 20%, var(--brand-paper));
+}
+
+.seo-club-audience {
+  padding-block: clamp(3rem, 5vw, 4.75rem);
+}
+
+.seo-club-audience .seo-page__split-copy {
+  align-items: flex-start;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.seo-club-audience .seo-page__split-copy > div:first-child {
+  max-width: 35rem;
+}
+
+.seo-club-audience h2 {
+  font-size: clamp(2.8rem, 4.7vw, 4.8rem);
+}
+
+.seo-club-audience .seo-page__prose {
+  max-width: 40rem;
+  padding-top: 1.8rem;
+}
+
+.seo-club-audience .seo-page__prose p:first-child {
+  margin-top: 0;
+}
+
+.seo-faq {
+  max-width: 52rem;
+}
+
+.seo-faq__list {
+  display: grid;
+  gap: 0.5rem;
+  margin-block: 2rem 2.25rem;
+}
+
+.seo-faq details {
+  border-bottom: 1px solid color-mix(in srgb, var(--brand-ink) 24%, transparent);
+}
+
+.seo-faq summary {
+  padding: 1.15rem 0;
+  cursor: pointer;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.35rem, 2.2vw, 2rem);
+  font-weight: 750;
+  list-style-position: inside;
+}
+
+.seo-faq details p {
+  max-width: 45rem;
+  padding: 0 2rem 1.2rem 1.65rem;
+  color: color-mix(in srgb, var(--brand-ink) 76%, transparent);
+}
+
+.seo-newsletter-hero {
+  padding-block: clamp(4rem, 8vw, 7rem);
+  background: color-mix(in srgb, var(--brand-orange) 23%, var(--brand-paper));
+}
+
+.seo-newsletter-hero__grid {
+  grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.6fr);
+}
+
+.seo-newsletter-hero__grid h1 {
+  max-width: 11ch;
+}
+
+.seo-newsletter-hero__grid .brand-button {
+  margin-top: 2rem;
+}
+
+.seo-newsletter-hero__note {
+  position: relative;
+  padding: 2rem;
+  border: 2px solid var(--brand-ink);
+  border-radius: 1rem 2rem 1rem 2rem;
+  background: var(--brand-paper);
+  box-shadow: 0.45rem 0.5rem 0 var(--brand-ink);
+  transform: rotate(2deg);
+}
+
+.seo-newsletter-hero__note svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--brand-red);
+}
+
+.seo-newsletter-hero__note p {
+  margin-top: 1.35rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.4rem, 2.3vw, 2.2rem);
+  font-weight: 750;
+  line-height: 1.05;
+}
+
+.seo-guide-points {
+  display: grid;
+  gap: 0.75rem;
+  margin-block: 2rem;
+}
+
+.seo-guide-points p {
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--brand-ink) 20%, transparent);
+}
+
+.seo-guide-points strong {
+  color: var(--brand-red);
+}
+
+.seo-page a:not(.brand-button) {
+  color: inherit;
+  font-weight: 800;
+  text-decoration-color: var(--brand-red);
+  text-decoration-thickness: 0.15rem;
+  text-underline-offset: 0.2rem;
+}
+
+.seo-book-hero {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.seo-book-hero__copy {
+  max-width: 46rem;
+}
+
+.seo-book-hero__eyebrow {
+  margin-top: 1.25rem;
+  color: var(--brand-red);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.35rem, 2.2vw, 2rem);
+  font-weight: 750;
+}
+
+.seo-book-hero__cover {
+  width: min(30rem, 80vw);
+  margin-inline: auto;
+  padding: 1.5rem;
+  background: var(--book-accent-soft, color-mix(in srgb, var(--brand-orange) 28%, var(--brand-paper)));
+  box-shadow: 0.8rem 0.8rem 0 var(--brand-orange);
+  transform: rotate(2deg);
+}
+
+.seo-book-hero__cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 2px solid var(--brand-ink);
+}
+
+.seo-book-hero__copy .brand-button {
+  margin-top: 2rem;
+}
+
+.seo-book-spreads {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.seo-book-spreads__grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.seo-book-spreads figure {
+  margin: 0;
+}
+
+.seo-book-spreads figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 2px solid var(--brand-ink);
+  background: var(--brand-paper);
+}
+
+.seo-book-spreads figcaption {
+  margin-top: 0.55rem;
+  color: color-mix(in srgb, var(--brand-ink) 66%, transparent);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.seo-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.seo-text-link svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.seo-book-next {
+  padding-block: clamp(3.5rem, 7vw, 6rem);
+}
+
+.seo-book-next__inner > div {
+  max-width: 48rem;
+}
+
+.library-index__entry {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.65rem;
+  scroll-snap-align: start;
+}
+
+.library-index__entry .library-index__book {
+  width: 100%;
+}
+
+.library-index__book-link {
+  color: var(--library-ink);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-decoration-color: var(--book-accent);
+  text-transform: uppercase;
+}
+
+@media (min-width: 52rem) {
+  .seo-page__hero-grid,
+  .seo-club-hero__grid,
+  .seo-book-hero__grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(20rem, 0.95fr);
+  }
+
+  .seo-exercise-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .seo-book-spreads__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 51.99rem) {
+  .seo-page__section-heading,
+  .seo-page__split-copy,
+  .seo-page__cta-inner,
+  .seo-book-next__inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .seo-page__hero-art {
+    min-height: 20rem;
+  }
+
+  .seo-page__hero-art img {
+    width: min(22rem, 76vw);
+  }
+
+  .seo-page__hero-art-circle {
+    width: min(22rem, 80vw);
+  }
+
+  .seo-club-benefits article {
+    grid-template-columns: 1fr;
+  }
+
+  .seo-club-benefits article::before,
+  .seo-club-benefits article:nth-child(2)::before {
+    top: 1.2rem;
+    right: auto;
+    left: 50%;
+    width: min(28rem, 92%);
+    height: 12rem;
+    transform: translateX(-50%) rotate(-2deg);
+  }
+
+  .seo-club-benefits article:nth-child(2) .seo-club-benefit-guide,
+  .seo-club-benefits article:nth-child(2) .seo-club-benefit-copy {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .seo-club-audience .seo-page__prose {
+    padding-top: 0;
+  }
+
+  .seo-newsletter-hero__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .seo-page__cta-inner .brand-button,
+  .seo-book-next__inner .brand-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 39.99rem) {
+  .seo-page__hero h1,
+  .seo-club-hero h1,
+  .seo-newsletter-hero h1,
+  .seo-book-hero h1 {
+    font-size: clamp(3rem, 14vw, 4.4rem);
+  }
+
+  .seo-route-list li {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .seo-route-list li > span {
+    font-size: 1.75rem;
+  }
+
+  .seo-exercise-card {
+    min-height: 0;
+  }
+
+  .seo-page__section-icon {
+    width: 3.2rem;
+    height: 3.2rem;
   }
 }

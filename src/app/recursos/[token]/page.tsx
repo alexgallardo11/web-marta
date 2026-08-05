@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ResourceDownloadForm } from "@/components/resource-download-form";
 import { notFound } from "next/navigation";
@@ -5,6 +6,11 @@ import { getResourceState } from "@/lib/resource-links";
 import { hasSupabaseServerConfig } from "@/lib/supabase/config";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Recurso privado",
+  robots: { index: false, follow: false, noarchive: true },
+};
 
 type Context = { params: Promise<{ token: string }> };
 

@@ -23,19 +23,19 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Marta Moreno · Ilustradora infantil",
+    default: "Aprender a dibujar e ilustración infantil · Marta Moreno",
     template: "%s · Marta Moreno",
   },
   description:
-    "Ilustración infantil y acompañamiento creativo para disfrutar dibujando, encontrar tu estilo y crear con emoción.",
+    "Aprende a dibujar, encuentra tu estilo y crea ilustraciones con emoción junto a Marta Moreno, ilustradora infantil y maestra.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "es_ES",
     siteName: "Marta Moreno",
-    title: "Marta Moreno · Ilustradora infantil",
+    title: "Aprender a dibujar e ilustración infantil · Marta Moreno",
     description:
-      "Ideas, retos y acompañamiento para disfrutar dibujando y encontrar tu propia voz.",
+      "Ideas, retos y acompañamiento para aprender a dibujar y encontrar tu propia voz.",
     images: [
       {
         url: "/images/web-2026/photos/marta-portada.jpg",
@@ -46,9 +46,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Marta Moreno · Ilustradora infantil",
+    title: "Aprender a dibujar e ilustración infantil · Marta Moreno",
     description:
-      "Ideas, retos y acompañamiento para disfrutar dibujando y encontrar tu propia voz.",
+      "Ideas, retos y acompañamiento para aprender a dibujar y encontrar tu propia voz.",
     images: ["/images/web-2026/photos/marta-portada.jpg"],
   },
 };

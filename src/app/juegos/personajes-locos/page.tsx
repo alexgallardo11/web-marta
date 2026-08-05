@@ -8,6 +8,21 @@ export const metadata: Metadata = {
   description:
     "Mezcla un personaje, un adjetivo, una acción y un complemento para desbloquear tu próximo dibujo.",
   alternates: { canonical: "/juegos/personajes-locos" },
+  openGraph: {
+    type: "website",
+    title: "Crea personajes locos · Marta Moreno",
+    description:
+      "Un juego creativo para desbloquear ideas y empezar a dibujar sin miedo al papel en blanco.",
+    url: "/juegos/personajes-locos",
+    images: ["/images/web-2026/characters/martina-futbolista.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Crea personajes locos · Marta Moreno",
+    description:
+      "Un juego creativo para desbloquear ideas y empezar a dibujar sin miedo al papel en blanco.",
+    images: ["/images/web-2026/characters/martina-futbolista.png"],
+  },
 };
 
 export default function CrazyCharactersPage() {

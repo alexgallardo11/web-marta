@@ -52,7 +52,7 @@ export default async function BooksPage({
         "@type": "ListItem",
         position: index + 1,
         name: book.title,
-        url: `https://martamoreno.com/mis-libros?libro=${book.slug}`,
+        url: `https://martamoreno.com/mis-libros/${book.slug}`,
         image: `https://martamoreno.com${book.cover}`,
       })),
     },
