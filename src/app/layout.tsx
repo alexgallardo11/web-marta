@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Atkinson_Hyperlegible_Next, Barriecito } from "next/font/google";
+import { Atkinson_Hyperlegible_Next, Outfit } from "next/font/google";
+import { AuthSessionRedirect } from "@/components/auth-session-redirect";
 import "./globals.css";
 
 const bodyFont = Atkinson_Hyperlegible_Next({
@@ -8,8 +9,7 @@ const bodyFont = Atkinson_Hyperlegible_Next({
   display: "swap",
 });
 
-const displayFont = Barriecito({
-  weight: "400",
+const displayFont = Outfit({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s · Marta Moreno",
   },
   description:
-    "Ilustración infantil, formación y juegos creativos para aprender a crear personajes que emocionan.",
+    "Ilustración infantil y acompañamiento creativo para disfrutar dibujando, encontrar tu estilo y crear con emoción.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -33,15 +33,21 @@ export const metadata: Metadata = {
     siteName: "Marta Moreno",
     title: "Marta Moreno · Ilustradora infantil",
     description:
-      "Ideas, herramientas y formación para convertir tus dibujos en personajes que conectan.",
-    images: [{ url: "/images/marta-portada.jpg", width: 548, height: 700 }],
+      "Ideas, retos y acompañamiento para disfrutar dibujando y encontrar tu propia voz.",
+    images: [
+      {
+        url: "/images/web-2026/photos/marta-portada.jpg",
+        width: 1000,
+        height: 1401,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Marta Moreno · Ilustradora infantil",
     description:
-      "Ideas, herramientas y formación para crear personajes que emocionan.",
-    images: ["/images/marta-portada.jpg"],
+      "Ideas, retos y acompañamiento para disfrutar dibujando y encontrar tu propia voz.",
+    images: ["/images/web-2026/photos/marta-portada.jpg"],
   },
 };
 
@@ -49,7 +55,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#f7f0e4",
+  themeColor: "#fffdf7",
 };
 
 export default function RootLayout({
@@ -62,6 +68,7 @@ export default function RootLayout({
       className={`${bodyFont.variable} ${displayFont.variable}`}
     >
       <body>
+        <AuthSessionRedirect />
         <a className="skip-link" href="#contenido">
           Saltar al contenido
         </a>

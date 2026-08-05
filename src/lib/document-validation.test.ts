@@ -4,6 +4,8 @@ import {
   completeDocumentSchema,
   createLinkSchema,
   hasPdfSignature,
+  isPdfMimeType,
+  isValidLinkExpiry,
   isPdfFilename,
   uploadRequestSchema,
 } from "@/lib/document-validation";
@@ -13,6 +15,12 @@ describe("validación de documentos", () => {
     expect(isPdfFilename("guia.pdf")).toBe(true);
     expect(isPdfFilename("GUIA.PDF")).toBe(true);
     expect(isPdfFilename("guia.png")).toBe(false);
+  });
+
+  it("solo acepta el tipo MIME PDF", () => {
+    expect(isPdfMimeType("application/pdf")).toBe(true);
+    expect(isPdfMimeType("APPLICATION/PDF")).toBe(true);
+    expect(isPdfMimeType("application/octet-stream")).toBe(false);
   });
 
   it("rechaza archivos vacíos y mayores de 100 MB", () => {
@@ -42,6 +50,11 @@ describe("validación de documentos", () => {
         expiresAt: "2030-01-01T23:59:59.000Z",
       }).success,
     ).toBe(true);
+    expect(createLinkSchema.safeParse({}).success).toBe(false);
+    const now = Date.parse("2026-01-01T00:00:00.000Z");
+    expect(isValidLinkExpiry("2026-01-02T00:00:00.000Z", now)).toBe(true);
+    expect(isValidLinkExpiry("2027-01-02T00:00:00.000Z", now)).toBe(false);
+    expect(isValidLinkExpiry("2025-12-31T23:59:59.000Z", now)).toBe(false);
   });
 
   it("comprueba la firma binaria del PDF", async () => {

@@ -9,9 +9,12 @@ la gestión privada de PDFs de Marta Moreno.
 - Juegos `/juegos/personajes-locos` y `/juegos/caldero-magico`.
 - Exportación del Caldero Mágico a PNG de 1080 × 1920.
 - Panel privado en `/admin/documentos` con subida directa a Supabase Storage.
-- Renombrado, sustitución segura, borrado y múltiples enlaces revocables.
+- Renombrado, sustitución segura, borrado y enlaces de un solo uso con
+  caducidad obligatoria (24 horas, 7 días, 30 días o fecha personalizada).
 - Descarga anónima mediante tokens de 256 bits; en base de datos solo se guarda
-  su hash SHA-256.
+  su hash SHA-256. Abrir `/recursos/:token` no consume la descarga; el botón
+  hace un `POST /recursos/:token/download` y la base de datos lo consume de
+  forma atómica.
 - SEO, sitemap, datos estructurados, páginas legales y redirección de la URL
   antigua.
 - Pruebas unitarias, E2E multinavegador y auditoría WCAG 2.2 AA.
@@ -37,24 +40,40 @@ La configuración local deshabilita el registro público. Para crear a Marta en
 local, utiliza la sección Authentication de Studio y después ejecuta:
 
 ```sql
-insert into public.admin_users (user_id)
-select id
+insert into public.admin_users (user_id, email, role, is_active)
+select id, lower(email), 'owner'::public.admin_role, true
 from auth.users
 where email = 'EMAIL_DE_MARTA';
 ```
 
 ## Supabase de producción
 
-1. Crea un proyecto y enlázalo con `supabase link --project-ref TU_REF`.
+1. Enlaza la CLI con el proyecto Marta `izoysmfdhghalkjhiwvn` mediante
+   `supabase link --project-ref izoysmfdhghalkjhiwvn`.
 2. Revisa el cambio con `supabase db push --dry-run`.
 3. Aplica la migración con `supabase db push`.
 4. En Authentication, desactiva **Allow new users to sign up** y añade como
    Site URL el dominio de producción.
 5. Añade como redirect URL:
    `https://TU_DOMINIO/auth/callback?next=/admin/nueva-contrasena`.
-6. Crea manualmente la usuaria de Marta, confirma su correo y añade su UUID a
-   `public.admin_users` con la consulta anterior.
-7. Configura un SMTP propio para que la recuperación de contraseña sea fiable.
+6. En **Authentication → Users**, invita a
+   `development@martamoreno.com`. La persona invitada creará su contraseña
+   desde el enlace recibido; no se guarda ninguna contraseña en el repositorio.
+7. Cuando la cuenta exista, registra su UUID como owner:
+
+   ```sql
+   insert into public.admin_users (user_id, email, role, is_active)
+   select id, lower(email), 'owner'::public.admin_role, true
+   from auth.users
+   where lower(email) = 'development@martamoreno.com'
+   on conflict (user_id) do update
+     set email = excluded.email, role = excluded.role, is_active = excluded.is_active;
+   ```
+
+   Marta se puede añadir más adelante repitiendo el mismo proceso con
+   `marta.ilustraciones@gmail.com`. La plataforma admite varias propietarias y
+   protege cada cuenta owner frente a desactivaciones o cambios de rol.
+8. Configura un SMTP propio para que la recuperación de contraseña sea fiable.
 
 La migración crea RLS en las cuatro tablas y un bucket privado `documents` con
 límite de 100 MB y MIME `application/pdf`. La clave secreta de Supabase nunca
@@ -122,8 +141,10 @@ la autoría, la rama de destino y el SHA exacto antes de fusionar.
 - Los PDFs tienen rutas UUID opacas y se sirven con URLs firmadas de 60 segundos.
 - Los enlaces públicos no contienen IDs y su token en claro solo se muestra al
   crearlo.
-- Los enlaces revocados o caducados responden `410`; los desconocidos, `404`.
+- Los enlaces revocados, usados o caducados responden `410` al intentar
+  descargarlos; los desconocidos, `404`.
 - Sustituir un archivo conserva el documento y todos sus enlaces.
+- Desactivar una cuenta invalida el acceso aunque conserve una sesión antigua.
 - No se registran IP, user-agent, correo ni otros datos personales en las
   descargas.
 - Las rutas del panel y de recursos incluyen instrucciones `noindex`.
