@@ -4,6 +4,7 @@ import { LegalPage } from "@/components/legal-page";
 export const metadata: Metadata = {
   title: "Cookies",
   description: "Información sobre las cookies utilizadas por Marta Moreno.",
+  alternates: { canonical: "/cookies" },
 };
 
 export default function CookiesPage() {

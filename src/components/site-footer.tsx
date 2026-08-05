@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Mail } from "lucide-react";
 import { InstagramIcon } from "@/components/icons/instagram-icon";
-import { CLUB_URL } from "@/lib/site-links";
 
 export function SiteFooter() {
   return (
@@ -48,9 +47,9 @@ export function SiteFooter() {
         <div className="site-footer__links">
           <Link href="/">Inicio</Link>
           <Link href="/mis-libros">Mis libros</Link>
-          <a href={CLUB_URL} target="_blank" rel="noreferrer">
+          <Link href="/mi-club-de-ilustracion">
             Mi Club de Ilustración
-          </a>
+          </Link>
           <Link href="/juegos/personajes-locos">Juegos creativos</Link>
           <Link href="/aviso-legal">Aviso legal</Link>
           <Link href="/privacidad">Privacidad</Link>

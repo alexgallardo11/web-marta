@@ -11,9 +11,7 @@ import { CharacterGuide } from "@/components/character-guide";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { books } from "@/lib/books-data";
-import { CLUB_URL } from "@/lib/site-links";
-
-const newsletterUrl = "https://marta-moreno.systeme.io/guiacreativa";
+import { CLUB_URL, NEWSLETTER_URL } from "@/lib/site-links";
 
 const testimonials = [
   {
@@ -71,6 +69,9 @@ export default function Home() {
       "Álbum ilustrado",
       "Diseño de personajes",
       "Formación creativa",
+      "Aprender a dibujar",
+      "Dibujo para principiantes",
+      "Comunidad de ilustración",
     ],
   };
 
@@ -90,7 +91,7 @@ export default function Home() {
             <div className="brand-hero__copy">
               <p className="brand-kicker">Ilustración infantil · Creatividad · Comunidad</p>
               <h1>
-                Dibuja lo que todavía <span>no sabes que imaginas.</span>
+                Aprende a dibujar y <span>encuentra tu propia voz.</span>
               </h1>
               <p className="brand-hero__lead">
                 Soy Marta Moreno, ilustradora infantil y maestra. Creo libros y
@@ -100,7 +101,7 @@ export default function Home() {
               <div className="brand-actions">
                 <a
                   className="brand-button brand-button--primary"
-                  href={newsletterUrl}
+                  href={NEWSLETTER_URL}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -113,7 +114,7 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Conocer Mi Club
+                  Conocer mi Club
                   <ArrowRight aria-hidden="true" />
                 </a>
               </div>
@@ -164,7 +165,11 @@ export default function Home() {
                   Propuestas prácticas, trucos y pequeños retos para volver al
                   papel, jugar con tus personajes y mantener viva la creatividad.
                 </p>
-                <a href={newsletterUrl} target="_blank" rel="noreferrer">
+                <a
+                  href={NEWSLETTER_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Quiero recibirlas <ArrowRight aria-hidden="true" />
                 </a>
                 <CharacterGuide character="leon">
@@ -182,9 +187,9 @@ export default function Home() {
                   tu ritmo, tanto si sueñas con dedicarte a la ilustración como
                   si simplemente quieres regalarte tiempo para crear.
                 </p>
-                <a href={CLUB_URL} target="_blank" rel="noreferrer">
+                <Link href="/mi-club-de-ilustracion">
                   Quiero saber más <ArrowRight aria-hidden="true" />
-                </a>
+                </Link>
                 <CharacterGuide character="gatita">
                   Aquí dibujamos juntas, cada una con su propia voz.
                 </CharacterGuide>
@@ -251,14 +256,12 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-              <a
+              <Link
                 className="brand-button brand-button--light"
-                href={CLUB_URL}
-                target="_blank"
-                rel="noreferrer"
+                href="/mi-club-de-ilustracion"
               >
                 Cuéntame sobre el Club <ArrowRight aria-hidden="true" />
-              </a>
+              </Link>
             </div>
           </div>
         </section>
@@ -449,14 +452,12 @@ export default function Home() {
                 Ven a crear acompañada, compartir el proceso y descubrir todo
                 lo que aparece cuando te das permiso para jugar.
               </p>
-              <a
+              <Link
                 className="brand-button brand-button--dark"
-                href={CLUB_URL}
-                target="_blank"
-                rel="noreferrer"
+                href="/mi-club-de-ilustracion"
               >
                 Quiero conocer el Club <ArrowRight aria-hidden="true" />
-              </a>
+              </Link>
             </div>
           </div>
         </section>

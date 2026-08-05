@@ -8,6 +8,21 @@ export const metadata: Metadata = {
   description:
     "Combina personaje, personalidad y contexto para invocar una nueva idea y descargarla para Stories.",
   alternates: { canonical: "/juegos/caldero-magico" },
+  openGraph: {
+    type: "website",
+    title: "Caldero mágico · Marta Moreno",
+    description:
+      "Mezcla personajes, personalidades y situaciones para invocar una idea nueva y convertirla en un dibujo.",
+    url: "/juegos/caldero-magico",
+    images: ["/images/web-2026/characters/perro-cocinero.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Caldero mágico · Marta Moreno",
+    description:
+      "Mezcla personajes, personalidades y situaciones para invocar una idea nueva y convertirla en un dibujo.",
+    images: ["/images/web-2026/characters/perro-cocinero.png"],
+  },
 };
 
 export default function MagicCauldronPage() {

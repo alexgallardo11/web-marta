@@ -4,6 +4,7 @@ import { LegalPage } from "@/components/legal-page";
 export const metadata: Metadata = {
   title: "Privacidad",
   description: "Política de privacidad del sitio web de Marta Moreno.",
+  alternates: { canonical: "/privacidad" },
 };
 
 export default function PrivacyPage() {

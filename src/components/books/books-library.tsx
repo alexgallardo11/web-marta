@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowDown,
   ChevronLeft,
@@ -299,29 +300,33 @@ export function BooksLibrary({ books, initialBookSlug }: BooksLibraryProps) {
           </header>
           <div className="library-index__rail" role="tablist" aria-label="Libros de Marta">
           {books.map((book, index) => (
-            <button
-              key={book.slug}
-              type="button"
-              role="tab"
-              aria-selected={index === selectedIndex}
-              aria-label={`Seleccionar ${book.title}`}
-              className="library-index__book"
-              onClick={() => selectBook(index)}
-            >
-              <span
-                className={`library-index__cover${book.coverTreatment ? " is-artwork" : ""}`}
-                style={{
-                  "--cover-aspect": book.coverAspect,
-                  "--cover-color": book.accent,
-                } as CSSProperties}
+            <div key={book.slug} className="library-index__entry">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={index === selectedIndex}
+                aria-label={`Seleccionar ${book.title}`}
+                className="library-index__book"
+                onClick={() => selectBook(index)}
               >
-                <span className="library-index__image" style={getCoverCropStyle(book)}>
-                  <Image src={book.cover} alt="" fill sizes="8rem" />
+                <span
+                  className={`library-index__cover${book.coverTreatment ? " is-artwork" : ""}`}
+                  style={{
+                    "--cover-aspect": book.coverAspect,
+                    "--cover-color": book.accent,
+                  } as CSSProperties}
+                >
+                  <span className="library-index__image" style={getCoverCropStyle(book)}>
+                    <Image src={book.cover} alt="" fill sizes="8rem" />
+                  </span>
+                  {book.coverTreatment ? <span aria-hidden="true">{book.title}</span> : null}
                 </span>
-                {book.coverTreatment ? <span aria-hidden="true">{book.title}</span> : null}
-              </span>
-              <span className="library-index__meta"><b>{book.numberLabel}</b>{book.title}</span>
-            </button>
+                <span className="library-index__meta"><b>{book.numberLabel}</b>{book.title}</span>
+              </button>
+              <Link className="library-index__book-link" href={`/mis-libros/${book.slug}`}>
+                Ver ficha
+              </Link>
+            </div>
           ))}
           </div>
         </div>

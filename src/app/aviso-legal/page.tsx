@@ -4,6 +4,7 @@ import { LegalPage } from "@/components/legal-page";
 export const metadata: Metadata = {
   title: "Aviso legal",
   description: "Información legal del sitio web de Marta Moreno.",
+  alternates: { canonical: "/aviso-legal" },
 };
 
 export default function LegalNoticePage() {
