@@ -4,6 +4,7 @@ import {
   completeDocumentSchema,
   createLinkSchema,
   hasPdfSignature,
+  isPdfMimeType,
   isValidLinkExpiry,
   isPdfFilename,
   uploadRequestSchema,
@@ -14,6 +15,12 @@ describe("validación de documentos", () => {
     expect(isPdfFilename("guia.pdf")).toBe(true);
     expect(isPdfFilename("GUIA.PDF")).toBe(true);
     expect(isPdfFilename("guia.png")).toBe(false);
+  });
+
+  it("solo acepta el tipo MIME PDF", () => {
+    expect(isPdfMimeType("application/pdf")).toBe(true);
+    expect(isPdfMimeType("APPLICATION/PDF")).toBe(true);
+    expect(isPdfMimeType("application/octet-stream")).toBe(false);
   });
 
   it("rechaza archivos vacíos y mayores de 100 MB", () => {

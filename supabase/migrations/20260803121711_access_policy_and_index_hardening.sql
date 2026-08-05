@@ -14,5 +14,3 @@ create index documents_created_by_idx
 
 create index share_links_created_by_idx
   on public.share_links(created_by);
-
-revoke all on function public.rls_auto_enable() from public, anon, authenticated;
