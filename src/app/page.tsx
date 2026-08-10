@@ -140,7 +140,7 @@ export default function Home() {
                 />
               </div>
               <CharacterGuide character="mono" className="brand-hero__guide">
-                Pasa, aquí las ideas no tienen que salir perfectas.
+                Aquí las ideas no tienen que salir perfectas.
               </CharacterGuide>
             </div>
           </div>
@@ -321,13 +321,13 @@ export default function Home() {
             aria-label="Testimonios de alumnas"
             tabIndex={0}
           >
-            {testimonials.map((testimonial, index) => (
+            {testimonials.map((testimonial) => (
               <figure key={testimonial.name} className="brand-testimonial">
                 <span aria-hidden="true">“</span>
                 <blockquote>{testimonial.text}</blockquote>
                 <figcaption>
                   <strong>{testimonial.name}</strong>
-                  <small>Comunidad de Marta · {String(index + 1).padStart(2, "0")}</small>
+                  <small>Comunidad de Marta</small>
                 </figcaption>
               </figure>
             ))}
