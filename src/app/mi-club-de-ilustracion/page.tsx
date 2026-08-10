@@ -190,7 +190,7 @@ export default function IllustrationClubPage() {
               target="_blank"
               rel="noreferrer"
             >
-              Ver Mi Club de Ilustración <ArrowRight aria-hidden="true" />
+              Entrar a mi Club de Ilustración <ArrowRight aria-hidden="true" />
             </a>
           </div>
         </section>
