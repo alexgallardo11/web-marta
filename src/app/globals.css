@@ -1150,15 +1150,6 @@ a {
   line-height: 1.55;
 }
 
-.brand-2026 .library-intro__button {
-  width: fit-content;
-  margin-top: 2rem;
-}
-
-.brand-2026 .library-intro__button svg:last-child {
-  margin-left: 0.15rem;
-}
-
 .brand-2026 .library-intro__visual {
   position: relative;
   z-index: 1;

@@ -4,10 +4,8 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowDown,
   ChevronLeft,
   ChevronRight,
-  LibraryBig,
   X,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -179,9 +177,6 @@ export function BooksLibrary({ books, initialBookSlug }: BooksLibraryProps) {
               Esta es mi estantería: un lugar para curiosear portadas,
               reencontrarte con personajes y asomarte a algunas páginas.
             </p>
-            <a className="brand-button brand-button--primary library-intro__button" href="#biblioteca-3d">
-              <LibraryBig aria-hidden="true" /> Entrar en la biblioteca <ArrowDown aria-hidden="true" />
-            </a>
           </div>
           <div className="library-intro__visual">
             <div className="library-intro__conversation">
