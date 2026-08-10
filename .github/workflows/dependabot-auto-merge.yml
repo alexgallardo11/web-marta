@@ -90,6 +90,15 @@ jobs:
             ' \
             <<<"$current_pr" >/dev/null
 
+          workflow_files="$(gh api \
+            "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}/files?per_page=100" \
+            --jq '[.[] | .filename | select(startswith(".github/workflows/"))] | join(", ")')"
+
+          if [[ -n "$workflow_files" ]]; then
+            echo "Skipping automatic merge for ${pr_number}: workflow files require manual approval (${workflow_files})."
+            exit 0
+          fi
+
           gh pr merge "$pr_number" \
             --repo "$GITHUB_REPOSITORY" \
             --squash \
