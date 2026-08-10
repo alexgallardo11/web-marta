@@ -10,6 +10,7 @@ export type Book = {
   numberLabel: string;
   coverAspect: number;
   shelfScale: number;
+  openable?: boolean;
   coverCrop?: {
     x: number;
     y: number;
@@ -90,6 +91,7 @@ export const books = [
     numberLabel: "04",
     coverAspect: 0.9,
     shelfScale: 0.86,
+    openable: false,
     coverCrop: { x: 0.18, y: 0.205, width: 0.64, height: 0.57 },
   },
   {

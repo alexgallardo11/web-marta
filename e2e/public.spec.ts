@@ -71,6 +71,9 @@ test("la biblioteca permite cambiar de libro y abrir una muestra", async ({
   await expect(page.locator(".library-experience")).toHaveClass(/is-shelf/);
   await expect(page.getByRole("button", { name: "Abrir Kai y Emma tocando la portada" })).toHaveCount(0);
 
+  await activateBookTab("Seleccionar Antón Piñón");
+  await expect(page.getByRole("button", { name: "Abrir Antón Piñón tocando la portada" })).toHaveCount(0);
+
   await activateBookTab("Seleccionar Simona");
   await expect(page.getByRole("button", { name: "Abrir Simona tocando la portada" })).toHaveCount(0);
 });

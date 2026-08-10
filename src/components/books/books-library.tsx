@@ -75,6 +75,7 @@ export function BooksLibrary({ books, initialBookSlug }: BooksLibraryProps) {
     [selectedBook],
   );
   const hasInterior = spreads.length > 0;
+  const canOpen = hasInterior && selectedBook?.openable !== false;
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -127,10 +128,10 @@ export function BooksLibrary({ books, initialBookSlug }: BooksLibraryProps) {
   }, []);
 
   const openBook = useCallback(() => {
-    if (!hasInterior || isClosing) return;
+    if (!canOpen || isClosing) return;
     stageRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
     setMode("reading");
-  }, [hasInterior, isClosing]);
+  }, [canOpen, isClosing]);
 
   useEffect(() => {
     if (!isClosing) return;
@@ -215,7 +216,7 @@ export function BooksLibrary({ books, initialBookSlug }: BooksLibraryProps) {
               spreads={spreads}
               turn={turn}
               reducedMotion={reducedMotion}
-              canOpen={hasInterior}
+              canOpen={canOpen}
               onSelect={selectBook}
               onOpen={openBook}
               onClose={closeBook}
@@ -235,7 +236,7 @@ export function BooksLibrary({ books, initialBookSlug }: BooksLibraryProps) {
           )}
 
           {mode === "inspect" ? (
-            hasInterior && !isClosing ? (
+            canOpen && !isClosing ? (
               <button
                 type="button"
                 className="library-selected-book-hit"
