@@ -17,7 +17,17 @@ import type { LibraryMode } from "./books-scene";
 
 const BooksScene = dynamic(
   () => import("./books-scene").then((module) => module.BooksScene),
-  { ssr: false },
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="library-scene"
+        data-testid="library-3d-scene"
+        role="status"
+        aria-label="Cargando la biblioteca"
+      />
+    ),
+  },
 );
 
 type BooksLibraryProps = {
