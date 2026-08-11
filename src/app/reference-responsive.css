@@ -1,0 +1,1438 @@
+/* Final responsive layer for the reference-led home.
+   Kept separate so its cascade stays predictable after the legacy global skin. */
+
+.reference-home {
+  overflow: clip;
+}
+
+.reference-home .reference-hero__accent,
+.reference-home .reference-hero__statement span {
+  color: var(--reference-orange-text, #b85c00);
+  font: inherit;
+}
+
+.reference-home .reference-hero__accent {
+  display: block;
+}
+
+.reference-home .reference-hero__statement {
+  margin-top: 0;
+  line-height: 0.96;
+}
+
+.reference-home section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+.site-header.site-header--reference .site-header__mobile summary,
+.reference-home .reference-books__arrow,
+.reference-home .reference-testimonials__arrow {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.site-header.site-header--reference .site-header__mobile nav > a {
+  min-height: 3.25rem;
+  font-size: 0.95rem;
+}
+
+.reference-home .reference-button {
+  min-height: 2.75rem;
+}
+
+.reference-home .reference-books__rail,
+.reference-home .reference-testimonials__rail {
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  touch-action: pan-x pan-y;
+}
+
+.reference-home .reference-testimonials {
+  overflow: hidden;
+  padding-bottom: 0;
+}
+
+.reference-home .reference-testimonials__illustration {
+  width: min(100vw, 88rem);
+  margin: clamp(2.5rem, 6vw, 5rem) 0 0 50%;
+  transform: translateX(-50%);
+}
+
+.reference-home .reference-testimonials__illustration img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.site-footer--reference .reference-footer__main a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+}
+
+/* Shared public navigation and secondary actions remain comfortable on touch
+   devices, including the library, book details and both creative games. */
+
+.site-header .site-header__brand,
+.site-header .site-header__nav .site-header__link {
+  min-height: 2.75rem;
+}
+
+.site-header .site-header__nav .site-header__link {
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-header .site-header__instagram {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.site-footer:not(.site-footer--reference) .site-footer__email,
+.site-footer:not(.site-footer--reference) .site-footer__instagram,
+.site-footer:not(.site-footer--reference) .site-footer__links a,
+.library-index__book-link,
+.seo-text-link,
+.game-route-nav a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+}
+
+.library-index__book-link,
+.seo-text-link {
+  width: fit-content;
+}
+
+.game-route-nav__links a {
+  padding-block: 0.65rem;
+}
+
+@media (max-width: 39.99rem) {
+  .reference-home .site-container,
+  .site-header--reference .site-container,
+  .site-footer--reference .site-container {
+    width: calc(100% - 1.5rem);
+  }
+
+  .site-header.site-header--reference .site-header__inner {
+    min-height: 3.75rem;
+    padding-block: 0.5rem;
+  }
+
+  .site-header.site-header--reference .site-header__mobile nav {
+    top: 3.15rem;
+    width: min(20rem, calc(100vw - 1.5rem));
+    padding: 0.5rem;
+  }
+
+  .reference-home .reference-hero__grid {
+    gap: 1.75rem;
+    min-height: auto;
+    padding-block: 2.5rem 3rem;
+  }
+
+  .reference-home .reference-hero h1 {
+    max-width: 12ch;
+    font-size: clamp(2.45rem, 12.5vw, 3.05rem);
+    line-height: 0.96;
+  }
+
+  .reference-home .reference-hero__statement {
+    margin-top: 0;
+    font-size: clamp(1.9rem, 9.6vw, 2.45rem);
+    line-height: 0.96;
+  }
+
+  .reference-home .reference-hero__lead {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .reference-home .reference-hero .reference-button {
+    display: flex;
+    width: fit-content;
+    margin-top: 1.15rem;
+    margin-inline: auto;
+  }
+
+  .reference-home .reference-hero__image {
+    width: 100%;
+  }
+
+  .reference-home .reference-books {
+    padding-block: 1.75rem 2.75rem;
+  }
+
+  .reference-home .reference-books__rail {
+    grid-auto-columns: min(70vw, 15rem);
+    gap: 0.9rem;
+    padding: 0.5rem 2.75rem 0.9rem;
+    scroll-padding-inline: 2.75rem;
+    scrollbar-width: none;
+  }
+
+  .reference-home .reference-books__rail::-webkit-scrollbar,
+  .reference-home .reference-testimonials__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .reference-home .reference-book-card figure {
+    height: clamp(11rem, 54vw, 13rem);
+  }
+
+  .reference-home .reference-books__arrow--previous,
+  .reference-home .reference-testimonials__arrow--previous {
+    left: 0;
+  }
+
+  .reference-home .reference-books__arrow--next,
+  .reference-home .reference-testimonials__arrow--next {
+    right: 0;
+  }
+
+  .reference-home .reference-button--books {
+    margin-top: 0.75rem;
+  }
+
+  .reference-home .reference-support {
+    padding-block: 3.5rem 4rem;
+  }
+
+  .reference-home .reference-support h2,
+  .reference-home .reference-testimonials h2,
+  .reference-home .reference-bio h2 {
+    max-width: 13ch;
+    margin-inline: auto;
+    font-size: clamp(2rem, 10.5vw, 2.65rem);
+    line-height: 0.95;
+  }
+
+  .reference-home .reference-support__grid {
+    gap: 3.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .reference-home .reference-support__card > img {
+    width: 8.75rem;
+    height: 8.75rem;
+  }
+
+  .reference-home .reference-support__card h3 {
+    margin-top: 1rem;
+    font-size: 1.18rem;
+  }
+
+  .reference-home .reference-support__scribble {
+    margin-top: 0.8rem;
+  }
+
+  .reference-home .reference-support__card p {
+    margin-top: 0.8rem;
+    font-size: 0.94rem;
+    line-height: 1.5;
+  }
+
+  .reference-home .reference-support__link {
+    min-height: 2.75rem;
+    margin-top: 0.65rem;
+    font-size: 0.74rem;
+  }
+
+  .reference-home .reference-testimonials {
+    padding-top: 3.75rem;
+  }
+
+  .reference-home .reference-testimonials__carousel {
+    margin-top: 2rem;
+  }
+
+  .reference-home .reference-testimonials__rail {
+    gap: 1rem;
+    padding: 0.5rem 2.75rem 1.25rem;
+    scroll-padding-inline: 2.75rem;
+    scrollbar-width: none;
+  }
+
+  .reference-home .reference-testimonial-card {
+    flex: 0 0 min(82vw, 22rem);
+    min-height: 32rem;
+    padding: 1.5rem;
+  }
+
+  .reference-home .reference-testimonial-card blockquote {
+    max-width: 33ch;
+    font-size: 0.94rem;
+    line-height: 1.55;
+  }
+
+  .reference-home .reference-testimonial-card figcaption {
+    font-size: 0.72rem;
+  }
+
+  .reference-home .reference-testimonials__illustration {
+    margin-top: 2.5rem;
+  }
+
+  .reference-home .reference-games {
+    padding-block: 3.75rem 4.25rem;
+  }
+
+  .reference-home .reference-games__heading {
+    gap: 1rem;
+  }
+
+  .reference-home .reference-games__heading h2 {
+    margin-top: 0.5rem;
+    font-size: clamp(2.15rem, 10.5vw, 2.8rem);
+  }
+
+  .reference-home .reference-games__heading > p {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .reference-home .reference-games__grid {
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .reference-home .reference-game-card {
+    grid-template-columns: minmax(5.75rem, 0.42fr) minmax(0, 1fr);
+    gap: 1rem;
+    min-height: 13.5rem;
+    padding: 1rem;
+    box-shadow: 0.25rem 0.25rem 0 var(--reference-ink);
+  }
+
+  .reference-home .reference-game-card h3 {
+    font-size: 1.45rem;
+  }
+
+  .reference-home .reference-game-card__description {
+    font-size: 0.9rem;
+    line-height: 1.48;
+  }
+
+  .reference-home .reference-game-card__link {
+    min-height: 2.75rem;
+    margin-top: 0.75rem;
+    font-size: 0.72rem;
+  }
+
+  .reference-home .reference-bio {
+    padding-block: 4.5rem;
+  }
+
+  .reference-home .reference-bio__inner > p:not(.reference-bio__signature) {
+    margin-top: 1.1rem;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .reference-home .reference-bio__inner > p:first-of-type {
+    margin-top: 2rem;
+  }
+
+  .reference-home .reference-club {
+    padding-block: 3.75rem;
+  }
+
+  .reference-home .reference-club h2 {
+    font-size: clamp(2.3rem, 11.5vw, 3rem);
+    line-height: 0.94;
+  }
+
+  .reference-home .reference-club p {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .reference-home .reference-club__actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .reference-home .reference-club__actions .reference-button {
+    width: 100%;
+    min-height: 3rem;
+  }
+
+  .reference-home .reference-club__grid > img {
+    width: min(10rem, 48vw);
+  }
+
+  .site-footer--reference .reference-footer__main {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-block: 0.5rem;
+    font-size: 0.78rem;
+  }
+
+  .site-footer--reference .reference-footer__main > a {
+    gap: 0.3rem;
+    white-space: nowrap;
+  }
+
+  .site-footer--reference .reference-footer__bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 40rem) and (max-width: 63.99rem) {
+  .reference-home .site-container,
+  .site-header--reference .site-container,
+  .site-footer--reference .site-container {
+    width: min(100% - 3rem, 78rem);
+  }
+
+  .site-header.site-header--reference .site-header__inner {
+    min-height: 3.75rem;
+  }
+
+  .reference-home .reference-hero__grid {
+    gap: clamp(2rem, 5vw, 3.5rem);
+    padding-block: 4rem;
+  }
+
+  .reference-home .reference-books__rail {
+    grid-auto-columns: min(30vw, 13rem);
+    scroll-padding-inline: 2rem;
+  }
+
+  .reference-home .reference-testimonials__rail {
+    gap: 1.25rem;
+    padding-inline: 3rem;
+    scroll-padding-inline: 3rem;
+  }
+
+  .reference-home .reference-testimonial-card {
+    flex: 0 0 calc((100% - 1.25rem) / 2);
+    min-height: 34rem;
+    padding: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .reference-home .reference-testimonial-card blockquote {
+    font-size: 0.95rem;
+  }
+
+  .reference-home .reference-testimonials__illustration {
+    width: 100vw;
+  }
+
+  .reference-home .reference-bio__inner > p:not(.reference-bio__signature) {
+    font-size: 1rem;
+  }
+
+  .site-footer--reference .reference-footer__main {
+    font-size: 0.78rem;
+  }
+}
+
+@media (pointer: coarse) {
+  .site-header.site-header--reference .site-header__mobile summary,
+  .reference-home .reference-books__arrow,
+  .reference-home .reference-testimonials__arrow {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .reference-home .reference-button {
+    min-height: 3rem;
+  }
+}
+
+@media (hover: none) {
+  .reference-home .reference-button:hover {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .reference-home .reference-game-card:hover {
+    box-shadow: 0.25rem 0.25rem 0 var(--reference-ink);
+    transform: none;
+  }
+
+  .reference-home .reference-testimonials__arrow:hover {
+    transform: translateY(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-home .reference-books__rail,
+  .reference-home .reference-testimonials__rail {
+    scroll-behavior: auto;
+  }
+
+  .reference-home .reference-button,
+  .reference-home .reference-book-card img,
+  .reference-home .reference-game-card,
+  .reference-home .reference-books__arrow,
+  .reference-home .reference-testimonials__arrow {
+    transition: none;
+  }
+}
+
+/* Final visual refinements from the annotated review. */
+
+.site-header.site-header--reference {
+  background: #fff8dc;
+  box-shadow: 0 1px 0 rgb(18 23 34 / 0.12);
+  backdrop-filter: none;
+  isolation: isolate;
+}
+
+.reference-home .reference-book-card {
+  appearance: none;
+  display: grid;
+  min-width: 0;
+  gap: 0.7rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--reference-ink);
+  cursor: pointer;
+  font: inherit;
+  text-align: center;
+}
+
+.reference-home .reference-book-card figure,
+.reference-home .reference-testimonial-card,
+.reference-home .reference-game-card {
+  border: 1px solid color-mix(in srgb, var(--reference-ink) 14%, transparent);
+  border-radius: 0.35rem;
+  box-shadow: 0 0.75rem 1.8rem rgb(18 23 34 / 0.09);
+}
+
+.reference-home .reference-book-card figure {
+  width: 100%;
+  margin: 0;
+  background: #fff;
+}
+
+.reference-home .reference-book-card__title,
+.reference-home .reference-book-card > span.reference-book-card__title {
+  position: static;
+  display: block;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  color: var(--reference-ink);
+  font-size: 0.88rem;
+  font-weight: 750;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.reference-home .reference-game-card {
+  border-color: color-mix(in srgb, var(--reference-ink) 14%, transparent);
+  background: #fff;
+  box-shadow: 0 0.75rem 1.8rem rgb(18 23 34 / 0.09);
+}
+
+.reference-home .reference-game-card--cauldron {
+  background: color-mix(in srgb, var(--brand-cyan) 13%, #fff);
+}
+
+.reference-home .reference-game-card:hover,
+.reference-home .reference-game-card:focus-visible {
+  box-shadow: 0 0.9rem 2rem rgb(18 23 34 / 0.12);
+  transform: translateY(-0.12rem);
+}
+
+.reference-home .reference-support__grid {
+  max-width: 52rem;
+  margin-inline: auto;
+}
+
+.reference-home .reference-testimonial-card {
+  height: 31rem;
+  min-height: 31rem;
+  justify-content: flex-start;
+}
+
+.reference-home .reference-testimonial-card blockquote {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.reference-testimonial-card__more {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--reference-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+  text-transform: uppercase;
+}
+
+.reference-home .reference-testimonial-card figcaption {
+  width: 100%;
+  margin-top: 0.8rem;
+}
+
+/* Shared native dialogs for books and complete reviews. */
+
+.reference-dialog {
+  width: min(68rem, calc(100vw - 2rem));
+  max-width: none;
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  color: var(--reference-ink, #121722);
+}
+
+.reference-dialog::backdrop {
+  background: rgb(18 23 34 / 0.7);
+  backdrop-filter: blur(3px);
+}
+
+.reference-dialog__surface {
+  position: relative;
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+  border: 1px solid rgb(18 23 34 / 0.16);
+  border-radius: 0.5rem;
+  background: #fffdf7;
+  box-shadow: 0 1.5rem 4rem rgb(18 23 34 / 0.3);
+}
+
+.reference-dialog__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 5;
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid rgb(18 23 34 / 0.18);
+  border-radius: 50%;
+  background: #fff;
+  color: #121722;
+  cursor: pointer;
+}
+
+.reference-dialog__close svg,
+.reference-book-dialog__arrow svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.reference-book-dialog__content {
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.reference-book-dialog__header {
+  padding-right: 3.5rem;
+}
+
+.reference-book-dialog__header p,
+.reference-review-dialog__eyebrow {
+  color: color-mix(in srgb, var(--reference-ink) 64%, transparent);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.reference-book-dialog__header h2,
+.reference-review-dialog__content h2 {
+  margin-top: 0.25rem;
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(1.7rem, 4vw, 3rem);
+  font-weight: 750;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.reference-book-dialog__viewer {
+  position: relative;
+  margin-top: 1.25rem;
+}
+
+.reference-book-dialog__stage {
+  position: relative;
+  height: min(61dvh, 35rem);
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgb(18 23 34 / 0.1);
+  background: #f4f5f6;
+}
+
+.reference-book-dialog__stage img {
+  object-fit: contain;
+}
+
+.reference-book-dialog__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid rgb(18 23 34 / 0.2);
+  border-radius: 50%;
+  background: #fff;
+  color: #121722;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.reference-book-dialog__arrow:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.reference-book-dialog__arrow--previous {
+  left: 0.75rem;
+}
+
+.reference-book-dialog__arrow--next {
+  right: 0.75rem;
+}
+
+.reference-book-dialog__meta {
+  margin-top: 0.75rem;
+  color: rgb(18 23 34 / 0.7);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.reference-book-dialog__thumbnails {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+  padding-bottom: 0.25rem;
+  overflow-x: auto;
+}
+
+.reference-book-dialog__thumbnails button {
+  position: relative;
+  width: 4.75rem;
+  height: 4.75rem;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 0.25rem;
+  background: #f4f5f6;
+  cursor: pointer;
+}
+
+.reference-book-dialog__thumbnails button.is-active {
+  border-color: var(--reference-orange, #f8b84e);
+}
+
+.reference-book-dialog__thumbnails img {
+  object-fit: contain;
+}
+
+.reference-review-dialog {
+  width: min(44rem, calc(100vw - 2rem));
+}
+
+.reference-review-dialog__content {
+  padding: clamp(2rem, 6vw, 4rem);
+  padding-right: clamp(3.75rem, 8vw, 5rem);
+}
+
+.reference-review-dialog__content blockquote {
+  margin: 2rem 0 0;
+  color: #121722;
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.7;
+}
+
+.reference-review-dialog__content blockquote p + p {
+  margin-top: 1rem;
+}
+
+/* Marta's portrait and the biography now share a compact editorial grid. */
+
+.reference-home .reference-bio__inner {
+  display: grid;
+  max-width: 70rem;
+  grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr);
+  align-items: start;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+
+.reference-home .reference-bio__portrait {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 0.35rem;
+  background: var(--reference-cream);
+}
+
+.reference-home .reference-bio__portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.reference-home .reference-bio__copy h2 {
+  text-align: left;
+}
+
+.reference-home .reference-bio__copy > p:not(.reference-bio__signature) {
+  max-width: 65rem;
+  margin-top: 1rem;
+  color: color-mix(in srgb, var(--reference-ink) 87%, transparent);
+  font-size: clamp(0.88rem, 1.2vw, 1rem);
+  line-height: 1.62;
+}
+
+.reference-home .reference-bio__copy > p:first-of-type {
+  margin-top: 1rem;
+}
+
+.reference-home .reference-bio__quote {
+  display: block;
+  height: 2.5rem;
+  margin-top: 1.4rem;
+  color: var(--reference-ink);
+  font-family: Georgia, serif;
+  font-size: 4.8rem;
+  line-height: 0.9;
+}
+
+/* Game pages: compact introduction, smaller cups and correct back direction. */
+
+.game-page-shell .game-hero,
+.game-page-shell .game-hero.game-hero--cups,
+.game-page-shell .game-hero.game-hero--cauldron {
+  min-height: 0;
+  padding-block: clamp(2.75rem, 6vw, 4.5rem);
+}
+
+@media (min-width: 48rem) {
+  .reference-home .reference-support__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 40rem) and (max-width: 71.99rem) {
+  .game-page-shell .cups-grid {
+    width: min(100%, 47rem);
+    margin-inline: auto;
+  }
+}
+
+@media (min-width: 72rem) {
+  .game-page-shell .cups-grid {
+    width: min(100%, 68rem);
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .reference-dialog {
+    width: calc(100vw - 1rem);
+    max-height: calc(100dvh - 1rem);
+  }
+
+  .reference-dialog__surface {
+    max-height: calc(100dvh - 1rem);
+  }
+
+  .reference-book-dialog__content {
+    padding: 1rem;
+  }
+
+  .reference-book-dialog__stage {
+    height: min(55dvh, 27rem);
+  }
+
+  .reference-book-dialog__arrow--previous {
+    left: 0.4rem;
+  }
+
+  .reference-book-dialog__arrow--next {
+    right: 0.4rem;
+  }
+
+  .reference-review-dialog__content {
+    padding: 2rem 1.25rem;
+    padding-right: 3.75rem;
+  }
+
+  .reference-home .reference-testimonial-card {
+    height: 30rem;
+    min-height: 30rem;
+  }
+
+  .reference-home .reference-bio__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.25rem;
+  }
+
+  .reference-home .reference-bio__portrait {
+    width: min(100%, 22rem);
+    margin-inline: auto;
+  }
+
+  .reference-home .reference-bio__copy h2 {
+    margin-inline: 0;
+    text-align: left;
+  }
+
+  .game-page-shell .game-hero,
+  .game-page-shell .game-hero.game-hero--cups,
+  .game-page-shell .game-hero.game-hero--cauldron {
+    padding-block: 2.25rem 2.75rem;
+  }
+}
+
+@media (hover: none) {
+  .reference-home .reference-game-card:hover {
+    box-shadow: 0 0.75rem 1.8rem rgb(18 23 34 / 0.09);
+    transform: none;
+  }
+}
+
+.reference-scroll-top {
+  position: fixed;
+  z-index: 40;
+  right: max(1.25rem, env(safe-area-inset-right));
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--reference-ink, #121722) 72%, transparent);
+  border-radius: 0.2rem;
+  background: var(--reference-orange, #ffbd5d);
+  box-shadow: 0 0.55rem 1.25rem rgb(18 23 34 / 0.16);
+  color: var(--reference-ink, #121722);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.65rem);
+  transition:
+    opacity 180ms ease,
+    transform 240ms cubic-bezier(0.25, 1, 0.5, 1),
+    background-color 160ms ease;
+}
+
+.reference-scroll-top.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.reference-scroll-top:hover,
+.reference-scroll-top:focus-visible {
+  background: color-mix(in srgb, var(--reference-orange, #ffbd5d) 82%, #fff);
+}
+
+.reference-scroll-top svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  stroke-width: 2.25;
+}
+
+@media (max-width: 39.99rem) {
+  .reference-scroll-top {
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-scroll-top {
+    transition: none;
+  }
+}
+
+/* Editorial book index inspired by the reference site. */
+
+.reference-library-page {
+  background: #fff;
+}
+
+.reference-library-hero {
+  position: relative;
+  height: clamp(22rem, 44vw, 34rem);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--reference-cream) 68%, #fff);
+}
+
+.reference-library-hero img {
+  object-fit: contain;
+  object-position: center;
+}
+
+.reference-library-hero__back {
+  position: absolute;
+  z-index: 2;
+  top: clamp(1rem, 2.5vw, 2rem);
+  left: max(1rem, calc((100vw - 78rem) / 2 + 1rem));
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--reference-ink);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.25rem;
+  text-transform: uppercase;
+}
+
+.reference-library-hero__back svg {
+  width: 1rem;
+  transition: transform 160ms ease;
+}
+
+.reference-library-hero__back:hover svg,
+.reference-library-hero__back:focus-visible svg {
+  transform: translateX(-0.18rem);
+}
+
+.reference-library-index {
+  padding-block: clamp(3.5rem, 8vw, 7rem);
+}
+
+.reference-library-index__heading {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.reference-library-index__heading > p:first-child {
+  color: color-mix(in srgb, var(--reference-ink) 64%, transparent);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.reference-library-index__heading h1 {
+  margin-top: 0.5rem;
+  color: var(--reference-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.6rem, 6vw, 5.4rem);
+  font-weight: 750;
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.reference-library-index__heading > span {
+  width: 7rem;
+  height: 0.5rem;
+  margin-top: 1rem;
+  border-top: 0.2rem solid var(--reference-orange);
+  border-bottom: 0.2rem solid var(--reference-orange);
+  transform: skewX(-25deg) rotate(-1deg);
+}
+
+.reference-library-index__heading > p:last-child {
+  max-width: 37rem;
+  margin-top: 1.25rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.6;
+}
+
+.reference-library-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(3rem, 6vw, 6rem) clamp(1.25rem, 3vw, 3rem);
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.reference-library-filters {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.reference-library-filters__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.reference-library-filters__buttons button {
+  min-height: 2.75rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--reference-orange);
+  border-radius: 0.2rem;
+  background: color-mix(in srgb, var(--reference-orange) 24%, #fff);
+  color: var(--reference-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 750;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.reference-library-filters__buttons button.is-active {
+  background: var(--reference-orange);
+}
+
+.reference-library-page .reference-library-filters__buttons button[aria-pressed="false"] {
+  background-color: color-mix(in srgb, var(--reference-orange) 24%, #fff);
+}
+
+.reference-library-page .reference-library-filters__buttons button[aria-pressed="true"] {
+  background-color: var(--reference-orange);
+}
+
+.reference-library-filter-menu {
+  display: none;
+}
+
+.reference-library-filter-menu__label {
+  color: color-mix(in srgb, var(--reference-ink) 65%, transparent);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.reference-library-filter-menu__trigger {
+  width: 100%;
+  min-height: 3.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.45rem;
+  padding: 0.75rem 0.9rem 0.75rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--reference-ink) 72%, transparent);
+  border-radius: 0.2rem;
+  background: var(--reference-orange);
+  color: var(--reference-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 750;
+  text-align: left;
+}
+
+.reference-library-filter-menu__trigger svg {
+  width: 1.1rem;
+  transition: transform 180ms ease;
+}
+
+.reference-library-filter-menu__trigger[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.reference-library-filter-menu__options {
+  position: absolute;
+  z-index: 12;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--reference-ink) 72%, transparent);
+  border-radius: 0.2rem;
+  background: #fffaf0;
+  box-shadow: 0 0.9rem 2rem rgb(18 23 34 / 0.15);
+}
+
+.reference-library-filter-menu__options button {
+  display: flex;
+  width: 100%;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--reference-ink) 12%, transparent);
+  background: transparent;
+  color: var(--reference-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.reference-library-filter-menu__options button:last-child {
+  border-bottom: 0;
+}
+
+.reference-library-filter-menu__options button[aria-selected="true"] {
+  background: color-mix(in srgb, var(--reference-orange) 42%, #fffaf0);
+}
+
+.reference-library-filter-menu__options button:hover,
+.reference-library-filter-menu__options button:focus-visible {
+  background: var(--reference-orange);
+  outline-offset: -0.2rem;
+}
+
+.reference-library-filter-menu__options svg {
+  width: 1rem;
+  flex: 0 0 auto;
+}
+
+.reference-library-card {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  flex-direction: column;
+  color: var(--reference-ink);
+  text-align: center;
+  text-decoration: none;
+}
+
+.reference-library-card figure {
+  width: 100%;
+  margin: 0;
+  line-height: 0;
+}
+
+.reference-library-card figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: unset;
+  filter: drop-shadow(0 0.65rem 0.7rem rgb(18 23 34 / 0.12));
+}
+
+.reference-library-card h2 {
+  margin-top: 1rem;
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  font-weight: 750;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.reference-library-index__back {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--reference-ink);
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+  text-transform: uppercase;
+}
+
+.reference-library-index__back svg {
+  width: 0.9rem;
+}
+
+.reference-library-index__back {
+  margin: clamp(4rem, 9vw, 7rem) auto 0;
+}
+
+.reference-library-cta .reference-club__grid > img {
+  border-radius: 50%;
+}
+
+@media (min-width: 40rem) and (max-width: 63.99rem) {
+  .reference-library-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+@media (max-width: 39.99rem) {
+  .reference-library-hero {
+    height: 26rem;
+  }
+
+  .reference-library-hero img {
+    object-position: center;
+  }
+
+  .reference-library-index {
+    padding-block: 3.5rem 4.5rem;
+  }
+
+  .reference-library-filters__buttons {
+    display: none;
+  }
+
+  .reference-library-filter-menu {
+    position: relative;
+    display: block;
+    width: min(100%, 19rem);
+  }
+
+  .reference-library-grid {
+    width: min(100%, 19rem);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4rem;
+    margin-inline: auto;
+  }
+
+  .reference-library-card h2 {
+    font-size: 1.35rem;
+  }
+
+  .reference-library-cta .reference-club__grid > img {
+    width: min(11rem, 48vw);
+  }
+}
+
+/* Book carousel: seamless editorial presentation inspired by the original site. */
+
+.reference-home .reference-books__carousel {
+  grid-template-areas:
+    "previous rail next"
+    ". pagination .";
+  grid-template-columns: 3rem minmax(0, 1fr) 3rem;
+  gap: 0.75rem 1rem;
+}
+
+.reference-home .reference-books__arrow--previous {
+  grid-area: previous;
+}
+
+.reference-home .reference-books__arrow--next {
+  grid-area: next;
+}
+
+.reference-home .reference-books__rail {
+  grid-area: rail;
+  grid-auto-columns: calc((100% - 3rem) / 3);
+  gap: 1.5rem;
+  padding: 1.25rem 0 0.75rem;
+  scroll-padding-inline: 0;
+  scrollbar-width: none;
+}
+
+.reference-home .reference-books__rail::-webkit-scrollbar {
+  display: none;
+}
+
+.reference-home .reference-book-card {
+  gap: 0.65rem;
+}
+
+.reference-home .reference-book-card figure {
+  height: clamp(15rem, 23vw, 21.5rem);
+  border: 0;
+  border-radius: 0;
+  background: #fff;
+  box-shadow: none;
+}
+
+.reference-home .reference-book-card img {
+  filter: none;
+}
+
+.reference-home .reference-book-card:hover img,
+.reference-home .reference-book-card:focus-visible img {
+  transform: translateY(-0.2rem);
+}
+
+.reference-home .reference-book-card__title,
+.reference-home .reference-book-card > span.reference-book-card__title {
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+}
+
+.reference-home .reference-books__pagination {
+  grid-area: pagination;
+  display: flex;
+  min-height: 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.35rem, 0.65vw, 0.65rem);
+  overflow: hidden;
+}
+
+.reference-home .reference-books__pagination span {
+  width: 0.42rem;
+  height: 0.42rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--reference-ink) 20%, transparent);
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.reference-home .reference-books__pagination span.is-active {
+  background: color-mix(in srgb, var(--reference-ink) 82%, transparent);
+  transform: scale(1.25);
+}
+
+@media (min-width: 40rem) and (max-width: 63.99rem) {
+  .reference-home .reference-books__rail {
+    grid-auto-columns: calc((100% - 1.25rem) / 2);
+    gap: 1.25rem;
+  }
+
+  .reference-home .reference-book-card figure {
+    height: clamp(15rem, 35vw, 20rem);
+  }
+}
+
+@media (max-width: 39.99rem) {
+  .reference-home .reference-books__carousel {
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+    gap: 0.75rem 0;
+  }
+
+  .reference-home .reference-books__rail {
+    grid-auto-columns: min(76vw, 18rem);
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem 0.5rem;
+    scroll-padding-inline: 1.5rem;
+  }
+
+  .reference-home .reference-book-card figure {
+    height: clamp(14rem, 67vw, 18rem);
+  }
+
+  .reference-home .reference-books__pagination {
+    gap: 0.32rem;
+  }
+
+  .reference-home .reference-books__pagination span {
+    width: 0.34rem;
+    height: 0.34rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-home .reference-books__pagination span {
+    transition: none;
+  }
+}

@@ -1,9 +1,39 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Mail } from "lucide-react";
+import { CurrentYear } from "@/components/current-year";
 import { InstagramIcon } from "@/components/icons/instagram-icon";
+import { ScrollToTop } from "@/components/scroll-to-top";
 
-export function SiteFooter() {
+export function SiteFooter({ variant = "default" }: { variant?: "default" | "reference" }) {
+  const currentYear = new Date().getFullYear();
+
+  if (variant === "reference") {
+    return (
+      <>
+        <ScrollToTop />
+        <footer id="contacto" className="site-footer site-footer--reference">
+          <div className="site-container reference-footer__line" aria-hidden="true" />
+          <div className="site-container reference-footer__main">
+            <Link href="/aviso-legal">Aviso legal</Link>
+            <a
+              href="https://www.instagram.com/martamoreno.art/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <InstagramIcon aria-hidden="true" className="size-4" />
+              Instagram
+            </a>
+            <a href="mailto:mm@martamoreno.com">Contacto</a>
+          </div>
+          <div className="reference-footer__bottom">
+            © <CurrentYear initialYear={currentYear} /> Marta Moreno
+          </div>
+        </footer>
+      </>
+    );
+  }
+
   return (
     <footer id="contacto" className="site-footer">
       <div className="site-container site-footer__main">
@@ -58,7 +88,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="site-footer__bottom">
-        © {new Date().getFullYear()} Marta Moreno. Ilustración infantil y
+        © <CurrentYear initialYear={currentYear} /> Marta Moreno. Ilustración infantil y
         formación creativa.
       </div>
     </footer>

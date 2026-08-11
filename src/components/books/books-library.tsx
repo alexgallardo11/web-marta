@@ -8,7 +8,14 @@ import {
   ChevronRight,
   X,
 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import type { CSSProperties } from "react";
 import { CharacterGuide } from "@/components/character-guide";
 import { getBookSpreads } from "@/lib/books-data";
@@ -39,6 +46,10 @@ function wrapIndex(index: number, length: number) {
   return (index + length) % length;
 }
 
+const subscribeToHydration = () => () => {};
+const getClientReady = () => true;
+const getServerReady = () => false;
+
 function getInitialBookIndex(books: readonly Book[], slug?: string) {
   const initialIndex = books.findIndex((book) => book.slug === slug);
   return initialIndex >= 0 ? initialIndex : 0;
@@ -68,6 +79,11 @@ export function BooksLibrary({ books, initialBookSlug }: BooksLibraryProps) {
   const [turn, setTurn] = useState<{ id: number; direction: -1 | 1 }>({ id: 0, direction: 1 });
   const [webglFallback, setWebglFallback] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const isReady = useSyncExternalStore(
+    subscribeToHydration,
+    getClientReady,
+    getServerReady,
+  );
   const [isClosing, setIsClosing] = useState(false);
   const selectedBook = books[selectedIndex] ?? books[0];
   const spreads = useMemo(
@@ -176,7 +192,11 @@ export function BooksLibrary({ books, initialBookSlug }: BooksLibraryProps) {
   const realSpread = spreads[spreadIndex];
 
   return (
-    <div className={`library-experience is-${mode}`} style={stageStyle}>
+    <div
+      className={`library-experience is-${mode}`}
+      style={stageStyle}
+      aria-busy={!isReady}
+    >
       <section className="library-intro paper-grain" aria-labelledby="library-title">
         <div className="brand-orbit brand-orbit--cyan library-intro__orbit-cyan" aria-hidden="true" />
         <div className="brand-orbit brand-orbit--lime library-intro__orbit-lime" aria-hidden="true" />
@@ -304,13 +324,12 @@ export function BooksLibrary({ books, initialBookSlug }: BooksLibraryProps) {
               Yo siempre empiezo por la que más me hace cosquillas.
             </CharacterGuide>
           </header>
-          <div className="library-index__rail" role="tablist" aria-label="Libros de Marta">
+          <div className="library-index__rail" role="list" aria-label="Libros de Marta">
           {books.map((book, index) => (
-            <div key={book.slug} className="library-index__entry">
+            <div key={book.slug} className="library-index__entry" role="listitem">
               <button
                 type="button"
-                role="tab"
-                aria-selected={index === selectedIndex}
+                aria-pressed={index === selectedIndex}
                 aria-label={`Seleccionar ${book.title}`}
                 className="library-index__book"
                 onClick={() => selectBook(index)}

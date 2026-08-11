@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Sparkles } from "lucide-react";
 import { CauldronGame } from "@/components/games/cauldron-game";
-import { GameNarrator, GameShell } from "@/components/games/game-shell";
+import { GameShell } from "@/components/games/game-shell";
 
 export const metadata: Metadata = {
   title: "Caldero mágico",
@@ -42,18 +42,11 @@ export default function MagicCauldronPage() {
               Tres ingredientes, miles de historias
             </p>
             <h1 className="display-title">Caldero <em>mágico</em></h1>
-            <p className="game-hero__lead">
-              Mezcla un personaje, una forma de ser y una situación imposible.
-              El resto lo pone tu imaginación.
-            </p>
-          </div>
-          <GameNarrator
-            image="/images/web-2026/characters/perro-cocinero.png"
-            name="el Perro Cocinero"
-          >
-            Elige los ingredientes uno a uno tocando cada tarjeta. O invoca un
-            personaje y yo los echaré todos al caldero de golpe.
-          </GameNarrator>
+          <p className="game-hero__lead">
+            Mezcla un personaje, una forma de ser y una situación imposible.
+            El resto lo pone tu imaginación.
+          </p>
+        </div>
         </section>
         <CauldronGame />
       </main>

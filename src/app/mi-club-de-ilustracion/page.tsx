@@ -19,14 +19,14 @@ export const metadata: Metadata = {
     description:
       "Una comunidad para aprender a dibujar, compartir procesos y encontrar tu propia voz creativa.",
     url: "/mi-club-de-ilustracion",
-    images: ["/images/web-2026/photos/marta-club.jpg"],
+    images: ["/images/marta-2026/marta-club.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Mi Club de Ilustración · Marta Moreno",
     description:
       "Una comunidad para aprender a dibujar, compartir procesos y encontrar tu propia voz creativa.",
-    images: ["/images/web-2026/photos/marta-club.jpg"],
+    images: ["/images/marta-2026/marta-club.jpg"],
   },
 };
 
@@ -90,10 +90,10 @@ export default function IllustrationClubPage() {
             </div>
             <div className="seo-club-hero__visual">
               <Image
-                src="/images/web-2026/photos/marta-club.jpg"
+                src="/images/marta-2026/marta-club.jpg"
                 alt="Marta en su estudio preparando una propuesta para su comunidad de ilustración"
-                width={1600}
-                height={850}
+                width={1084}
+                height={576}
                 sizes="(max-width: 832px) 92vw, 48vw"
                 priority
               />

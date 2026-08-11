@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ArrowUpRight, Menu, Sparkles } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { BrandLockup } from "@/components/brand-lockup";
 import { InstagramIcon } from "@/components/icons/instagram-icon";
+import { MobileNavigation } from "@/components/mobile-navigation";
 import { NEWSLETTER_URL } from "@/lib/site-links";
 
 const navItems: Array<{ href: string; label: string; external?: boolean }> = [
@@ -11,9 +12,20 @@ const navItems: Array<{ href: string; label: string; external?: boolean }> = [
   { href: "/#contacto", label: "Contacto" },
 ];
 
-export function SiteHeader() {
+export function SiteHeader({ variant = "default" }: { variant?: "default" | "reference" }) {
+  const isReference = variant === "reference";
+  const visibleNavItems = isReference
+    ? [
+        { href: "/", label: "Inicio" },
+        { href: "/#sobre-mi", label: "Sobre mí" },
+        { href: "/#libros", label: "Mis libros" },
+        { href: "/#resenas", label: "Reseñas" },
+        { href: "/#contacto", label: "Contacto" },
+      ]
+    : navItems;
+
   return (
-    <header className="site-header">
+    <header className={`site-header${isReference ? " site-header--reference" : ""}`}>
       <div className="site-container site-header__inner">
         <Link
           href="/"
@@ -24,7 +36,7 @@ export function SiteHeader() {
         </Link>
 
         <nav aria-label="Navegación principal" className="site-header__nav">
-          {navItems.map((item) =>
+          {visibleNavItems.map((item) =>
             item.external ? (
               <a
                 key={item.href}
@@ -41,59 +53,35 @@ export function SiteHeader() {
               </Link>
             ),
           )}
-          <a
-            href="https://www.instagram.com/martamoreno.art/"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Instagram de Marta Moreno"
-            className="site-header__instagram"
-          >
-            <InstagramIcon aria-hidden="true" className="size-5" />
-          </a>
-          <a
-            href={NEWSLETTER_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="site-header__cta"
-          >
-            Ideas cada martes
-            <ArrowUpRight aria-hidden="true" />
-          </a>
+          {!isReference && (
+            <>
+              <a
+                href="https://www.instagram.com/martamoreno.art/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram de Marta Moreno"
+                className="site-header__instagram"
+              >
+                <InstagramIcon aria-hidden="true" className="size-5" />
+              </a>
+              <a
+                href={NEWSLETTER_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="site-header__cta"
+              >
+                Ideas cada martes
+                <ArrowUpRight aria-hidden="true" />
+              </a>
+            </>
+          )}
         </nav>
 
-        <details className="site-header__mobile group">
-          <summary className="[&::-webkit-details-marker]:hidden">
-            <Menu aria-hidden="true" className="size-5" />
-            <span className="sr-only">Abrir menú</span>
-          </summary>
-          <nav aria-label="Navegación móvil">
-            {navItems.map((item) =>
-              item.external ? (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <Link key={item.href} href={item.href}>
-                  {item.label}
-                </Link>
-              ),
-            )}
-            <a
-              href={NEWSLETTER_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="site-header__mobile-cta"
-            >
-              <Sparkles aria-hidden="true" className="size-5" />
-              Recibir ideas cada martes
-            </a>
-          </nav>
-        </details>
+        <MobileNavigation
+          items={visibleNavItems}
+          newsletterUrl={NEWSLETTER_URL}
+          showNewsletter={!isReference}
+        />
       </div>
     </header>
   );

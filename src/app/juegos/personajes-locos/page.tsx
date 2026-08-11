@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Sparkles } from "lucide-react";
 import { CupsGame } from "@/components/games/cups-game";
-import { GameNarrator, GameShell } from "@/components/games/game-shell";
+import { GameShell } from "@/components/games/game-shell";
 
 export const metadata: Metadata = {
   title: "Crea personajes locos",
@@ -42,18 +42,11 @@ export default function CrazyCharactersPage() {
               Cuatro vasos, miles de combinaciones
             </p>
             <h1 className="display-title">Crea personajes <em>locos</em></h1>
-            <p className="game-hero__lead">
-              Cuatro pistas inesperadas para desbloquear una idea y empezar a
-              dibujar sin pensarlo demasiado.
-            </p>
-          </div>
-          <GameNarrator
-            image="/images/web-2026/characters/martina-futbolista.png"
-            name="Martina Futbolista"
-          >
-            Toca un vaso para agitar solo esa pista. Si quieres la sorpresa
-            completa, pulsa «Mezclar los cuatro».
-          </GameNarrator>
+          <p className="game-hero__lead">
+            Cuatro pistas inesperadas para desbloquear una idea y empezar a
+            dibujar sin pensarlo demasiado.
+          </p>
+        </div>
         </section>
         <CupsGame />
       </main>
