@@ -1,17 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Atkinson_Hyperlegible_Next, Outfit } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AuthSessionRedirect } from "@/components/auth-session-redirect";
 import "./globals.css";
+import "./reference-responsive.css";
 
-const bodyFont = Atkinson_Hyperlegible_Next({
+const bodyFont = Inter({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
 });
 
-const displayFont = Outfit({
+const displayFont = Inter({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
       "Ideas, retos y acompañamiento para aprender a dibujar y encontrar tu propia voz.",
     images: [
       {
-        url: "/images/web-2026/photos/marta-portada.jpg",
+        url: "/images/marta-2026/marta-portada.jpg",
         width: 1000,
         height: 1401,
       },
@@ -49,7 +50,7 @@ export const metadata: Metadata = {
     title: "Aprender a dibujar e ilustración infantil · Marta Moreno",
     description:
       "Ideas, retos y acompañamiento para aprender a dibujar y encontrar tu propia voz.",
-    images: ["/images/web-2026/photos/marta-portada.jpg"],
+    images: ["/images/marta-2026/marta-portada.jpg"],
   },
 };
 

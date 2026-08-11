@@ -1,60 +1,157 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowRight,
-  BookOpen,
-  Gamepad2,
-  Heart,
-  Mail,
-} from "lucide-react";
-import { CharacterGuide } from "@/components/character-guide";
+import { ArrowRight, Gamepad2, Mail } from "lucide-react";
+import { ReferenceBookCarousel } from "@/components/reference-book-carousel";
+import { ReferenceTestimonialsCarousel } from "@/components/reference-testimonials-carousel";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { books } from "@/lib/books-data";
 import { CLUB_URL, NEWSLETTER_URL } from "@/lib/site-links";
 
+export const metadata: Metadata = {
+  title: "Marta Moreno · Ilustradora infantil",
+  description:
+    "Ilustración infantil, personajes memorables y un espacio para aprender a dibujar con emoción.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "es_ES",
+    title: "Marta Moreno · Ilustradora infantil",
+    description:
+      "Crea ilustraciones memorables y encuentra tu propia voz junto a Marta Moreno.",
+    url: "/",
+    images: ["/images/marta-2026/marta-portada.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Marta Moreno · Ilustradora infantil",
+    description:
+      "Crea ilustraciones memorables y encuentra tu propia voz junto a Marta Moreno.",
+    images: ["/images/marta-2026/marta-portada.jpg"],
+  },
+};
+
+const supportPaths = [
+  {
+    image: "/images/newsletter.jpg",
+    alt: "Personaje ilustrado que acompaña la newsletter de Marta",
+    title: "Recibe ideas creativas en tu mail cada semana",
+    text: "Recibe cada martes en tu mail ideas, retos de dibujo y trucos para ilustrar personajes que emocionen.",
+    href: NEWSLETTER_URL,
+    label: "Quiero recibirla",
+    external: true,
+  },
+  {
+    image: "/images/marta-2026/marta-bio.jpg",
+    alt: "Marta Moreno dibujando en su estudio",
+    title: "Mi Club de Ilustración",
+    text: "Te acompaño a crear ilustraciones memorables y transformar tus ideas en historias con emoción.",
+    href: "/mi-club-de-ilustracion",
+    label: "Conocer el Club",
+    external: false,
+  },
+] as const;
+
 const testimonials = [
   {
     name: "Santi",
-    text: "He estado practicando el dibujo para coger ritmo sin miedo, con la mente despejada y dejando que la imaginación fluya al crear personajes.",
+    paragraphs: [
+      "He estado practicando muchas veces el dibujo para coger el ritmo sin miedo, con la mente despejada y dejando que la imaginación fluya al crear personajes.",
+      "Incluso he preparado mi propio cuadernillo con todas las prácticas que he realizado contigo a partir del tuyo.",
+      "Es como tener un apunte completo, una guía que realmente ayuda.",
+    ],
   },
   {
-    name: "Mayuki",
-    text: "Gracias a ti volví a dibujar. Estoy aprendiendo a confiar en mí y a gustarme lo que hago.",
+    name: "@Mayuki76",
+    paragraphs: [
+      "Gracias a ti volví a dibujar. Gracias a tu curso estoy aprendiendo a confiar en mí y a gustarme lo que hago. Gracias por cruzarte en mi camino justo en el momento más oportuno.",
+    ],
+  },
+  {
+    name: "Maria Jesús",
+    paragraphs: [
+      "Siempre he pensado que dibujo fatal pero tus publicaciones y newsletters me están ayudando mucho. Ahora cuando mis hijos me dicen «¿me dibujas esto o lo otro?», yo lo intento y busco mi manera de hacerlo ❤️",
+    ],
   },
   {
     name: "Ana",
-    text: "Acabo de hacer los personajes del último directo y estoy encantada. No sabía que era capaz de hacer algo así. Gracias por hacerlo tan fácil.",
+    paragraphs: [
+      "Acabo de hacer los personajes del último directo y estoy encantada. No sabía que era capaz de hacer algo así.",
+      "Gracias por hacerlo tan fácil ❤️.",
+      "Estoy deseando hacer tu curso porque, además, llega justo en el momento adecuado: he escrito una historia sobre el primer diente que se le ha caído a mi hija y me encantaría dibujarlo yo misma.",
+      "Así que nada, muchas gracias por lo que compartes.",
+    ],
   },
   {
     name: "Noe",
-    text: "Me he tomado los retos como un momento de desconexión. Me sorprende ver que cada vez voy cogiendo más soltura en el trazo.",
+    paragraphs: [
+      "Me encantan los retos que haces y este año me lo he tomado como un momento de desconexión.",
+      "Los dibujos que hago cada día los utilizo para el calendario de adviento de mi peque y le encanta.",
+      "Me he sorprendido que voy cogiendo más soltura en el trazo y la verdad es que me gusta.",
+      "Esto me da la vida, en un momento de mucho estrés y complicado que estoy viviendo.",
+    ],
   },
   {
     name: "Ania",
-    text: "Ahora que soy abuela, mi nieta me tiene tremendamente motivada con esto de dibujar. Gracias por compartir y por motivarme.",
+    paragraphs: [
+      "Ahora que soy abuela, mi nieta me tiene tremendamente motivada con esto de dibujar.",
+      "Hacemos algunas historias de nuestras conversaciones y me he atrevido a realizar los dibujos, son cosas muy empíricas y las disfruto.",
+      "Gracias por compartir.",
+      "Gracias por motivarme.",
+    ],
   },
   {
     name: "Sara",
-    text: "Me siento súper orgullosa. El desafío era terapéutico: llegaba de un día ajetreado y solo me apetecía ponerme a pintar.",
+    paragraphs: [
+      "TERMINÉ los 20 dibujos!!!!!!!",
+      "Qué gran idea. Me siento súper orgullosa porque aunque en general ha sido disfrute, también ha habido momentos de frustración, y esos momentos, me ha gustado superarlos.",
+      "Creo que voy a echar de menos el desafío porque era terapéutico, llegaba de un día ajetreado y sólo me apetecía ponerme a pintar…",
+      "Bueno, que gracias mil.",
+    ],
   },
   {
     name: "Isabel",
-    text: "Gracias, Marta, por el reto, tus mails, tu trabajo y los vídeos. Qué bonito sienta dibujar.",
+    paragraphs: [
+      "Gracias Marta por el reto, tus mails, tu trabajo, los vídeos donde seguir la estela de tus creaciones… qué bonito sienta dibujar.",
+      "Aquí te envío mi pequeño vídeo del reto de octubre, estoy muy contenta de haberlo hecho!!",
+      "Me ha costado un montón, por no saber nada de nada pero LO HE DISFRUTADO TANTOOO!! Aunque es cierto que cuesta uno al día jijiji. Gracias de verdad!! UN ABRAZO ENORME!! 🤗",
+    ],
   },
   {
     name: "Sonia",
-    text: "Hacía mucho que no dibujaba porque no tenía inspiración ni ganas. Cuando lo vi me animé y he vuelto a reconectar con el dibujo.",
+    paragraphs: [
+      "Hacía mucho que no dibujaba porque no tenía inspiración, ni ganas y cuando lo vi me animé y he vuelto a reconectar con el dibujo!",
+      "Me cuestan mucho las caras y las manos pero ahora he vuelto a coger «soltura»; voy a practicar más para mejorar.",
+      "Muchas gracias 😊❤️",
+    ],
   },
   {
     name: "Cristina",
-    text: "Te he descubierto hace poco y me has aportado muchísima inspiración en mis proyectos. Gracias por la divulgación que haces.",
+    paragraphs: [
+      "Te he descubierto hace poco y me has aportado muchísima inspiración en mis proyectos, gracias por la divulgación que haces!!!",
+    ],
+  },
+  {
+    name: "Judith",
+    paragraphs: [
+      "La verdad es que me encanta porque todos los días me pongo a dibujar un ratito, y eso lejos de estresarme ¡me salva el día! Así que gracias por la inspiración y la propuesta! ¡¡Eres genial haciendo estas cosas!!",
+    ],
   },
   {
     name: "Julita",
-    text: "Con esta clase me lo he pasado muy bien. ¡Qué emoción comenzar la semana con tu curso!",
+    paragraphs: [
+      "A mis dibujos intento darles a cada personaje un estilo y personalidad, pero a veces me salen parecidos y con esta clase me lo he pasado muy bien.",
+      "¡Qué emoción comenzar la semana con tu curso!",
+    ],
   },
-];
+  {
+    name: "Sabrina",
+    paragraphs: [
+      "Lo bueno de los retos de dibujo es que además de hacer cosas divertidas, pruebo técnicas y soportes. Y esto me ayuda a darme cuenta de qué me gusta, qué no… en qué me siento cómoda y con qué pienso que hago desastres.",
+    ],
+  },
+] as const;
 
 export default function Home() {
   const jsonLd = {
@@ -66,403 +163,281 @@ export default function Home() {
     sameAs: ["https://www.instagram.com/martamoreno.art/"],
     knowsAbout: [
       "Ilustración infantil",
-      "Álbum ilustrado",
       "Diseño de personajes",
       "Formación creativa",
       "Aprender a dibujar",
-      "Dibujo para principiantes",
-      "Comunidad de ilustración",
     ],
   };
 
   return (
     <>
-      <SiteHeader />
-      <main id="contenido" className="brand-2026">
+      <SiteHeader variant="reference" />
+      <main id="contenido" className="reference-home">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
 
-        <section className="brand-hero paper-grain">
-          <div className="brand-orbit brand-orbit--cyan" aria-hidden="true" />
-          <div className="brand-orbit brand-orbit--lime" aria-hidden="true" />
-          <div className="site-container brand-hero__grid">
-            <div className="brand-hero__copy">
-              <p className="brand-kicker">Ilustración infantil · Creatividad · Comunidad</p>
-              <h1>
-                Aprende a dibujar y <span>encuentra tu propia voz.</span>
+        <section className="reference-hero" aria-labelledby="hero-title">
+          <div className="site-container reference-hero__grid">
+            <div className="reference-hero__copy">
+              <h1 id="hero-title">
+                <strong className="reference-hero__accent">
+                  La ilustración infantil
+                </strong>
+                <span>No es solo dibujar bonito.</span>
               </h1>
-              <p className="brand-hero__lead">
-                Soy Marta Moreno, ilustradora infantil y maestra. Creo libros y
-                acompaño a personas que quieren disfrutar dibujando, encontrar
-                su estilo y contar historias con emoción.
+              <p className="reference-hero__statement">
+                Es crear <span>emoción</span> y <span>conectar</span>.
               </p>
-              <div className="brand-actions">
+              <p className="reference-hero__lead">
+                Eso es lo que hago, y quiero acompañarte en el camino para que tú
+                lo logres también.
+              </p>
+              <a
+                className="reference-button"
+                href="#sobre-mi"
+              >
+                Conoce mi trabajo <ArrowRight aria-hidden="true" />
+              </a>
+            </div>
+
+            <div className="reference-hero__image">
+              <Image
+                src="/images/marta-2026/marta-portada.jpg"
+                alt="Marta Moreno rodeada de algunos de sus libros ilustrados"
+                width={919}
+                height={1288}
+                priority
+                sizes="(max-width: 720px) 86vw, 34rem"
+                unoptimized
+              />
+            </div>
+          </div>
+        </section>
+
+        <section id="libros" className="reference-books" aria-labelledby="books-title">
+          <div className="site-container">
+            <h2 id="books-title" className="sr-only">
+              Mis libros ilustrados
+            </h2>
+            <ReferenceBookCarousel books={books} />
+            <Link className="reference-button reference-button--books" href="/mis-libros">
+              Ver todos mis libros <ArrowRight aria-hidden="true" />
+            </Link>
+          </div>
+        </section>
+
+        <section className="reference-support" aria-labelledby="support-title">
+          <div className="site-container">
+            <h2 id="support-title">¿Cómo te puedo ayudar?</h2>
+            <div className="reference-support__grid">
+              {supportPaths.map((path) => {
+                const content = (
+                  <>
+                    <Image
+                      src={path.image}
+                      alt={path.alt}
+                      width={400}
+                      height={400}
+                      sizes="(max-width: 720px) 55vw, 12rem"
+                    />
+                    <h3>{path.title}</h3>
+                    <span className="reference-support__scribble" aria-hidden="true" />
+                    <p>{path.text}</p>
+                    <span className="reference-support__link">
+                      {path.label} <ArrowRight aria-hidden="true" />
+                    </span>
+                  </>
+                );
+
+                return path.external ? (
+                  <a
+                    className="reference-support__card"
+                    href={path.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    key={path.title}
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  <Link className="reference-support__card" href={path.href} key={path.title}>
+                    {content}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section id="resenas" className="reference-testimonials" aria-labelledby="testimonials-title">
+          <div className="site-container">
+            <h2 id="testimonials-title">Mensajes bonitos que recibo</h2>
+            <ReferenceTestimonialsCarousel testimonials={testimonials} />
+            <figure className="reference-testimonials__illustration">
+              <Image
+                src="/images/resenas-personajes.webp"
+                alt="Desfile de personajes infantiles ilustrados por Marta Moreno"
+                width={2534}
+                height={1198}
+                sizes="(max-width: 767px) 100vw, (max-width: 1439px) 96vw, 88rem"
+              />
+            </figure>
+          </div>
+        </section>
+
+        <section className="reference-games" aria-labelledby="games-title">
+          <div className="site-container">
+            <div className="reference-games__heading">
+              <div>
+                <p className="reference-games__eyebrow">
+                  <Gamepad2 aria-hidden="true" /> Un recreo creativo
+                </p>
+                <h2 id="games-title">Juega con las ideas antes de dibujarlas.</h2>
+              </div>
+              <p>
+                Dos juegos para desbloquear personajes, mezclar ocurrencias y
+                volver al papel con una historia que contar.
+              </p>
+            </div>
+
+            <div className="reference-games__grid">
+              <Link
+                href="/juegos/personajes-locos"
+                className="reference-game-card reference-game-card--cups"
+              >
+                <Image
+                  src="/images/web-2026/characters/martina-futbolista.png"
+                  alt="Martina Futbolista"
+                  width={720}
+                  height={720}
+                  sizes="(max-width: 720px) 30vw, 14rem"
+                />
+                <span className="reference-game-card__copy">
+                  <span className="reference-game-card__eyebrow">Juego 01</span>
+                  <h3>Personajes locos</h3>
+                  <span className="reference-game-card__description">
+                    Mezcla cuatro pistas inesperadas y empieza a dibujar.
+                  </span>
+                  <span className="reference-game-card__link">
+                    Mezclar ideas <ArrowRight aria-hidden="true" />
+                  </span>
+                </span>
+              </Link>
+
+              <Link
+                href="/juegos/caldero-magico"
+                className="reference-game-card reference-game-card--cauldron"
+              >
+                <Image
+                  src="/images/web-2026/characters/perro-cocinero.png"
+                  alt="El Perro Cocinero"
+                  width={720}
+                  height={720}
+                  sizes="(max-width: 720px) 30vw, 14rem"
+                />
+                <span className="reference-game-card__copy">
+                  <span className="reference-game-card__eyebrow">Juego 02</span>
+                  <h3>Caldero mágico</h3>
+                  <span className="reference-game-card__description">
+                    Elige los ingredientes y deja que aparezca una historia.
+                  </span>
+                  <span className="reference-game-card__link">
+                    Invocar historia <ArrowRight aria-hidden="true" />
+                  </span>
+                </span>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section id="sobre-mi" className="reference-bio" aria-labelledby="bio-title">
+          <div className="site-container reference-bio__inner">
+            <figure className="reference-bio__portrait">
+              <Image
+                src="/images/marta-2026/marta-bio.jpg"
+                alt="Marta Moreno dibujando en su estudio"
+                width={1657}
+                height={1657}
+                sizes="(max-width: 767px) 82vw, 28rem"
+              />
+            </figure>
+            <div className="reference-bio__copy">
+              <h2 id="bio-title">Soy Marta Moreno</h2>
+              <span className="reference-bio__quote" aria-hidden="true">
+                “
+              </span>
+              <p>
+                Marta Moreno nació en Barcelona y se formó en Ilustración en l&apos;Escola
+                d&apos;Art i Disseny de Tarragona y en Magisterio en la Universidad de
+                Barcelona.
+              </p>
+              <p>
+                Es autora e ilustradora de álbumes infantiles que han emocionado a
+                miles de lectores, entre ellos <em>El hilo invisible</em>, la colección
+                <em> Antón Piñón</em>, <em>Martina Futbolista</em>, <em>Gracias, Profe</em>
+                y <em>¿Dónde está mi escoba?</em>.
+              </p>
+              <p>
+                Durante más de 20 años ha compaginado la creación artística con su
+                vocación como maestra de primaria en escuelas rurales. Ese contacto
+                diario con la infancia le ha permitido comprender cómo sienten,
+                imaginan y se relacionan los niños con las historias, convirtiéndose
+                en la mayor fuente de inspiración para su trabajo.
+              </p>
+              <p>
+                Hoy combina la creación de libros con la formación de personas que
+                desean crecer a través de la ilustración infantil. Acompaña tanto a
+                quienes sueñan con dedicarse profesionalmente a este oficio como a
+                quienes encuentran en el dibujo un espacio de disfrute, creatividad y
+                bienestar.
+              </p>
+              <p className="reference-bio__signature">Marta Moreno</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="reference-club" aria-labelledby="club-title">
+          <div className="site-container reference-club__grid">
+            <div>
+              <h2 id="club-title">¿Quieres crear ilustraciones memorables?</h2>
+              <p>
+                Mi Club de Ilustración es un espacio para quienes quieren disfrutar
+                dibujando, despertar su creatividad y crear ilustraciones con emoción.
+                Aquí encontrarás retos creativos, formación, clases en directo y
+                acompañamiento para avanzar a tu ritmo.
+              </p>
+              <div className="reference-club__actions">
                 <a
-                  className="brand-button brand-button--primary"
+                  className="reference-button reference-button--dark"
                   href={NEWSLETTER_URL}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Mail aria-hidden="true" />
-                  Recibir ideas cada martes
+                  <Mail aria-hidden="true" /> Apuntarme a la newsletter
                 </a>
                 <a
-                  className="brand-button brand-button--secondary"
+                  className="reference-button reference-button--dark"
                   href={CLUB_URL}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Conocer mi Club
-                  <ArrowRight aria-hidden="true" />
+                  Conocer Mi Club <ArrowRight aria-hidden="true" />
                 </a>
               </div>
-              <ul className="brand-proof" aria-label="Trayectoria de Marta">
-                <li>
-                  <BookOpen aria-hidden="true" /> Más de 25 libros ilustrados
-                </li>
-                <li>
-                  <Heart aria-hidden="true" /> Más de 20 años enseñando
-                </li>
-              </ul>
             </div>
-
-            <div className="brand-hero__visual">
-              <div className="brand-hero__photo">
-                <Image
-                  src="/images/web-2026/photos/marta-portada.jpg"
-                  alt="Marta Moreno tumbada y sonriendo entre algunos de sus libros"
-                  width={1000}
-                  height={1401}
-                  preload
-                  sizes="(max-width: 900px) 86vw, 42vw"
-                />
-              </div>
-              <CharacterGuide character="mono" className="brand-hero__guide">
-                Aquí las ideas no tienen que salir perfectas.
-              </CharacterGuide>
-            </div>
-          </div>
-        </section>
-
-        <section className="brand-paths" aria-labelledby="elige-camino">
-          <div className="site-container">
-            <header className="brand-section-heading brand-section-heading--center">
-              <p className="brand-kicker">Dos formas de empezar</p>
-              <h2 id="elige-camino">Un ratito para crear puede cambiarte el día.</h2>
-              <p>
-                Elige si hoy necesitas una pequeña chispa en tu correo o un
-                espacio donde dibujar acompañada.
-              </p>
-            </header>
-
-            <div className="brand-paths__grid">
-              <article className="brand-path-card brand-path-card--mail">
-                <p className="brand-kicker">Gratuito · Cada martes</p>
-                <h3>Recibe ideas creativas en tu mail cada semana.</h3>
-                <p>
-                  Propuestas prácticas, trucos y pequeños retos para volver al
-                  papel, jugar con tus personajes y mantener viva la creatividad.
-                </p>
-                <a
-                  href={NEWSLETTER_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Quiero recibirlas <ArrowRight aria-hidden="true" />
-                </a>
-                <CharacterGuide character="leon">
-                  Yo ya estoy pensando qué dibujar el martes.
-                </CharacterGuide>
-              </article>
-
-              <article className="brand-path-card brand-path-card--club">
-                <p className="brand-kicker">Formación · Comunidad</p>
-                <h3>Mi Club de Ilustración.</h3>
-                <p>
-                  Un espacio para disfrutar dibujando, despertar tu creatividad
-                  y crear ilustraciones con emoción. Encontrarás retos,
-                  formación, clases en directo y acompañamiento para avanzar a
-                  tu ritmo, tanto si sueñas con dedicarte a la ilustración como
-                  si simplemente quieres regalarte tiempo para crear.
-                </p>
-                <Link href="/mi-club-de-ilustracion">
-                  Quiero saber más <ArrowRight aria-hidden="true" />
-                </Link>
-                <CharacterGuide character="gatita">
-                  Aquí dibujamos juntas, cada una con su propia voz.
-                </CharacterGuide>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section id="club" className="brand-club paper-grain" aria-labelledby="club-title">
-          <div className="site-container brand-club__grid">
-            <div className="brand-club__photo">
-              <Image
-                src="/images/web-2026/photos/marta-club.jpg"
-                alt="Marta en su estudio junto al título Mi Club de Ilustración"
-                width={1600}
-                height={850}
-                sizes="(max-width: 900px) 92vw, 51vw"
-              />
-            </div>
-            <div className="brand-club__copy">
-              <p className="brand-kicker">Mi Club de Ilustración</p>
-              <h2 id="club-title">Tu espacio para probar, aprender y disfrutar.</h2>
-              <div
-                className="brand-club__voices"
-                aria-label="Los personajes explican cómo es el Club"
-              >
-                <div className="brand-club-voice">
-                  <Image
-                    src="/images/web-2026/characters/mono.png"
-                    alt=""
-                    width={709}
-                    height={709}
-                    sizes="80px"
-                  />
-                  <p>
-                    Marta prepara retos para que nunca te quedes demasiado
-                    tiempo mirando el papel en blanco.
-                  </p>
-                </div>
-                <div className="brand-club-voice brand-club-voice--reverse">
-                  <Image
-                    src="/images/web-2026/characters/gatita.png"
-                    alt=""
-                    width={709}
-                    height={709}
-                    sizes="80px"
-                  />
-                  <p>
-                    En las clases en directo puedes verla trabajar, preguntar
-                    y probar nuevas formas de dibujar a tu ritmo.
-                  </p>
-                </div>
-                <div className="brand-club-voice">
-                  <Image
-                    src="/images/web-2026/characters/perro-cocinero.png"
-                    alt=""
-                    width={709}
-                    height={709}
-                    sizes="80px"
-                  />
-                  <p>
-                    Y no dibujas sola: compartimos procesos, dudas y esos
-                    pequeños avances que merece la pena celebrar.
-                  </p>
-                </div>
-              </div>
-              <Link
-                className="brand-button brand-button--light"
-                href="/mi-club-de-ilustracion"
-              >
-                Cuéntame sobre el Club <ArrowRight aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <section id="libros" className="brand-books" aria-labelledby="books-title">
-          <div className="site-container">
-            <div className="brand-books__grid">
-              <div className="brand-books__copy">
-                <p className="brand-kicker">Mis libros</p>
-                <h2 id="books-title">Historias para mirar, sentir y volver a abrir.</h2>
-                <p>
-                  Marta es autora e ilustradora de álbumes infantiles que han
-                  emocionado a miles de lectores, entre ellos <em>El hilo invisible</em>,
-                  la colección <em>Antón Piñón</em>, <em>Martina Futbolista</em>,
-                  <em> Gracias, Profe</em> y <em>¿Dónde está mi escoba?</em>.
-                </p>
-                <div className="brand-books__actions">
-                  <Link className="brand-button brand-button--primary" href="/mis-libros">
-                    <BookOpen aria-hidden="true" />
-                    Entrar en la biblioteca
-                    <ArrowRight aria-hidden="true" />
-                  </Link>
-                  <span>{books.length} historias ilustradas para curiosear</span>
-                </div>
-              </div>
-              <div className="brand-books__visual">
-                <Image
-                  src="/images/web-2026/photos/marta-trabajando.jpg"
-                  alt="Marta trabajando en una ilustración en su mesa de estudio"
-                  width={1200}
-                  height={1200}
-                  sizes="(max-width: 900px) 90vw, 41vw"
-                />
-                <CharacterGuide character="anton-pinon">
-                  Yo ya estoy dentro. ¿Vienes a curiosear nuestras historias?
-                </CharacterGuide>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <section className="brand-testimonials" aria-labelledby="testimonials-title">
-          <div className="site-container">
-            <header className="brand-section-heading">
-              <div>
-                <p className="brand-kicker">Mensajes bonitos que recibo</p>
-                <h2 id="testimonials-title">Cuando dibujar vuelve a ser tu momento.</h2>
-              </div>
-              <CharacterGuide character="girafa" className="brand-guide--compact">
-                Sigue hacia la derecha, hay muchas historias.
-              </CharacterGuide>
-            </header>
-          </div>
-          <div
-            className="brand-testimonials__rail"
-            aria-label="Testimonios de alumnas"
-            tabIndex={0}
-          >
-            {testimonials.map((testimonial) => (
-              <figure key={testimonial.name} className="brand-testimonial">
-                <span aria-hidden="true">“</span>
-                <blockquote>{testimonial.text}</blockquote>
-                <figcaption>
-                  <strong>{testimonial.name}</strong>
-                  <small>Comunidad de Marta</small>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </section>
-
-        <section id="sobre-mi" className="brand-about paper-grain" aria-labelledby="about-title">
-          <div className="site-container brand-about__grid">
-            <div className="brand-about__photo">
-              <Image
-                src="/images/web-2026/photos/marta-bio.jpg"
-                alt="Retrato de Marta Moreno sonriendo en su estudio"
-                width={1600}
-                height={900}
-                sizes="(max-width: 900px) 92vw, 48vw"
-              />
-            </div>
-            <div className="brand-about__copy">
-              <p className="brand-kicker">Hola, soy Marta</p>
-              <h2 id="about-title">Dibujo desde la emoción. Enseño desde la experiencia.</h2>
-              <div
-                className="brand-about__story"
-                aria-label="Los personajes de Marta cuentan su biografía"
-              >
-                <div className="brand-bio-beat brand-bio-beat--start">
-                  <Image
-                    src="/images/web-2026/characters/mono.png"
-                    alt=""
-                    width={709}
-                    height={709}
-                    sizes="96px"
-                  />
-                  <p>
-                    Marta nació en Barcelona y estudió Ilustración en Tarragona
-                    y Magisterio en la Universidad de Barcelona.
-                  </p>
-                </div>
-                <div className="brand-bio-beat brand-bio-beat--reverse">
-                  <Image
-                    src="/images/web-2026/characters/cocodrilo.png"
-                    alt=""
-                    width={709}
-                    height={709}
-                    sizes="96px"
-                  />
-                  <p>
-                    Ha dado vida a más de 25 libros, como <em>El hilo invisible</em>,
-                    <em> Antón Piñón</em>, <em>Martina Futbolista</em> y
-                    <em> Gracias, Profe</em>.
-                  </p>
-                </div>
-                <div className="brand-bio-beat brand-bio-beat--middle">
-                  <Image
-                    src="/images/web-2026/characters/girafa.png"
-                    alt=""
-                    width={531}
-                    height={531}
-                    sizes="96px"
-                  />
-                  <p>
-                    Durante más de 20 años fue maestra en escuelas rurales. Allí
-                    aprendió cómo sienten, imaginan y cuentan los niños.
-                  </p>
-                </div>
-                <div className="brand-bio-beat brand-bio-beat--reverse brand-bio-beat--finish">
-                  <Image
-                    src="/images/web-2026/characters/leon.png"
-                    alt=""
-                    width={709}
-                    height={709}
-                    sizes="96px"
-                  />
-                  <p>
-                    Hoy acompaña a quien quiere hacer de la ilustración su oficio
-                    y a quien dibuja por placer, para encontrar voz, estilo y
-                    comunidad.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="brand-play" aria-labelledby="play-title">
-          <div className="site-container brand-play__inner">
-            <div>
-              <p className="brand-kicker">Un recreo creativo</p>
-              <h2 id="play-title">¿Jugamos antes de seguir?</h2>
-              <p>
-                Mezcla ideas al azar y deja que un personaje inesperado te dé
-                la excusa perfecta para empezar a dibujar.
-              </p>
-              <div className="brand-actions">
-                <Link className="brand-button brand-button--primary" href="/juegos/personajes-locos">
-                  <Gamepad2 aria-hidden="true" /> Personajes locos
-                </Link>
-                <Link className="brand-button brand-button--secondary" href="/juegos/caldero-magico">
-                  Caldero mágico <ArrowRight aria-hidden="true" />
-                </Link>
-              </div>
-            </div>
-            <CharacterGuide character="martina-futbolista">
-              Si una idea se escapa, corremos detrás de ella.
-            </CharacterGuide>
-          </div>
-        </section>
-
-        <section className="brand-final" aria-labelledby="final-title">
-          <div className="brand-final__shape" aria-hidden="true" />
-          <div className="site-container brand-final__grid">
             <Image
-              src="/images/web-2026/marta-illustration.png"
-              alt="Ilustración de Marta con sus materiales de dibujo"
-              width={1525}
-              height={1576}
-              sizes="(max-width: 768px) 180px, 280px"
+              src="/images/newsletter.jpg"
+              alt="Personaje ilustrado de Marta Moreno"
+              width={400}
+              height={400}
+              sizes="(max-width: 720px) 40vw, 13rem"
             />
-            <div>
-              <p className="brand-kicker">Mi Club de Ilustración</p>
-              <h2 id="final-title">Tu manera de dibujar también merece un lugar.</h2>
-              <p>
-                Ven a crear acompañada, compartir el proceso y descubrir todo
-                lo que aparece cuando te das permiso para jugar.
-              </p>
-              <Link
-                className="brand-button brand-button--dark"
-                href="/mi-club-de-ilustracion"
-              >
-                Quiero conocer el Club <ArrowRight aria-hidden="true" />
-              </Link>
-            </div>
           </div>
         </section>
       </main>
-      <SiteFooter />
+      <SiteFooter variant="reference" />
     </>
   );
 }
