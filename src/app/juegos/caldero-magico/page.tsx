@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Sparkles } from "lucide-react";
 import { CauldronGame } from "@/components/games/cauldron-game";
 import { GameShell } from "@/components/games/game-shell";
 
@@ -37,10 +36,6 @@ export default function MagicCauldronPage() {
             ✦
           </span>
           <div className="game-hero__copy">
-            <p className="eyebrow text-[var(--pink)]">
-              <Sparkles className="size-4" aria-hidden="true" />
-              Tres ingredientes, miles de historias
-            </p>
             <h1 className="display-title">Caldero <em>mágico</em></h1>
           <p className="game-hero__lead">
             Mezcla un personaje, una forma de ser y una situación imposible.

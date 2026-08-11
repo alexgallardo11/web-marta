@@ -1242,7 +1242,7 @@
 @media (max-width: 47.99rem) {
   .game-hero {
     min-height: auto !important;
-    padding-block: 3.5rem 4.5rem !important;
+    padding-block: 3.5rem 4.5rem;
   }
 
   .game-narrator {

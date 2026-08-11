@@ -1002,14 +1002,6 @@
   text-align: center;
 }
 
-.reference-library-index__heading > p:first-child {
-  color: color-mix(in srgb, var(--reference-ink) 64%, transparent);
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
 .reference-library-index__heading h1 {
   margin-top: 0.5rem;
   color: var(--reference-ink);
@@ -1028,13 +1020,6 @@
   border-top: 0.2rem solid var(--reference-orange);
   border-bottom: 0.2rem solid var(--reference-orange);
   transform: skewX(-25deg) rotate(-1deg);
-}
-
-.reference-library-index__heading > p:last-child {
-  max-width: 37rem;
-  margin-top: 1.25rem;
-  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
-  line-height: 1.6;
 }
 
 .reference-library-grid {
@@ -1393,5 +1378,25 @@
 
   .reference-home .reference-books__pagination span {
     transition: none;
+  }
+}
+
+/* Keep game introductions close to the interactive area at every viewport. */
+.game-page-shell .game-hero,
+.game-page-shell .game-hero.game-hero--cups,
+.game-page-shell .game-hero.game-hero--cauldron {
+  padding-block: clamp(2.5rem, 4vw, 3rem) clamp(1.5rem, 2vw, 2rem);
+}
+
+.game-page-shell .cups-lab,
+.game-page-shell .magic-lab {
+  padding-top: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+@media (max-width: 47.99rem) {
+  .game-page-shell .game-hero,
+  .game-page-shell .game-hero.game-hero--cups,
+  .game-page-shell .game-hero.game-hero--cauldron {
+    padding-block: 2.25rem 1.5rem;
   }
 }

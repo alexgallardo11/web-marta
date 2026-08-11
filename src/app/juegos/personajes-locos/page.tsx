@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Sparkles } from "lucide-react";
 import { CupsGame } from "@/components/games/cups-game";
 import { GameShell } from "@/components/games/game-shell";
 
@@ -37,10 +36,6 @@ export default function CrazyCharactersPage() {
             ↝
           </span>
           <div className="game-hero__copy">
-            <p className="eyebrow text-[var(--pink)]">
-              <Sparkles className="size-4" aria-hidden="true" />
-              Cuatro vasos, miles de combinaciones
-            </p>
             <h1 className="display-title">Crea personajes <em>locos</em></h1>
           <p className="game-hero__lead">
             Cuatro pistas inesperadas para desbloquear una idea y empezar a

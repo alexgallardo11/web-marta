@@ -23,7 +23,7 @@ const authorBooks = new Set([
 ]);
 
 function getBookFilter(book: Book): Exclude<BookFilter, "all"> {
-  if (book.slug === "anton-pinon") return "anton";
+  if (book.slug.startsWith("anton-pinon")) return "anton";
   if (authorBooks.has(book.slug)) return "author";
   return "parenting";
 }

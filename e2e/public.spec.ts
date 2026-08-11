@@ -162,7 +162,13 @@ test("la página editorial filtra los libros sin páginas individuales", async (
   await page.goto("/mis-libros");
 
   await expect(page.getByRole("heading", { name: "Mis libros" })).toBeVisible();
-  await expect(page.locator(".reference-library-card")).toHaveCount(19);
+  await expect(
+    page.getByText(
+      "Una selección de personajes, emociones y aventuras para leer, imaginar y volver a mirar sin prisa.",
+      { exact: true },
+    ),
+  ).toHaveCount(0);
+  await expect(page.locator(".reference-library-card")).toHaveCount(27);
   await expect(page.locator(".reference-library-card__number")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Volver atrás" })).toHaveAttribute(
     "href",
@@ -184,14 +190,16 @@ test("la página editorial filtra los libros sin páginas individuales", async (
   expect(Math.min(...cardSpacing)).toBeGreaterThanOrEqual(15);
 
   await selectFilter("Colección Antón Piñón");
-  await expect(page.locator(".reference-library-card")).toHaveCount(1);
-  await expect(page.getByRole("heading", { name: "Antón Piñón" })).toBeVisible();
+  await expect(page.locator(".reference-library-card")).toHaveCount(9);
+  await expect(
+    page.getByRole("heading", { name: "Antón Piñón: Una carrera muy marrón" }),
+  ).toBeVisible();
 
   await selectFilter("Autoría integral");
   await expect(page.locator(".reference-library-card")).toHaveCount(5);
 
   await selectFilter("Todos los libros");
-  await expect(page.locator(".reference-library-card")).toHaveCount(19);
+  await expect(page.locator(".reference-library-card")).toHaveCount(27);
 
   const removedPage = await page.request.get("/mis-libros/sant-jordi");
   expect(removedPage.status()).toBe(404);

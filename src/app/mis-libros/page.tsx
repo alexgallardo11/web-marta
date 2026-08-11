@@ -70,13 +70,8 @@ export default function BooksPage() {
             </Link>
 
             <header className="reference-library-index__heading">
-              <p>Álbumes e historias ilustradas</p>
               <h1 id="library-title">Mis libros</h1>
               <span aria-hidden="true" />
-              <p>
-                Una selección de personajes, emociones y aventuras para leer,
-                imaginar y volver a mirar sin prisa.
-              </p>
             </header>
 
             <ReferenceBooksFilter books={books} />
