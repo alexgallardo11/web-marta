@@ -1421,3 +1421,8 @@
     white-space: nowrap;
   }
 }
+
+.game-page-shell .game-hero .display-title,
+.game-page-shell .game-hero .display-title em {
+  color: var(--reference-orange-text, #b85c00);
+}
