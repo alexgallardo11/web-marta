@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ReferenceDialog } from "@/components/reference-dialog";
 import { getBookSpreads } from "@/lib/books-data";
 import type { Book } from "@/lib/books-data";
@@ -13,6 +13,7 @@ export function ReferenceBookCarousel({
   books: readonly Book[];
 }) {
   const railRef = useRef<HTMLDivElement>(null);
+  const scrollFrameRef = useRef<number | null>(null);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [activeBookIndex, setActiveBookIndex] = useState(0);
@@ -28,23 +29,57 @@ export function ReferenceBookCarousel({
     });
   }
 
-  function updateActiveBook() {
+  const updateActiveBook = useCallback(() => {
     const rail = railRef.current;
     if (!rail) return;
 
     const cards = Array.from(
       rail.querySelectorAll<HTMLElement>(".reference-book-card"),
     );
-    const step = cards[1]
-      ? cards[1].offsetLeft - cards[0].offsetLeft
-      : cards[0]?.offsetWidth;
+    const railRect = rail.getBoundingClientRect();
+    const railCenter = railRect.left + railRect.width / 2;
+    let closestIndex = 0;
+    let closestDistance = Number.POSITIVE_INFINITY;
 
-    if (step) {
-      setActiveBookIndex(
-        Math.min(books.length - 1, Math.max(0, Math.round(rail.scrollLeft / step))),
-      );
-    }
+    cards.forEach((card, index) => {
+      const cardRect = card.getBoundingClientRect();
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const distance = Math.abs(cardCenter - railCenter);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    setActiveBookIndex(closestIndex);
+  }, []);
+
+  function handleRailScroll() {
+    if (scrollFrameRef.current !== null) return;
+
+    scrollFrameRef.current = requestAnimationFrame(() => {
+      updateActiveBook();
+      scrollFrameRef.current = null;
+    });
   }
+
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    const frame = requestAnimationFrame(updateActiveBook);
+    const resizeObserver = new ResizeObserver(updateActiveBook);
+    resizeObserver.observe(rail);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      if (scrollFrameRef.current !== null) {
+        cancelAnimationFrame(scrollFrameRef.current);
+      }
+      resizeObserver.disconnect();
+    };
+  }, [updateActiveBook]);
 
   function openBook(book: Book) {
     setSelectedImageIndex(0);
@@ -75,12 +110,12 @@ export function ReferenceBookCarousel({
         role="region"
         aria-label="Carrusel de libros ilustrados"
         tabIndex={0}
-        onScroll={updateActiveBook}
+        onScroll={handleRailScroll}
       >
-        {books.map((book) => (
+        {books.map((book, index) => (
           <button
             type="button"
-            className="reference-book-card"
+            className={`reference-book-card${index === activeBookIndex ? " is-active" : ""}`}
             onClick={() => openBook(book)}
             aria-label={`Abrir imágenes de ${book.title}`}
             key={book.slug}
@@ -95,7 +130,6 @@ export function ReferenceBookCarousel({
                 unoptimized
               />
             </figure>
-            <span className="reference-book-card__title">{book.title}</span>
           </button>
         ))}
       </div>

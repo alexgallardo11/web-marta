@@ -491,7 +491,7 @@
   appearance: none;
   display: grid;
   min-width: 0;
-  gap: 0.7rem;
+  gap: 0;
   padding: 0;
   border: 0;
   background: transparent;
@@ -513,22 +513,6 @@
   width: 100%;
   margin: 0;
   background: #fff;
-}
-
-.reference-home .reference-book-card__title,
-.reference-home .reference-book-card > span.reference-book-card__title {
-  position: static;
-  display: block;
-  width: auto;
-  height: auto;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
-  color: var(--reference-ink);
-  font-size: 0.88rem;
-  font-weight: 750;
-  line-height: 1.25;
-  text-align: center;
 }
 
 .reference-home .reference-game-card {
@@ -982,29 +966,13 @@
   background: #fff;
 }
 
-.reference-library-hero {
-  position: relative;
-  height: clamp(22rem, 44vw, 34rem);
-  overflow: hidden;
-  background: color-mix(in srgb, var(--reference-cream) 68%, #fff);
-}
-
-.reference-library-hero img {
-  object-fit: contain;
-  object-position: center;
-}
-
-.reference-library-hero__back {
-  position: absolute;
-  z-index: 2;
-  top: clamp(1rem, 2.5vw, 2rem);
-  left: max(1rem, calc((100vw - 78rem) / 2 + 1rem));
+.reference-library-index__back {
   display: inline-flex;
-  min-height: 2.75rem;
   align-items: center;
   gap: 0.45rem;
+  margin-bottom: clamp(2rem, 3vw, 3rem);
   color: var(--reference-ink);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-decoration: underline;
@@ -1013,18 +981,18 @@
   text-transform: uppercase;
 }
 
-.reference-library-hero__back svg {
+.reference-library-index__back svg {
   width: 1rem;
   transition: transform 160ms ease;
 }
 
-.reference-library-hero__back:hover svg,
-.reference-library-hero__back:focus-visible svg {
+.reference-library-index__back:hover svg,
+.reference-library-index__back:focus-visible svg {
   transform: translateX(-0.18rem);
 }
 
 .reference-library-index {
-  padding-block: clamp(3.5rem, 8vw, 7rem);
+  padding-block: clamp(2.25rem, 4vw, 4rem) clamp(3.5rem, 8vw, 7rem);
 }
 
 .reference-library-index__heading {
@@ -1070,9 +1038,8 @@
 }
 
 .reference-library-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(3rem, 6vw, 6rem) clamp(1.25rem, 3vw, 3rem);
+  column-count: 4;
+  column-gap: clamp(1.5rem, 3vw, 3rem);
   margin-top: clamp(3rem, 6vw, 5rem);
 }
 
@@ -1208,10 +1175,13 @@
 }
 
 .reference-library-card {
-  display: flex;
+  display: inline-flex;
   min-width: 0;
+  width: 100%;
   align-items: center;
+  break-inside: avoid;
   flex-direction: column;
+  padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
   color: var(--reference-ink);
   text-align: center;
   text-decoration: none;
@@ -1228,7 +1198,7 @@
   width: 100%;
   height: auto;
   object-fit: unset;
-  filter: drop-shadow(0 0.65rem 0.7rem rgb(18 23 34 / 0.12));
+  filter: none;
 }
 
 .reference-library-card h2 {
@@ -1240,50 +1210,26 @@
   line-height: 1.1;
 }
 
-.reference-library-index__back {
-  display: inline-flex;
-  min-height: 2.75rem;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--reference-ink);
-  font-size: 0.67rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-decoration: underline;
-  text-underline-offset: 0.25rem;
-  text-transform: uppercase;
-}
-
-.reference-library-index__back svg {
-  width: 0.9rem;
-}
-
-.reference-library-index__back {
-  margin: clamp(4rem, 9vw, 7rem) auto 0;
-}
-
 .reference-library-cta .reference-club__grid > img {
   border-radius: 50%;
 }
 
 @media (min-width: 40rem) and (max-width: 63.99rem) {
   .reference-library-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-count: 2;
   }
 
 }
 
+@media (min-width: 64rem) and (max-width: 79.99rem) {
+  .reference-library-grid {
+    column-count: 3;
+  }
+}
+
 @media (max-width: 39.99rem) {
-  .reference-library-hero {
-    height: 26rem;
-  }
-
-  .reference-library-hero img {
-    object-position: center;
-  }
-
   .reference-library-index {
-    padding-block: 3.5rem 4.5rem;
+    padding-block: 2rem 4.5rem;
   }
 
   .reference-library-filters__buttons {
@@ -1298,9 +1244,12 @@
 
   .reference-library-grid {
     width: min(100%, 19rem);
-    grid-template-columns: minmax(0, 1fr);
-    gap: 4rem;
+    column-count: 1;
     margin-inline: auto;
+  }
+
+  .reference-library-card {
+    padding-bottom: 4rem;
   }
 
   .reference-library-card h2 {
@@ -1343,16 +1292,23 @@
   display: none;
 }
 
-.reference-home .reference-book-card {
-  gap: 0.65rem;
-}
-
 .reference-home .reference-book-card figure {
   height: clamp(15rem, 23vw, 21.5rem);
   border: 0;
   border-radius: 0;
   background: #fff;
   box-shadow: none;
+  transform: translateY(0) scale(0.985);
+  transform-origin: center bottom;
+  transition: transform 280ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reference-home .reference-book-card.is-active {
+  z-index: 1;
+}
+
+.reference-home .reference-book-card.is-active figure {
+  transform: translateY(-0.4rem) scale(1.025);
 }
 
 .reference-home .reference-book-card img {
@@ -1362,11 +1318,6 @@
 .reference-home .reference-book-card:hover img,
 .reference-home .reference-book-card:focus-visible img {
   transform: translateY(-0.2rem);
-}
-
-.reference-home .reference-book-card__title,
-.reference-home .reference-book-card > span.reference-book-card__title {
-  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
 }
 
 .reference-home .reference-books__pagination {
@@ -1432,6 +1383,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reference-home .reference-book-card figure {
+    transition: none;
+  }
+
+  .reference-home .reference-book-card.is-active figure {
+    transform: translateY(-0.2rem) scale(1.01);
+  }
+
   .reference-home .reference-books__pagination span {
     transition: none;
   }

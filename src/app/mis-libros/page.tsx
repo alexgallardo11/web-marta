@@ -63,21 +63,12 @@ export default function BooksPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
 
-        <section className="reference-library-hero" aria-label="Marta Moreno en su estudio">
-          <Link href="/" className="reference-library-hero__back">
-            <ArrowLeft aria-hidden="true" /> Volver atrás
-          </Link>
-          <Image
-            src="/images/marta-2026/marta-estudio.jpg"
-            alt="Marta Moreno dibujando en su estudio"
-            fill
-            priority
-            sizes="100vw"
-          />
-        </section>
-
         <section className="reference-library-index" aria-labelledby="library-title">
           <div className="site-container">
+            <Link href="/" className="reference-library-index__back">
+              <ArrowLeft aria-hidden="true" /> Volver atrás
+            </Link>
+
             <header className="reference-library-index__heading">
               <p>Álbumes e historias ilustradas</p>
               <h1 id="library-title">Mis libros</h1>

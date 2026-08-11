@@ -170,7 +170,7 @@ test("la página editorial filtra los libros sin páginas individuales", async (
   );
   await expect(
     page.getByRole("img", { name: "Marta Moreno dibujando en su estudio" }),
-  ).toBeVisible();
+  ).toHaveCount(0);
   await expect(page.getByText("Ver el libro", { exact: true })).toHaveCount(0);
   await expect(page.locator(".reference-library-card a")).toHaveCount(0);
   const cardSpacing = await page.locator(".reference-library-card").evaluateAll(
