@@ -1400,3 +1400,24 @@
     padding-block: 2.25rem 1.5rem;
   }
 }
+
+@media (min-width: 64rem) {
+  .game-page-shell .game-hero .display-title {
+    max-width: none;
+    font-size: clamp(3.25rem, 4.5vw, 4.25rem);
+    line-height: 0.94;
+  }
+
+  .game-page-shell .game-section-intro h2 {
+    max-width: none;
+    font-size: clamp(2.5rem, 3.8vw, 3.5rem);
+    line-height: 0.96;
+  }
+}
+
+@media (min-width: 72rem) {
+  .game-page-shell .game-hero .display-title,
+  .game-page-shell .game-section-intro h2 {
+    white-space: nowrap;
+  }
+}
