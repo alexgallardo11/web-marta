@@ -7,7 +7,7 @@
 
 .reference-home .reference-hero__accent,
 .reference-home .reference-hero__statement span {
-  color: var(--reference-orange);
+  color: var(--reference-orange-text, #b85c00);
   font: inherit;
 }
 

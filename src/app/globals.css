@@ -7380,6 +7380,7 @@ a {
 .reference-home {
   --reference-ink: #121722;
   --reference-orange: #ffbd5d;
+  --reference-orange-text: #b85c00;
   --reference-cream: #fff8dc;
   overflow-x: clip;
   background: #fff;
