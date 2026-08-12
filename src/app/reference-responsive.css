@@ -7,7 +7,7 @@
 
 .reference-home .reference-hero__accent,
 .reference-home .reference-hero__statement span {
-  color: var(--reference-orange-text, #b85c00);
+  color: #000;
   font: inherit;
 }
 
@@ -17,7 +17,7 @@
 
 .reference-home .reference-hero__statement {
   margin-top: 0;
-  line-height: 0.96;
+  line-height: 1.02;
 }
 
 .reference-home section[id] {
@@ -1423,6 +1423,9 @@
 }
 
 .game-page-shell .game-hero .display-title,
-.game-page-shell .game-hero .display-title em {
-  color: var(--reference-orange-text, #b85c00);
+.game-page-shell .game-hero .display-title em,
+.game-page-shell .game-section-intro h2,
+.game-page-shell .game-hero__lead,
+.game-page-shell .game-narrator__bubble p {
+  color: #000;
 }

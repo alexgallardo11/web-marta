@@ -4,6 +4,7 @@ import { Mail } from "lucide-react";
 import { CurrentYear } from "@/components/current-year";
 import { InstagramIcon } from "@/components/icons/instagram-icon";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { CLUB_URL } from "@/lib/site-links";
 
 export function SiteFooter({ variant = "default" }: { variant?: "default" | "reference" }) {
   const currentYear = new Date().getFullYear();
@@ -77,9 +78,9 @@ export function SiteFooter({ variant = "default" }: { variant?: "default" | "ref
         <div className="site-footer__links">
           <Link href="/">Inicio</Link>
           <Link href="/mis-libros">Mis libros</Link>
-          <Link href="/mi-club-de-ilustracion">
+          <a href={CLUB_URL} target="_blank" rel="noreferrer">
             Mi Club de Ilustración
-          </Link>
+          </a>
           <Link href="/juegos/personajes-locos">Juegos creativos</Link>
           <Link href="/aviso-legal">Aviso legal</Link>
           <Link href="/privacidad">Privacidad</Link>

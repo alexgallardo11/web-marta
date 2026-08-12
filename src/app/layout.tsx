@@ -1,19 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AuthSessionRedirect } from "@/components/auth-session-redirect";
 import "./globals.css";
 import "./reference-responsive.css";
 
-const bodyFont = Inter({
+const bodyFont = Poppins({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   variable: "--font-body",
   display: "swap",
 });
 
-const displayFont = Inter({
+const displayFont = Poppins({
   subsets: ["latin"],
+  weight: ["700", "800", "900"],
   variable: "--font-display",
   display: "swap",
 });

@@ -3,12 +3,12 @@ import { ArrowUpRight } from "lucide-react";
 import { BrandLockup } from "@/components/brand-lockup";
 import { InstagramIcon } from "@/components/icons/instagram-icon";
 import { MobileNavigation } from "@/components/mobile-navigation";
-import { NEWSLETTER_URL } from "@/lib/site-links";
+import { CLUB_URL, NEWSLETTER_URL } from "@/lib/site-links";
 
 const navItems: Array<{ href: string; label: string; external?: boolean }> = [
   { href: "/", label: "Inicio" },
   { href: "/mis-libros", label: "Mis libros" },
-  { href: "/mi-club-de-ilustracion", label: "Mi Club de Ilustración" },
+  { href: CLUB_URL, label: "Mi Club de Ilustración", external: true },
   { href: "/#contacto", label: "Contacto" },
 ];
 
