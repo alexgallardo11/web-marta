@@ -1,5 +1,36 @@
 import { expect, test } from "@playwright/test";
 
+test("navega el carrusel de libros con flechas junto a los puntos", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const controls = page.getByRole("group", {
+    name: "Controles del carrusel",
+  });
+  await controls.scrollIntoViewIfNeeded();
+
+  const previousButton = controls.getByRole("button", {
+    name: "Ver libro anterior",
+  });
+  const nextButton = controls.getByRole("button", {
+    name: "Ver siguiente libro",
+  });
+  const firstDot = controls.locator(
+    ".reference-books__pagination button",
+  ).first();
+
+  await expect(previousButton).toBeDisabled();
+  await expect(firstDot).toHaveAttribute("aria-current", "true");
+
+  await nextButton.click();
+  await expect(previousButton).toBeEnabled();
+  await expect(firstDot).not.toHaveAttribute("aria-current", "true");
+
+  await previousButton.click();
+  await expect(firstDot).toHaveAttribute("aria-current", "true");
+});
+
 test("abre y navega el visor de libros desde el carrusel de inicio", async ({
   page,
 }) => {

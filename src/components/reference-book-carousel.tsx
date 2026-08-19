@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ReferenceBookDialog } from "@/components/reference-book-dialog";
 import { referenceCarouselSlides } from "@/lib/books-data";
@@ -85,6 +86,14 @@ export function ReferenceBookCarousel({
     setSelectedBook(book);
   }
 
+  function moveToAdjacentBook(direction: -1 | 1) {
+    const nextIndex = activeBookIndex + direction;
+
+    if (nextIndex < 0 || nextIndex >= carouselSlides.length) return;
+
+    scrollToBook(nextIndex);
+  }
+
   return (
     <div className="reference-books__carousel">
       <div
@@ -116,17 +125,39 @@ export function ReferenceBookCarousel({
         ))}
       </div>
 
-      <div className="reference-books__pagination" aria-label="Navegación de libros">
-        {carouselSlides.map(({ book, image }, index) => (
-          <button
-            type="button"
-            className={index === activeBookIndex ? "is-active" : ""}
-            key={image}
-            onClick={() => scrollToBook(index)}
-            aria-label={`Ver ${book.title}`}
-            aria-current={index === activeBookIndex ? "true" : undefined}
-          />
-        ))}
+      <div className="reference-books__controls" role="group" aria-label="Controles del carrusel">
+        <button
+          type="button"
+          className="reference-books__arrow reference-books__arrow--previous"
+          onClick={() => moveToAdjacentBook(-1)}
+          aria-label="Ver libro anterior"
+          disabled={activeBookIndex === 0}
+        >
+          <ArrowLeft aria-hidden="true" />
+        </button>
+
+        <div className="reference-books__pagination" aria-label="Navegación de libros">
+          {carouselSlides.map(({ book, image }, index) => (
+            <button
+              type="button"
+              className={index === activeBookIndex ? "is-active" : ""}
+              key={image}
+              onClick={() => scrollToBook(index)}
+              aria-label={`Ver ${book.title}`}
+              aria-current={index === activeBookIndex ? "true" : undefined}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          className="reference-books__arrow reference-books__arrow--next"
+          onClick={() => moveToAdjacentBook(1)}
+          aria-label="Ver siguiente libro"
+          disabled={activeBookIndex === carouselSlides.length - 1}
+        >
+          <ArrowRight aria-hidden="true" />
+        </button>
       </div>
 
       <ReferenceBookDialog
