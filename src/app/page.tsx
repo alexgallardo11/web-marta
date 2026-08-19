@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Gamepad2, Mail } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 import { ReferenceBookCarousel } from "@/components/reference-book-carousel";
 import { ReferenceTestimonialsCarousel } from "@/components/reference-testimonials-carousel";
 import { SiteFooter } from "@/components/site-footer";
@@ -47,9 +47,9 @@ const supportPaths = [
     alt: "Marta Moreno dibujando en su estudio",
     title: "Mi Club de Ilustración",
     text: "Te acompaño a crear ilustraciones memorables y transformar tus ideas en historias con emoción.",
-    href: "/mi-club-de-ilustracion",
+    href: CLUB_URL,
     label: "Conocer el Club",
-    external: false,
+    external: true,
   },
 ] as const;
 
@@ -185,10 +185,10 @@ export default function Home() {
                 <strong className="reference-hero__accent">
                   La ilustración infantil
                 </strong>
-                <span>No es solo dibujar bonito.</span>
+                <span>No es solo dibujar bonito</span>
               </h1>
               <p className="reference-hero__statement">
-                Es crear <span>emoción</span> y <span>conectar</span>.
+                Es crear <span>emoción</span> y <span>conectar</span>
               </p>
               <p className="reference-hero__lead">
                 Eso es lo que hago, y quiero acompañarte en el camino para que tú
@@ -284,71 +284,6 @@ export default function Home() {
                 sizes="(max-width: 767px) 100vw, (max-width: 1439px) 96vw, 88rem"
               />
             </figure>
-          </div>
-        </section>
-
-        <section className="reference-games" aria-labelledby="games-title">
-          <div className="site-container">
-            <div className="reference-games__heading">
-              <div>
-                <p className="reference-games__eyebrow">
-                  <Gamepad2 aria-hidden="true" /> Un recreo creativo
-                </p>
-                <h2 id="games-title">Juega con las ideas antes de dibujarlas.</h2>
-              </div>
-              <p>
-                Dos juegos para desbloquear personajes, mezclar ocurrencias y
-                volver al papel con una historia que contar.
-              </p>
-            </div>
-
-            <div className="reference-games__grid">
-              <Link
-                href="/juegos/personajes-locos"
-                className="reference-game-card reference-game-card--cups"
-              >
-                <Image
-                  src="/images/web-2026/characters/martina-futbolista.png"
-                  alt="Martina Futbolista"
-                  width={720}
-                  height={720}
-                  sizes="(max-width: 720px) 30vw, 14rem"
-                />
-                <span className="reference-game-card__copy">
-                  <span className="reference-game-card__eyebrow">Juego 01</span>
-                  <h3>Personajes locos</h3>
-                  <span className="reference-game-card__description">
-                    Mezcla cuatro pistas inesperadas y empieza a dibujar.
-                  </span>
-                  <span className="reference-game-card__link">
-                    Mezclar ideas <ArrowRight aria-hidden="true" />
-                  </span>
-                </span>
-              </Link>
-
-              <Link
-                href="/juegos/caldero-magico"
-                className="reference-game-card reference-game-card--cauldron"
-              >
-                <Image
-                  src="/images/web-2026/characters/perro-cocinero.png"
-                  alt="El Perro Cocinero"
-                  width={720}
-                  height={720}
-                  sizes="(max-width: 720px) 30vw, 14rem"
-                />
-                <span className="reference-game-card__copy">
-                  <span className="reference-game-card__eyebrow">Juego 02</span>
-                  <h3>Caldero mágico</h3>
-                  <span className="reference-game-card__description">
-                    Elige los ingredientes y deja que aparezca una historia.
-                  </span>
-                  <span className="reference-game-card__link">
-                    Invocar historia <ArrowRight aria-hidden="true" />
-                  </span>
-                </span>
-              </Link>
-            </div>
           </div>
         </section>
 

@@ -567,14 +567,14 @@
 
   .reference-hero h1 {
     max-width: 12ch;
-    font-size: clamp(2.45rem, 12.5vw, 3.05rem);
-    line-height: 0.96;
+    font-size: clamp(2.3rem, 11.5vw, 2.85rem);
+    line-height: 1.02;
   }
 
   .reference-hero__statement {
     margin-top: 1.25rem;
-    font-size: clamp(1.9rem, 9.6vw, 2.45rem);
-    line-height: 0.95;
+    font-size: clamp(2.3rem, 11.5vw, 2.85rem);
+    line-height: 1.02;
   }
 
   .reference-hero__lead {
@@ -7390,6 +7390,7 @@ a {
 .reference-home h1,
 .reference-home h2,
 .reference-home h3 {
+  color: #000;
   font-family: var(--font-display), sans-serif;
   font-weight: 700;
   letter-spacing: -0.04em;
@@ -7550,8 +7551,8 @@ a {
 
 .reference-hero h1 {
   max-width: 11ch;
-  font-size: clamp(2.8rem, 6vw, 5.8rem);
-  line-height: 0.98;
+  font-size: clamp(2.6rem, 5.5vw, 5.4rem);
+  line-height: 1.02;
 }
 
 .reference-hero h1 span {
@@ -7559,15 +7560,15 @@ a {
 }
 
 .reference-hero__statement {
-  max-width: 10ch;
+  max-width: 12ch;
   margin-top: 1.5rem;
   color: var(--reference-ink);
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(2.15rem, 4.5vw, 4.3rem);
-  font-weight: 750;
-  letter-spacing: -0.05em;
-  line-height: 0.94;
-  text-transform: uppercase;
+  font-size: clamp(2.6rem, 5.5vw, 5.4rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  text-transform: none;
 }
 
 .reference-hero__lead {

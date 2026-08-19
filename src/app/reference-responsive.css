@@ -7,7 +7,7 @@
 
 .reference-home .reference-hero__accent,
 .reference-home .reference-hero__statement span {
-  color: var(--reference-orange-text, #b85c00);
+  color: #000;
   font: inherit;
 }
 
@@ -17,7 +17,7 @@
 
 .reference-home .reference-hero__statement {
   margin-top: 0;
-  line-height: 0.96;
+  line-height: 1.02;
 }
 
 .reference-home section[id] {
@@ -627,12 +627,44 @@
   height: 1.1rem;
 }
 
+.reference-book-dialog {
+  width: min(72rem, calc(100vw - 2rem));
+}
+
+.reference-book-dialog::backdrop {
+  background: rgb(18 23 34 / 0.78);
+  backdrop-filter: blur(5px);
+}
+
+.reference-book-dialog .reference-dialog__surface {
+  border: 0;
+  border-radius: 0.6rem;
+  background: #fffdf7;
+  box-shadow: none;
+}
+
+.reference-book-dialog .reference-dialog__close {
+  top: clamp(0.75rem, 2vw, 1.2rem);
+  right: clamp(0.75rem, 2vw, 1.2rem);
+  width: 2.75rem;
+  height: 2.75rem;
+  border-color: color-mix(in srgb, var(--reference-ink, #121722) 22%, transparent);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: none;
+  color: var(--reference-ink, #121722);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
 .reference-book-dialog__content {
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: clamp(1.2rem, 3.4vw, 2.35rem);
 }
 
 .reference-book-dialog__header {
-  padding-right: 3.5rem;
+  padding-right: 4.25rem;
 }
 
 .reference-book-dialog__header p,
@@ -642,6 +674,10 @@
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+.reference-book-dialog__header p {
+  color: var(--reference-orange-text, #b85c00);
 }
 
 .reference-book-dialog__header h2,
@@ -654,18 +690,30 @@
   line-height: 1;
 }
 
+.reference-book-dialog__header h2 {
+  color: var(--reference-ink, #121722);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2rem, 5.4vw, 4.15rem);
+  font-weight: 800;
+  letter-spacing: -0.065em;
+  line-height: 0.93;
+}
+
 .reference-book-dialog__viewer {
   position: relative;
-  margin-top: 1.25rem;
+  margin-top: clamp(1.25rem, 2.6vw, 1.75rem);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .reference-book-dialog__stage {
   position: relative;
-  height: min(61dvh, 35rem);
+  height: min(59dvh, 34rem);
   margin: 0;
   overflow: hidden;
-  border: 1px solid rgb(18 23 34 / 0.1);
-  background: #f4f5f6;
+  background: #fff;
 }
 
 .reference-book-dialog__stage img {
@@ -680,61 +728,110 @@
   width: 2.75rem;
   height: 2.75rem;
   place-items: center;
-  border: 1px solid rgb(18 23 34 / 0.2);
+  border: 1px solid color-mix(in srgb, var(--reference-ink, #121722) 22%, transparent);
   border-radius: 50%;
   background: #fff;
-  color: #121722;
+  box-shadow: none;
+  color: var(--reference-ink, #121722);
   cursor: pointer;
   transform: translateY(-50%);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 
 .reference-book-dialog__arrow:disabled {
+  border-color: color-mix(in srgb, var(--reference-ink, #121722) 18%, transparent);
+  background: #fff;
+  box-shadow: none;
+  color: color-mix(in srgb, var(--reference-ink, #121722) 38%, transparent);
   cursor: default;
-  opacity: 0.35;
+  opacity: 0.55;
 }
 
 .reference-book-dialog__arrow--previous {
-  left: 0.75rem;
+  left: clamp(0.7rem, 1.8vw, 1.25rem);
 }
 
 .reference-book-dialog__arrow--next {
-  right: 0.75rem;
+  right: clamp(0.7rem, 1.8vw, 1.25rem);
 }
 
 .reference-book-dialog__meta {
-  margin-top: 0.75rem;
-  color: rgb(18 23 34 / 0.7);
-  font-size: 0.75rem;
-  font-weight: 700;
+  width: fit-content;
+  margin: 0.9rem auto 0;
+  padding-bottom: 0.25rem;
+  border-bottom: 0.18rem solid var(--reference-orange, #ffbd5d);
+  color: var(--reference-ink, #121722);
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  line-height: 1;
   text-align: center;
+  text-transform: uppercase;
 }
 
 .reference-book-dialog__thumbnails {
   display: flex;
-  gap: 0.6rem;
-  margin-top: 0.75rem;
-  padding-bottom: 0.25rem;
-  overflow-x: auto;
+  min-height: 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.35rem, 0.65vw, 0.65rem);
+  margin-top: 1rem;
+  padding: 0;
+  overflow: visible;
 }
 
 .reference-book-dialog__thumbnails button {
   position: relative;
-  width: 4.75rem;
-  height: 4.75rem;
+  width: 0.42rem;
+  height: 0.42rem;
   flex: 0 0 auto;
-  overflow: hidden;
-  border: 2px solid transparent;
-  border-radius: 0.25rem;
-  background: #f4f5f6;
+  overflow: visible;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--reference-ink, #121722) 20%, transparent);
+  box-shadow: none;
   cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
 }
 
 .reference-book-dialog__thumbnails button.is-active {
-  border-color: var(--reference-orange, #f8b84e);
+  background: color-mix(in srgb, var(--reference-ink, #121722) 82%, transparent);
+  transform: scale(1.25);
 }
 
 .reference-book-dialog__thumbnails img {
-  object-fit: contain;
+  display: none;
+}
+
+.reference-book-dialog .reference-dialog__close:hover,
+.reference-book-dialog .reference-dialog__close:focus-visible,
+.reference-book-dialog__arrow:not(:disabled):hover,
+.reference-book-dialog__arrow:not(:disabled):focus-visible {
+  background: var(--reference-cream, #fff8dc);
+}
+
+.reference-book-dialog__arrow:not(:disabled):hover,
+.reference-book-dialog__arrow:not(:disabled):focus-visible {
+  transform: translateY(-50%);
+}
+
+.reference-book-dialog__thumbnails button:hover,
+.reference-book-dialog__thumbnails button:focus-visible {
+  background: color-mix(in srgb, var(--reference-ink, #121722) 56%, transparent);
+  transform: scale(1.25);
+}
+
+.reference-book-dialog .reference-dialog__close:focus-visible,
+.reference-book-dialog__arrow:focus-visible,
+.reference-book-dialog__thumbnails button:focus-visible {
+  outline: 0.16rem solid var(--reference-orange, #ffbd5d);
+  outline-offset: 0.18rem;
 }
 
 .reference-review-dialog {
@@ -852,16 +949,36 @@
     padding: 1rem;
   }
 
+  .reference-book-dialog .reference-dialog__close,
+  .reference-book-dialog__arrow {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .reference-book-dialog__header {
+    padding-right: 3.4rem;
+  }
+
   .reference-book-dialog__stage {
     height: min(55dvh, 27rem);
   }
 
   .reference-book-dialog__arrow--previous {
-    left: 0.4rem;
+    left: 0.6rem;
   }
 
   .reference-book-dialog__arrow--next {
-    right: 0.4rem;
+    right: 0.6rem;
+  }
+
+  .reference-book-dialog__thumbnails {
+    gap: 0.32rem;
+    margin-top: 0.85rem;
+  }
+
+  .reference-book-dialog__thumbnails button {
+    width: 0.34rem;
+    height: 0.34rem;
   }
 
   .reference-review-dialog__content {
@@ -958,6 +1075,12 @@
   .reference-scroll-top {
     transition: none;
   }
+
+  .reference-book-dialog .reference-dialog__close,
+  .reference-book-dialog__arrow,
+  .reference-book-dialog__thumbnails button {
+    transition: none;
+  }
 }
 
 /* Editorial book index inspired by the reference site. */
@@ -1023,8 +1146,10 @@
 }
 
 .reference-library-grid {
-  column-count: 4;
-  column-gap: clamp(1.5rem, 3vw, 3rem);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 3vw, 3rem);
+  align-items: start;
   margin-top: clamp(3rem, 6vw, 5rem);
 }
 
@@ -1160,11 +1285,10 @@
 }
 
 .reference-library-card {
-  display: inline-flex;
+  display: flex;
   min-width: 0;
   width: 100%;
   align-items: center;
-  break-inside: avoid;
   flex-direction: column;
   padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
   color: var(--reference-ink);
@@ -1173,16 +1297,24 @@
 }
 
 .reference-library-card figure {
+  display: flex;
   width: 100%;
+  height: clamp(15rem, 26vw, 22rem);
   margin: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #fff;
   line-height: 0;
 }
 
 .reference-library-card figure img {
   display: block;
-  width: 100%;
+  max-width: 88%;
+  max-height: 88%;
+  width: auto;
   height: auto;
-  object-fit: unset;
+  object-fit: contain;
   filter: none;
 }
 
@@ -1201,14 +1333,14 @@
 
 @media (min-width: 40rem) and (max-width: 63.99rem) {
   .reference-library-grid {
-    column-count: 2;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
 }
 
 @media (min-width: 64rem) and (max-width: 79.99rem) {
   .reference-library-grid {
-    column-count: 3;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -1229,16 +1361,20 @@
 
   .reference-library-grid {
     width: min(100%, 19rem);
-    column-count: 1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-inline: auto;
   }
 
   .reference-library-card {
-    padding-bottom: 4rem;
+    padding-bottom: 3rem;
+  }
+
+  .reference-library-card figure {
+    height: clamp(12rem, 42vw, 17rem);
   }
 
   .reference-library-card h2 {
-    font-size: 1.35rem;
+    font-size: 1.15rem;
   }
 
   .reference-library-cta .reference-club__grid > img {
@@ -1246,29 +1382,381 @@
   }
 }
 
-/* Book carousel: seamless editorial presentation inspired by the original site. */
+/* Library gallery: the source photos are the same full compositions used by
+   the reference, so they must sit edge-to-edge and never be cropped into cards. */
+
+.reference-library-hero {
+  padding-block: clamp(3.25rem, 6vw, 6rem);
+  background: #fff;
+}
+
+.reference-library-hero .site-container {
+  width: min(100% - 2.5rem, 83.875rem);
+}
+
+.reference-library-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.85fr);
+  align-items: center;
+  column-gap: clamp(2.5rem, 6vw, 7rem);
+}
+
+.reference-library-hero__copy {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0;
+  text-align: left;
+}
+
+.reference-library-hero__copy h1 {
+  max-width: none;
+  margin: 0;
+  color: #121722;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(3rem, 6vw, 6.25rem);
+  font-weight: 700;
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.reference-library-hero__statement {
+  max-width: 13ch;
+  margin: clamp(1.25rem, 2vw, 1.75rem) 0 0;
+  color: var(--reference-ink);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.15rem, 4vw, 4.15rem);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.reference-library-hero__lead {
+  max-width: 29ch;
+  margin: clamp(1rem, 1.8vw, 1.5rem) 0 0;
+  color: color-mix(in srgb, var(--reference-ink) 90%, transparent);
+  font-size: clamp(0.94rem, 1.25vw, 1.12rem);
+  line-height: 1.48;
+}
+
+.reference-library-hero__action {
+  margin-top: clamp(1.3rem, 2vw, 1.85rem);
+}
+
+.reference-library-hero__image {
+  position: relative;
+  width: min(100%, 23rem);
+  min-height: 0;
+  aspect-ratio: 3 / 4;
+  margin: 0;
+  justify-self: end;
+  overflow: hidden;
+}
+
+.reference-library-hero__image img {
+  object-fit: cover;
+  object-position: center center;
+}
+
+.reference-library-index {
+  padding-block: clamp(3.5rem, 6vw, 5.5rem) 6.5rem;
+}
+
+.reference-library-index .site-container {
+  width: min(100% - 2.5rem, 83.875rem);
+}
+
+.reference-library-filters {
+  margin-top: 0;
+}
+
+.reference-library-filters__buttons {
+  gap: 0.55rem;
+}
+
+.reference-library-filters__buttons button,
+.reference-library-page .reference-library-filters__buttons button[aria-pressed="false"],
+.reference-library-page .reference-library-filters__buttons button[aria-pressed="true"] {
+  min-height: 2.6rem;
+  margin: 0;
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--reference-orange);
+  color: var(--reference-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.67rem;
+  font-weight: 750;
+  letter-spacing: 0.035em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  transition: transform 180ms var(--ease-out-expo), box-shadow 180ms ease,
+    background-color 180ms ease, color 180ms ease;
+}
+
+.reference-library-filters__buttons button:hover {
+  background: var(--reference-orange);
+  box-shadow: 0 0.3rem 0 rgb(18 23 34 / 0.16);
+  transform: translateY(-0.12rem);
+}
+
+.reference-library-filters__buttons button.is-active,
+.reference-library-page .reference-library-filters__buttons button[aria-pressed="true"] {
+  background: var(--reference-ink);
+  color: #fff;
+}
+
+.reference-library-filters__buttons button.is-active:hover,
+.reference-library-page .reference-library-filters__buttons button[aria-pressed="true"]:hover {
+  background: var(--reference-ink);
+}
+
+.reference-library-filters__buttons button:focus-visible,
+.reference-library-filter-menu__trigger:focus-visible,
+.reference-library-filter-menu__options button:focus-visible,
+.reference-library-index__return:focus-visible {
+  outline: 0.1875rem solid #121722;
+  outline-offset: 0.1875rem;
+}
+
+.reference-library-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem 0;
+  margin-top: 1.875rem;
+}
+
+.reference-library-card {
+  display: block;
+  padding: 0;
+}
+
+.reference-library-card__open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.reference-library-card__open:focus-visible {
+  outline: 0.16rem solid var(--reference-orange, #ffbd5d);
+  outline-offset: 0.25rem;
+}
+
+.reference-library-card figure {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: transparent;
+}
+
+.reference-library-card figure img {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  object-fit: contain;
+}
+
+.reference-library-index__return {
+  display: flex;
+  width: fit-content;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: clamp(4rem, 7vw, 6.5rem) auto 0;
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  background: #f68e45;
+  color: #fff;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(0.72rem, 1.1vw, 0.88rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.reference-library-index__return svg {
+  width: 1.05rem;
+  transition: transform 160ms ease;
+}
+
+.reference-library-index__return:hover svg {
+  transform: translateX(-0.18rem);
+}
+
+@media (max-width: 47.99rem) {
+  .reference-library-hero {
+    display: block;
+    min-height: 0;
+    padding-block: clamp(2.75rem, 11vw, 4rem);
+  }
+
+  .reference-library-hero .site-container {
+    width: calc(100% - 3rem);
+  }
+
+  .reference-library-hero__grid {
+    display: grid;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2rem;
+  }
+
+  .reference-library-hero__copy {
+    min-height: 0;
+    padding: 0;
+  }
+
+  .reference-library-hero__copy h1 {
+    max-width: none;
+    font-size: clamp(2.45rem, 11.5vw, 3.35rem);
+  }
+
+  .reference-library-hero__statement {
+    max-width: 12ch;
+    margin-top: 1.1rem;
+    font-size: clamp(2rem, 9.5vw, 2.65rem);
+  }
+
+  .reference-library-hero__lead {
+    margin-top: 1rem;
+    font-size: 0.98rem;
+  }
+
+  .reference-library-hero__action {
+    margin-top: 1.4rem;
+  }
+
+  .reference-library-hero__image {
+    min-height: 0;
+    width: min(100%, 20rem);
+    aspect-ratio: 3 / 4;
+    justify-self: center;
+  }
+
+  .reference-library-index {
+    padding-block: 2.6rem 4.5rem;
+  }
+
+  .reference-library-index .site-container {
+    width: calc(100% - 1.5rem);
+  }
+
+  .reference-library-filters {
+    margin-top: 1.75rem;
+  }
+
+  .reference-library-filters__buttons {
+    display: none;
+  }
+
+  .reference-library-filter-menu {
+    position: relative;
+    display: block;
+    width: min(100%, 22rem);
+    margin-inline: auto;
+  }
+
+  .reference-library-filter-menu__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .reference-library-filter-menu__trigger {
+    min-height: 2.75rem;
+    margin-top: 0;
+    padding: 0.65rem 1rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--reference-orange);
+    color: var(--reference-ink);
+    font-family: var(--font-body), sans-serif;
+    font-size: 0.67rem;
+    font-weight: 750;
+    letter-spacing: 0.035em;
+    line-height: 1.1;
+    text-transform: uppercase;
+    transition: transform 180ms var(--ease-out-expo), box-shadow 180ms ease;
+  }
+
+  .reference-library-filter-menu__trigger:hover {
+    box-shadow: 0 0.3rem 0 rgb(18 23 34 / 0.16);
+    transform: translateY(-0.12rem);
+  }
+
+  .reference-library-filter-menu__options {
+    border: 1px solid color-mix(in srgb, var(--reference-ink) 14%, transparent);
+    border-radius: 0.75rem;
+    background: #fff;
+    box-shadow: 0 0.75rem 1.6rem rgb(18 23 34 / 0.15);
+  }
+
+  .reference-library-filter-menu__options button {
+    min-height: 2.75rem;
+    background: #fff;
+    color: var(--reference-ink);
+    font-family: var(--font-body), sans-serif;
+    font-size: 0.67rem;
+    font-weight: 750;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+  }
+
+  .reference-library-filter-menu__options button[aria-selected="true"],
+  .reference-library-filter-menu__options button:hover,
+  .reference-library-filter-menu__options button:focus-visible {
+    background: var(--reference-orange);
+  }
+
+  .reference-library-grid {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem 0;
+    margin-top: 1.5rem;
+  }
+
+  .reference-library-index__return {
+    margin-top: 3.5rem;
+  }
+}
+
+/* Book carousel: the source photos already include the books and their shadows. */
 
 .reference-home .reference-books__carousel {
   grid-template-areas:
-    "previous rail next"
-    ". pagination .";
-  grid-template-columns: 3rem minmax(0, 1fr) 3rem;
-  gap: 0.75rem 1rem;
-}
-
-.reference-home .reference-books__arrow--previous {
-  grid-area: previous;
-}
-
-.reference-home .reference-books__arrow--next {
-  grid-area: next;
+    "rail"
+    "pagination";
+  grid-template-columns: minmax(0, 1fr);
+  width: min(100%, 71.25rem);
+  margin-inline: auto;
+  gap: 1.2rem;
 }
 
 .reference-home .reference-books__rail {
   grid-area: rail;
-  grid-auto-columns: calc((100% - 3rem) / 3);
-  gap: 1.5rem;
-  padding: 1.25rem 0 0.75rem;
+  grid-auto-columns: calc(100% / 3);
+  gap: 0;
+  align-items: center;
+  padding: 0;
   scroll-padding-inline: 0;
   scrollbar-width: none;
 }
@@ -1277,15 +1765,29 @@
   display: none;
 }
 
+.reference-home .reference-book-card {
+  align-content: start;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
 .reference-home .reference-book-card figure {
-  height: clamp(15rem, 23vw, 21.5rem);
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  height: auto;
+  margin: 0;
+  overflow: hidden;
   border: 0;
   border-radius: 0;
-  background: #fff;
+  background: transparent;
   box-shadow: none;
-  transform: translateY(0) scale(0.985);
-  transform-origin: center bottom;
-  transition: transform 280ms cubic-bezier(0.25, 1, 0.5, 1);
+  transform: none;
+}
+
+.reference-home .reference-book-card__cover::after {
+  content: none;
 }
 
 .reference-home .reference-book-card.is-active {
@@ -1293,16 +1795,25 @@
 }
 
 .reference-home .reference-book-card.is-active figure {
-  transform: translateY(-0.4rem) scale(1.025);
+  transform: none;
 }
 
 .reference-home .reference-book-card img {
+  width: 100%;
+  height: 100%;
   filter: none;
+  object-fit: contain;
+  object-position: center;
 }
 
 .reference-home .reference-book-card:hover img,
 .reference-home .reference-book-card:focus-visible img {
-  transform: translateY(-0.2rem);
+  transform: translateY(-0.12rem);
+}
+
+.reference-home .reference-book-card:focus-visible {
+  outline: 2px solid var(--reference-orange);
+  outline-offset: 0.25rem;
 }
 
 .reference-home .reference-books__pagination {
@@ -1315,53 +1826,47 @@
   overflow: hidden;
 }
 
-.reference-home .reference-books__pagination span {
+.reference-home .reference-books__pagination button {
   width: 0.42rem;
   height: 0.42rem;
   flex: 0 0 auto;
+  padding: 0;
   border-radius: 50%;
+  border: 0;
   background: color-mix(in srgb, var(--reference-ink) 20%, transparent);
+  cursor: pointer;
   transition: background-color 180ms ease, transform 180ms ease;
 }
 
-.reference-home .reference-books__pagination span.is-active {
+.reference-home .reference-books__pagination button.is-active {
   background: color-mix(in srgb, var(--reference-ink) 82%, transparent);
   transform: scale(1.25);
 }
 
 @media (min-width: 40rem) and (max-width: 63.99rem) {
   .reference-home .reference-books__rail {
-    grid-auto-columns: calc((100% - 1.25rem) / 2);
-    gap: 1.25rem;
-  }
-
-  .reference-home .reference-book-card figure {
-    height: clamp(15rem, 35vw, 20rem);
+    grid-auto-columns: calc(100% / 3);
   }
 }
 
-@media (max-width: 39.99rem) {
+@media (max-width: 47.99rem) {
   .reference-home .reference-books__carousel {
-    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
-    gap: 0.75rem 0;
+    width: 100%;
+    gap: 1rem;
   }
 
   .reference-home .reference-books__rail {
-    grid-auto-columns: min(76vw, 18rem);
-    gap: 0.75rem;
-    padding: 0.75rem 1.5rem 0.5rem;
-    scroll-padding-inline: 1.5rem;
-  }
-
-  .reference-home .reference-book-card figure {
-    height: clamp(14rem, 67vw, 18rem);
+    grid-auto-columns: 50%;
+    gap: 0;
+    padding: 0;
+    scroll-padding-inline: 0;
   }
 
   .reference-home .reference-books__pagination {
     gap: 0.32rem;
   }
 
-  .reference-home .reference-books__pagination span {
+  .reference-home .reference-books__pagination button {
     width: 0.34rem;
     height: 0.34rem;
   }
@@ -1373,10 +1878,10 @@
   }
 
   .reference-home .reference-book-card.is-active figure {
-    transform: translateY(-0.2rem) scale(1.01);
+    transform: none;
   }
 
-  .reference-home .reference-books__pagination span {
+  .reference-home .reference-books__pagination button {
     transition: none;
   }
 }
@@ -1423,6 +1928,9 @@
 }
 
 .game-page-shell .game-hero .display-title,
-.game-page-shell .game-hero .display-title em {
-  color: var(--reference-orange-text, #b85c00);
+.game-page-shell .game-hero .display-title em,
+.game-page-shell .game-section-intro h2,
+.game-page-shell .game-hero__lead,
+.game-page-shell .game-narrator__bubble p {
+  color: #000;
 }

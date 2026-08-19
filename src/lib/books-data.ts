@@ -527,3 +527,116 @@ export const books = [
     shelfScale: 0.84,
   },
 ] satisfies readonly Book[];
+
+export type ReferenceLibraryCategory = "author" | "anton" | "parenting";
+
+export const referenceLibraryItems = [
+  {
+    bookSlug: "el-monstruo-comepueblos",
+    image: "/images/reference-carousel/FT3S3979-1536x1024.jpeg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "gracias-profe",
+    image: "/images/reference-carousel/FT3S3981-1536x1024.jpeg",
+    category: "author",
+  },
+  {
+    bookSlug: "sensibles",
+    image: "/images/reference-carousel/FT3S3983-1536x1024.jpeg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "la-fuente",
+    image: "/images/reference-carousel/FT3S3990-1536x1024.jpeg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "el-hilo",
+    image: "/images/reference-carousel/FT3S3992-1536x1024.jpeg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "el-hilo",
+    image: "/images/reference-carousel/FT3S3993-1536x1024.jpeg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "el-caracol-se-queja",
+    image: "/images/reference-carousel/FT3S3999-1536x1024.jpeg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "anton-pinon-una-carrera-muy-marron",
+    image: "/images/reference-carousel/FT3S4002-1536x1024.jpeg",
+    category: "anton",
+  },
+  {
+    bookSlug: "anton-pinon-una-aventura-sin-pantalon",
+    image: "/images/reference-carousel/FT3S4003-1536x1024.jpeg",
+    category: "anton",
+  },
+  {
+    bookSlug: "anton-pinon-en-el-camping",
+    image: "/images/reference-carousel/FT3S4006-1536x1024.jpeg",
+    category: "anton",
+  },
+  {
+    bookSlug: "anton-pinon-una-dulce-explosion",
+    image: "/images/reference-carousel/FT3S4007-1536x1024.jpeg",
+    category: "anton",
+  },
+  {
+    bookSlug: "anton-pinon-detective-en-accion",
+    image: "/images/reference-carousel/FT3S4009-1536x1024.jpeg",
+    category: "anton",
+  },
+  {
+    bookSlug: "anton-pinon-en-busca-de-colchon",
+    image: "/images/reference-carousel/FT3S4011-1536x1024.jpeg",
+    category: "anton",
+  },
+  {
+    bookSlug: "kai-y-emma",
+    image: "/images/reference-carousel/FT3S4017-1536x1024.jpeg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "cocodrilo",
+    image: "/images/reference-carousel/FT3S3962-1536x1024.jpeg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "sant-jordi",
+    image: "/images/reference-carousel/FT3S3963-1536x1024.jpeg",
+    category: "author",
+  },
+  {
+    bookSlug: "que-frio",
+    image: "/images/reference-carousel/FT3S3968-2-1536x1024.jpeg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "don-croqueto",
+    image: "/images/reference-carousel/FT3S3969-1536x1024.jpeg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "dormir-sin-miedo",
+    image: "/images/reference-carousel/FT3S3972-copia-1536x1024.jpeg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "victor-no-quiere-compartir",
+    image: "/images/reference-carousel/FT3S3975-1536x1024.jpeg",
+    category: "parenting",
+  },
+] as const satisfies readonly {
+  bookSlug: Book["slug"];
+  image: string;
+  category: ReferenceLibraryCategory;
+}[];
+
+export const referenceCarouselSlides = referenceLibraryItems.map(
+  ({ bookSlug, image }) => ({ bookSlug, image }),
+);

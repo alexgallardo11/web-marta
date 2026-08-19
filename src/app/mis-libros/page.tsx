@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Mail } from "lucide-react";
+import { ArrowDown, ArrowLeft, Mail } from "lucide-react";
 import { ReferenceBooksFilter } from "@/components/reference-books-filter";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { books } from "@/lib/books-data";
+import { books, referenceLibraryItems } from "@/lib/books-data";
 import { NEWSLETTER_URL } from "@/lib/site-links";
+
+const booksBySlug = new Map(books.map((book) => [book.slug, book]));
+const libraryBooks = referenceLibraryItems.flatMap((item) => {
+  const book = booksBySlug.get(item.bookSlug);
+
+  return book ? [{ ...item, book }] : [];
+});
 
 export const metadata: Metadata = {
   title: "Mis libros",
@@ -44,12 +51,12 @@ export default function BooksPage() {
     },
     mainEntity: {
       "@type": "ItemList",
-      numberOfItems: books.length,
-      itemListElement: books.map((book, index) => ({
+      numberOfItems: libraryBooks.length,
+      itemListElement: libraryBooks.map(({ book, image }, index) => ({
         "@type": "ListItem",
         position: index + 1,
         name: book.title,
-        image: `https://martamoreno.com${book.cover}`,
+        image: `https://martamoreno.com${image}`,
       })),
     },
   };
@@ -63,18 +70,47 @@ export default function BooksPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
 
-        <section className="reference-library-index" aria-labelledby="library-title">
-          <div className="site-container">
-            <Link href="/" className="reference-library-index__back">
-              <ArrowLeft aria-hidden="true" /> Volver atrás
-            </Link>
-
-            <header className="reference-library-index__heading">
+        <section className="reference-library-hero" aria-labelledby="library-title">
+          <div className="site-container reference-library-hero__grid">
+            <header className="reference-library-hero__copy">
               <h1 id="library-title">Mis libros</h1>
-              <span aria-hidden="true" />
+              <p className="reference-library-hero__statement">
+                Historias para mirar, sentir y compartir.
+              </p>
+              <p className="reference-library-hero__lead">
+                Álbumes ilustrados para descubrir mundos, conversar y guardar
+                muy cerca.
+              </p>
+              <Link
+                href="#galeria-libros"
+                className="reference-button reference-library-hero__action"
+              >
+                Explorar los libros <ArrowDown aria-hidden="true" />
+              </Link>
             </header>
+            <figure className="reference-library-hero__image">
+              <Image
+                src="/images/marta-2026/marta-portada.jpg"
+                alt="Marta Moreno rodeada de los libros que ha ilustrado"
+                fill
+                priority
+                sizes="(max-width: 767px) calc(100vw - 3rem), (max-width: 1200px) 42vw, 29rem"
+              />
+            </figure>
+          </div>
+        </section>
 
+        <section
+          id="galeria-libros"
+          className="reference-library-index"
+          aria-label="Galería de libros"
+        >
+          <div className="site-container">
             <ReferenceBooksFilter books={books} />
+
+            <Link href="/" className="reference-library-index__return">
+              Volver a la página de inicio <ArrowLeft aria-hidden="true" />
+            </Link>
           </div>
         </section>
 

@@ -3,9 +3,14 @@
 import Image from "next/image";
 import { Check, ChevronDown } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
-import type { Book } from "@/lib/books-data";
+import { ReferenceBookDialog } from "@/components/reference-book-dialog";
+import {
+  referenceLibraryItems,
+  type Book,
+  type ReferenceLibraryCategory,
+} from "@/lib/books-data";
 
-type BookFilter = "all" | "author" | "anton" | "parenting";
+type BookFilter = "all" | ReferenceLibraryCategory;
 
 const filterOptions: readonly { value: BookFilter; label: string }[] = [
   { value: "all", label: "Todos los libros" },
@@ -14,33 +19,26 @@ const filterOptions: readonly { value: BookFilter; label: string }[] = [
   { value: "parenting", label: "Crianza consciente" },
 ];
 
-const authorBooks = new Set([
-  "sant-jordi",
-  "kai-y-emma",
-  "don-croqueto",
-  "el-monstruo-comepueblos",
-  "vera-astronauta",
-]);
-
-function getBookFilter(book: Book): Exclude<BookFilter, "all"> {
-  if (book.slug.startsWith("anton-pinon")) return "anton";
-  if (authorBooks.has(book.slug)) return "author";
-  return "parenting";
-}
-
 export function ReferenceBooksFilter({ books }: { books: readonly Book[] }) {
   const [activeFilter, setActiveFilter] = useState<BookFilter>("all");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const filterMenuRef = useRef<HTMLDivElement>(null);
   const filterTriggerRef = useRef<HTMLButtonElement>(null);
   const listboxId = useId();
   const activeOption = filterOptions.find(
     (option) => option.value === activeFilter,
   );
+  const booksBySlug = new Map(books.map((book) => [book.slug, book]));
+  const galleryItems = referenceLibraryItems.flatMap((item) => {
+    const book = booksBySlug.get(item.bookSlug);
+
+    return book ? [{ ...item, book }] : [];
+  });
   const visibleBooks =
     activeFilter === "all"
-      ? books
-      : books.filter((book) => getBookFilter(book) === activeFilter);
+      ? galleryItems
+      : galleryItems.filter((item) => item.category === activeFilter);
 
   useEffect(() => {
     const closeOnOutsidePress = (event: PointerEvent) => {
@@ -170,22 +168,33 @@ export function ReferenceBooksFilter({ books }: { books: readonly Book[] }) {
       </p>
 
       <div className="reference-library-grid" role="list">
-        {visibleBooks.map((book) => (
-          <article className="reference-library-card" role="listitem" key={book.slug}>
-            <figure>
-              <Image
-                src={book.displayCover ?? book.cover}
-                alt={`Portada de ${book.title}`}
-                width={900}
-                height={900}
-                sizes="(max-width: 639px) 76vw, (max-width: 1023px) 38vw, 20rem"
-                unoptimized
-              />
-            </figure>
-            <h2>{book.title}</h2>
+        {visibleBooks.map(({ book, image }) => (
+          <article className="reference-library-card" role="listitem" key={image}>
+            <button
+              type="button"
+              className="reference-library-card__open"
+              onClick={() => setSelectedBook(book)}
+              aria-label={`Abrir imágenes de ${book.title}`}
+            >
+              <figure>
+                <Image
+                  src={image}
+                  alt={`Fotografía de ${book.title}`}
+                  fill
+                  sizes="(max-width: 639px) calc(100vw - 2.5rem), 33vw"
+                  unoptimized
+                />
+              </figure>
+            </button>
           </article>
         ))}
       </div>
+
+      <ReferenceBookDialog
+        book={selectedBook}
+        open={selectedBook !== null}
+        onClose={() => setSelectedBook(null)}
+      />
     </>
   );
 }
