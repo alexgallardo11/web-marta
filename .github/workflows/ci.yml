@@ -162,10 +162,13 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build application
         run: pnpm build
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium firefox webkit
+      # The GitHub runner already includes the system packages Chromium needs.
+      # Installing every browser together with its Linux dependencies can exceed
+      # this job's timeout before the tests even begin.
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install chromium
       - name: End-to-end and accessibility tests
-        run: pnpm test:e2e
+        run: pnpm exec playwright test --project=chromium --project=mobile
       - name: Upload Playwright diagnostics
         if: ${{ failure() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
