@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ReferenceDialog } from "@/components/reference-dialog";
-import { getBookSpreads } from "@/lib/books-data";
+import { getBookSpreads, referenceCarouselSlides } from "@/lib/books-data";
 import type { Book } from "@/lib/books-data";
 
 export function ReferenceBookCarousel({
@@ -20,10 +20,24 @@ export function ReferenceBookCarousel({
   const selectedImages = selectedBook
     ? [selectedBook.cover, ...getBookSpreads(selectedBook)]
     : [];
+  const booksBySlug = new Map(books.map((book) => [book.slug, book]));
+  const carouselSlides = referenceCarouselSlides.flatMap((slide) => {
+    const book = booksBySlug.get(slide.bookSlug);
 
-  function moveRail(direction: number) {
-    railRef.current?.scrollBy({
-      left: direction * railRef.current.clientWidth * 0.82,
+    return book ? [{ ...slide, book }] : [];
+  });
+
+  function scrollToBook(index: number) {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    const card = rail.querySelectorAll<HTMLElement>(".reference-book-card")[
+      index
+    ];
+    if (!card) return;
+
+    rail.scrollTo({
+      left: card.offsetLeft,
       top: 0,
       behavior: "smooth",
     });
@@ -36,23 +50,14 @@ export function ReferenceBookCarousel({
     const cards = Array.from(
       rail.querySelectorAll<HTMLElement>(".reference-book-card"),
     );
-    const railRect = rail.getBoundingClientRect();
-    const railCenter = railRect.left + railRect.width / 2;
-    let closestIndex = 0;
-    let closestDistance = Number.POSITIVE_INFINITY;
+    const firstCard = cards[0];
+    if (!firstCard) return;
 
-    cards.forEach((card, index) => {
-      const cardRect = card.getBoundingClientRect();
-      const cardCenter = cardRect.left + cardRect.width / 2;
-      const distance = Math.abs(cardCenter - railCenter);
-
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = index;
-      }
-    });
-
-    setActiveBookIndex(closestIndex);
+    const gap = parseFloat(getComputedStyle(rail).columnGap || "0");
+    const step = firstCard.offsetWidth + gap;
+    setActiveBookIndex(
+      Math.min(cards.length - 1, Math.round(rail.scrollLeft / step)),
+    );
   }, []);
 
   function handleRailScroll() {
@@ -95,15 +100,6 @@ export function ReferenceBookCarousel({
 
   return (
     <div className="reference-books__carousel">
-      <button
-        type="button"
-        className="reference-books__arrow reference-books__arrow--previous"
-        onClick={() => moveRail(-1)}
-        aria-label="Ver libros anteriores"
-      >
-        <ArrowLeft aria-hidden="true" />
-      </button>
-
       <div
         ref={railRef}
         className="reference-books__rail"
@@ -112,21 +108,20 @@ export function ReferenceBookCarousel({
         tabIndex={0}
         onScroll={handleRailScroll}
       >
-        {books.map((book, index) => (
+        {carouselSlides.map(({ book, image }, index) => (
           <button
             type="button"
             className={`reference-book-card${index === activeBookIndex ? " is-active" : ""}`}
             onClick={() => openBook(book)}
             aria-label={`Abrir imágenes de ${book.title}`}
-            key={book.slug}
+            key={image}
           >
-            <figure>
+            <figure className="reference-book-card__cover">
               <Image
-                src={book.displayCover ?? book.cover}
+                src={image}
                 alt={`Portada de ${book.title}`}
-                width={900}
-                height={900}
-                sizes="(max-width: 720px) 42vw, (max-width: 1100px) 28vw, 18rem"
+                fill
+                sizes="(max-width: 767px) 50vw, (max-width: 1023px) 32vw, 24rem"
                 unoptimized
               />
             </figure>
@@ -134,20 +129,15 @@ export function ReferenceBookCarousel({
         ))}
       </div>
 
-      <button
-        type="button"
-        className="reference-books__arrow reference-books__arrow--next"
-        onClick={() => moveRail(1)}
-        aria-label="Ver más libros"
-      >
-        <ArrowRight aria-hidden="true" />
-      </button>
-
-      <div className="reference-books__pagination" aria-hidden="true">
-        {books.map((book, index) => (
-          <span
+      <div className="reference-books__pagination" aria-label="Navegación de libros">
+        {carouselSlides.map(({ book, image }, index) => (
+          <button
+            type="button"
             className={index === activeBookIndex ? "is-active" : ""}
-            key={book.slug}
+            key={image}
+            onClick={() => scrollToBook(index)}
+            aria-label={`Ver ${book.title}`}
+            aria-current={index === activeBookIndex ? "true" : undefined}
           />
         ))}
       </div>
