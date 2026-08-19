@@ -27,6 +27,12 @@ export default defineConfig({
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
     { name: "firefox", use: { ...devices["Desktop Firefox"] } },
     { name: "webkit", use: { ...devices["Desktop Safari"] } },
-    { name: "mobile", use: { ...devices["iPhone 13"] } },
+    {
+      name: "mobile",
+      // Keep the iPhone viewport, touch input and user agent while using the
+      // Chromium binary installed by CI. The iPhone preset otherwise defaults
+      // to WebKit and makes this project require a second browser download.
+      use: { ...devices["iPhone 13"], browserName: "chromium" },
+    },
   ],
 });
