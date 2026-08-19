@@ -20,8 +20,42 @@ test("navega el carrusel de libros con flechas junto a los puntos", async ({
     ".reference-books__pagination button",
   ).first();
 
+  const controlsLayout = await controls.evaluate((element) => {
+    const previousArrow = element.querySelector(
+      ".reference-books__arrow--previous",
+    );
+    const nextArrow = element.querySelector(".reference-books__arrow--next");
+    const dots = Array.from(
+      element.querySelectorAll(".reference-books__pagination button"),
+    );
+
+    if (!previousArrow || !nextArrow || dots.length === 0) {
+      throw new Error("No se encontraron todos los controles del carrusel.");
+    }
+
+    const firstDotBounds = dots[0].getBoundingClientRect();
+    const lastDotBounds = dots.at(-1)?.getBoundingClientRect();
+
+    if (!lastDotBounds) {
+      throw new Error("No se encontró el último punto del carrusel.");
+    }
+
+    return {
+      firstDotLeft: firstDotBounds.left,
+      lastDotRight: lastDotBounds.right,
+      previousArrowRight: previousArrow.getBoundingClientRect().right,
+      nextArrowLeft: nextArrow.getBoundingClientRect().left,
+    };
+  });
+
   await expect(previousButton).toBeDisabled();
   await expect(firstDot).toHaveAttribute("aria-current", "true");
+  expect(controlsLayout.firstDotLeft).toBeGreaterThan(
+    controlsLayout.previousArrowRight,
+  );
+  expect(controlsLayout.lastDotRight).toBeLessThan(
+    controlsLayout.nextArrowLeft,
+  );
 
   await nextButton.click();
   await expect(previousButton).toBeEnabled();
