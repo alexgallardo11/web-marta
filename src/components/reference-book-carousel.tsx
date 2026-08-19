@@ -1,10 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ReferenceDialog } from "@/components/reference-dialog";
-import { getBookSpreads, referenceCarouselSlides } from "@/lib/books-data";
+import { ReferenceBookDialog } from "@/components/reference-book-dialog";
+import { referenceCarouselSlides } from "@/lib/books-data";
 import type { Book } from "@/lib/books-data";
 
 export function ReferenceBookCarousel({
@@ -15,11 +14,7 @@ export function ReferenceBookCarousel({
   const railRef = useRef<HTMLDivElement>(null);
   const scrollFrameRef = useRef<number | null>(null);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [activeBookIndex, setActiveBookIndex] = useState(0);
-  const selectedImages = selectedBook
-    ? [selectedBook.cover, ...getBookSpreads(selectedBook)]
-    : [];
   const booksBySlug = new Map(books.map((book) => [book.slug, book]));
   const carouselSlides = referenceCarouselSlides.flatMap((slide) => {
     const book = booksBySlug.get(slide.bookSlug);
@@ -87,15 +82,7 @@ export function ReferenceBookCarousel({
   }, [updateActiveBook]);
 
   function openBook(book: Book) {
-    setSelectedImageIndex(0);
     setSelectedBook(book);
-  }
-
-  function moveImage(direction: number) {
-    setSelectedImageIndex((current) => {
-      const next = current + direction;
-      return Math.max(0, Math.min(next, selectedImages.length - 1));
-    });
   }
 
   return (
@@ -142,71 +129,11 @@ export function ReferenceBookCarousel({
         ))}
       </div>
 
-      <ReferenceDialog
+      <ReferenceBookDialog
+        book={selectedBook}
         open={selectedBook !== null}
         onClose={() => setSelectedBook(null)}
-        labelledBy="reference-book-dialog-title"
-        closeLabel="Cerrar imágenes del libro"
-        className="reference-book-dialog"
-      >
-        {selectedBook ? (
-          <div className="reference-book-dialog__content">
-            <header className="reference-book-dialog__header">
-              <p>{selectedBook.eyebrow}</p>
-              <h2 id="reference-book-dialog-title">{selectedBook.title}</h2>
-            </header>
-
-            <div className="reference-book-dialog__viewer">
-              <button
-                type="button"
-                className="reference-book-dialog__arrow reference-book-dialog__arrow--previous"
-                onClick={() => moveImage(-1)}
-                disabled={selectedImageIndex === 0}
-                aria-label="Imagen anterior"
-              >
-                <ArrowLeft aria-hidden="true" />
-              </button>
-              <figure className="reference-book-dialog__stage">
-                <Image
-                  src={selectedImages[selectedImageIndex]}
-                  alt={`${selectedImageIndex === 0 ? "Portada" : `Imagen interior ${selectedImageIndex}`} de ${selectedBook.title}`}
-                  fill
-                  sizes="(max-width: 767px) 92vw, 72vw"
-                  quality={92}
-                />
-              </figure>
-              <button
-                type="button"
-                className="reference-book-dialog__arrow reference-book-dialog__arrow--next"
-                onClick={() => moveImage(1)}
-                disabled={selectedImageIndex === selectedImages.length - 1}
-                aria-label="Imagen siguiente"
-              >
-                <ArrowRight aria-hidden="true" />
-              </button>
-            </div>
-
-            <div className="reference-book-dialog__meta" aria-live="polite">
-              Imagen {selectedImageIndex + 1} de {selectedImages.length}
-            </div>
-
-            <div className="reference-book-dialog__thumbnails" aria-label="Imágenes del libro">
-              {selectedImages.map((image, index) => (
-                <button
-                  type="button"
-                  className={index === selectedImageIndex ? "is-active" : ""}
-                  onClick={() => setSelectedImageIndex(index)}
-                  aria-label={`Ver imagen ${index + 1}`}
-                  aria-pressed={index === selectedImageIndex}
-                  key={`${image}-${index}`}
-                >
-                  <Image src={image} alt="" fill sizes="5rem" quality={88} />
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : null}
-      </ReferenceDialog>
+      />
     </div>
   );
 }

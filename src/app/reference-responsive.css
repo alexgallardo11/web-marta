@@ -1535,6 +1535,21 @@
   padding: 0;
 }
 
+.reference-library-card__open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.reference-library-card__open:focus-visible {
+  outline: 0.16rem solid var(--reference-orange, #ffbd5d);
+  outline-offset: 0.25rem;
+}
+
 .reference-library-card figure {
   position: relative;
   display: block;

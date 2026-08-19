@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Check, ChevronDown } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
+import { ReferenceBookDialog } from "@/components/reference-book-dialog";
 import {
   referenceLibraryItems,
   type Book,
@@ -21,6 +22,7 @@ const filterOptions: readonly { value: BookFilter; label: string }[] = [
 export function ReferenceBooksFilter({ books }: { books: readonly Book[] }) {
   const [activeFilter, setActiveFilter] = useState<BookFilter>("all");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const filterMenuRef = useRef<HTMLDivElement>(null);
   const filterTriggerRef = useRef<HTMLButtonElement>(null);
   const listboxId = useId();
@@ -168,18 +170,31 @@ export function ReferenceBooksFilter({ books }: { books: readonly Book[] }) {
       <div className="reference-library-grid" role="list">
         {visibleBooks.map(({ book, image }) => (
           <article className="reference-library-card" role="listitem" key={image}>
-            <figure>
-              <Image
-                src={image}
-                alt={`Fotografía de ${book.title}`}
-                fill
-                sizes="(max-width: 639px) calc(100vw - 2.5rem), 33vw"
-                unoptimized
-              />
-            </figure>
+            <button
+              type="button"
+              className="reference-library-card__open"
+              onClick={() => setSelectedBook(book)}
+              aria-label={`Abrir imágenes de ${book.title}`}
+            >
+              <figure>
+                <Image
+                  src={image}
+                  alt={`Fotografía de ${book.title}`}
+                  fill
+                  sizes="(max-width: 639px) calc(100vw - 2.5rem), 33vw"
+                  unoptimized
+                />
+              </figure>
+            </button>
           </article>
         ))}
       </div>
+
+      <ReferenceBookDialog
+        book={selectedBook}
+        open={selectedBook !== null}
+        onClose={() => setSelectedBook(null)}
+      />
     </>
   );
 }
