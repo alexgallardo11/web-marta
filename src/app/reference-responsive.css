@@ -627,12 +627,44 @@
   height: 1.1rem;
 }
 
+.reference-book-dialog {
+  width: min(72rem, calc(100vw - 2rem));
+}
+
+.reference-book-dialog::backdrop {
+  background: rgb(18 23 34 / 0.78);
+  backdrop-filter: blur(5px);
+}
+
+.reference-book-dialog .reference-dialog__surface {
+  border: 0;
+  border-radius: 0.6rem;
+  background: #fffdf7;
+  box-shadow: none;
+}
+
+.reference-book-dialog .reference-dialog__close {
+  top: clamp(0.75rem, 2vw, 1.2rem);
+  right: clamp(0.75rem, 2vw, 1.2rem);
+  width: 2.75rem;
+  height: 2.75rem;
+  border-color: color-mix(in srgb, var(--reference-ink, #121722) 22%, transparent);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: none;
+  color: var(--reference-ink, #121722);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
 .reference-book-dialog__content {
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: clamp(1.2rem, 3.4vw, 2.35rem);
 }
 
 .reference-book-dialog__header {
-  padding-right: 3.5rem;
+  padding-right: 4.25rem;
 }
 
 .reference-book-dialog__header p,
@@ -642,6 +674,10 @@
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+.reference-book-dialog__header p {
+  color: var(--reference-orange-text, #b85c00);
 }
 
 .reference-book-dialog__header h2,
@@ -654,18 +690,30 @@
   line-height: 1;
 }
 
+.reference-book-dialog__header h2 {
+  color: var(--reference-ink, #121722);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2rem, 5.4vw, 4.15rem);
+  font-weight: 800;
+  letter-spacing: -0.065em;
+  line-height: 0.93;
+}
+
 .reference-book-dialog__viewer {
   position: relative;
-  margin-top: 1.25rem;
+  margin-top: clamp(1.25rem, 2.6vw, 1.75rem);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .reference-book-dialog__stage {
   position: relative;
-  height: min(61dvh, 35rem);
+  height: min(59dvh, 34rem);
   margin: 0;
   overflow: hidden;
-  border: 1px solid rgb(18 23 34 / 0.1);
-  background: #f4f5f6;
+  background: #fff;
 }
 
 .reference-book-dialog__stage img {
@@ -680,61 +728,110 @@
   width: 2.75rem;
   height: 2.75rem;
   place-items: center;
-  border: 1px solid rgb(18 23 34 / 0.2);
+  border: 1px solid color-mix(in srgb, var(--reference-ink, #121722) 22%, transparent);
   border-radius: 50%;
   background: #fff;
-  color: #121722;
+  box-shadow: none;
+  color: var(--reference-ink, #121722);
   cursor: pointer;
   transform: translateY(-50%);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 
 .reference-book-dialog__arrow:disabled {
+  border-color: color-mix(in srgb, var(--reference-ink, #121722) 18%, transparent);
+  background: #fff;
+  box-shadow: none;
+  color: color-mix(in srgb, var(--reference-ink, #121722) 38%, transparent);
   cursor: default;
-  opacity: 0.35;
+  opacity: 0.55;
 }
 
 .reference-book-dialog__arrow--previous {
-  left: 0.75rem;
+  left: clamp(0.7rem, 1.8vw, 1.25rem);
 }
 
 .reference-book-dialog__arrow--next {
-  right: 0.75rem;
+  right: clamp(0.7rem, 1.8vw, 1.25rem);
 }
 
 .reference-book-dialog__meta {
-  margin-top: 0.75rem;
-  color: rgb(18 23 34 / 0.7);
-  font-size: 0.75rem;
-  font-weight: 700;
+  width: fit-content;
+  margin: 0.9rem auto 0;
+  padding-bottom: 0.25rem;
+  border-bottom: 0.18rem solid var(--reference-orange, #ffbd5d);
+  color: var(--reference-ink, #121722);
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  line-height: 1;
   text-align: center;
+  text-transform: uppercase;
 }
 
 .reference-book-dialog__thumbnails {
   display: flex;
-  gap: 0.6rem;
-  margin-top: 0.75rem;
-  padding-bottom: 0.25rem;
-  overflow-x: auto;
+  min-height: 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.35rem, 0.65vw, 0.65rem);
+  margin-top: 1rem;
+  padding: 0;
+  overflow: visible;
 }
 
 .reference-book-dialog__thumbnails button {
   position: relative;
-  width: 4.75rem;
-  height: 4.75rem;
+  width: 0.42rem;
+  height: 0.42rem;
   flex: 0 0 auto;
-  overflow: hidden;
-  border: 2px solid transparent;
-  border-radius: 0.25rem;
-  background: #f4f5f6;
+  overflow: visible;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--reference-ink, #121722) 20%, transparent);
+  box-shadow: none;
   cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
 }
 
 .reference-book-dialog__thumbnails button.is-active {
-  border-color: var(--reference-orange, #f8b84e);
+  background: color-mix(in srgb, var(--reference-ink, #121722) 82%, transparent);
+  transform: scale(1.25);
 }
 
 .reference-book-dialog__thumbnails img {
-  object-fit: contain;
+  display: none;
+}
+
+.reference-book-dialog .reference-dialog__close:hover,
+.reference-book-dialog .reference-dialog__close:focus-visible,
+.reference-book-dialog__arrow:not(:disabled):hover,
+.reference-book-dialog__arrow:not(:disabled):focus-visible {
+  background: var(--reference-cream, #fff8dc);
+}
+
+.reference-book-dialog__arrow:not(:disabled):hover,
+.reference-book-dialog__arrow:not(:disabled):focus-visible {
+  transform: translateY(-50%);
+}
+
+.reference-book-dialog__thumbnails button:hover,
+.reference-book-dialog__thumbnails button:focus-visible {
+  background: color-mix(in srgb, var(--reference-ink, #121722) 56%, transparent);
+  transform: scale(1.25);
+}
+
+.reference-book-dialog .reference-dialog__close:focus-visible,
+.reference-book-dialog__arrow:focus-visible,
+.reference-book-dialog__thumbnails button:focus-visible {
+  outline: 0.16rem solid var(--reference-orange, #ffbd5d);
+  outline-offset: 0.18rem;
 }
 
 .reference-review-dialog {
@@ -852,16 +949,36 @@
     padding: 1rem;
   }
 
+  .reference-book-dialog .reference-dialog__close,
+  .reference-book-dialog__arrow {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .reference-book-dialog__header {
+    padding-right: 3.4rem;
+  }
+
   .reference-book-dialog__stage {
     height: min(55dvh, 27rem);
   }
 
   .reference-book-dialog__arrow--previous {
-    left: 0.4rem;
+    left: 0.6rem;
   }
 
   .reference-book-dialog__arrow--next {
-    right: 0.4rem;
+    right: 0.6rem;
+  }
+
+  .reference-book-dialog__thumbnails {
+    gap: 0.32rem;
+    margin-top: 0.85rem;
+  }
+
+  .reference-book-dialog__thumbnails button {
+    width: 0.34rem;
+    height: 0.34rem;
   }
 
   .reference-review-dialog__content {
@@ -956,6 +1073,12 @@
 
 @media (prefers-reduced-motion: reduce) {
   .reference-scroll-top {
+    transition: none;
+  }
+
+  .reference-book-dialog .reference-dialog__close,
+  .reference-book-dialog__arrow,
+  .reference-book-dialog__thumbnails button {
     transition: none;
   }
 }
