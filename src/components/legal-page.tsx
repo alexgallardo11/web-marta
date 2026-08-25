@@ -15,24 +15,24 @@ export function LegalPage({
 }) {
   return (
     <>
-      <SiteHeader />
-      <main id="contenido" className="paper-grain legal-page">
-        <header className="legal-page__header">
-          <div className="site-container py-14 sm:py-20">
-            <p className="eyebrow text-[var(--pink)]">{eyebrow}</p>
-            <h1 className="mt-4 max-w-[14ch] font-display text-6xl leading-none sm:text-8xl">
-              {title}
-            </h1>
-            <p className="mt-5 text-sm text-foreground/60">
-              Última actualización: {updatedAt}
-            </p>
+      <SiteHeader variant="reference" />
+      <main id="contenido" className="reference-home legal-page">
+        <header className="legal-page__hero" aria-labelledby="legal-page-title">
+          <div className="site-container legal-page__hero-inner">
+            <p className="legal-page__eyebrow">{eyebrow}</p>
+            <div className="legal-page__title-row">
+              <h1 id="legal-page-title">{title}</h1>
+              <p className="legal-page__updated">
+                Última actualización: <time>{updatedAt}</time>
+              </p>
+            </div>
           </div>
         </header>
-        <article className="legal-copy site-container max-w-4xl py-14 sm:py-20">
+        <article className="legal-copy site-container">
           {children}
         </article>
       </main>
-      <SiteFooter showGames={false} />
+      <SiteFooter variant="reference" />
     </>
   );
 }

@@ -493,11 +493,22 @@
 /* Final visual refinements from the annotated review. */
 
 .site-header.site-header--reference {
+  --reference-ink: #121722;
+  --reference-orange: #ffbd5d;
+  --reference-cream: #fff8dc;
   background: #fff8dc;
   border-bottom: 0;
   box-shadow: none;
   backdrop-filter: none;
   isolation: isolate;
+}
+
+.site-footer--reference {
+  --reference-ink: #121722;
+  --reference-orange: #ffbd5d;
+  border-top: 0;
+  background: var(--reference-orange);
+  color: var(--reference-ink);
 }
 
 .reference-home .reference-book-card {
@@ -2033,38 +2044,151 @@
   color: #000;
 }
 
+/* Legal pages use the same visual system as the reference landing. The
+   content stays quiet and readable while the page chrome remains identical. */
+
 .legal-page {
-  background: var(--brand-paper);
-  color: var(--brand-ink);
+  --legal-ink: #121722;
+  --legal-orange: #ffbd5d;
+  --legal-cream: #fff8dc;
+  overflow: clip;
+  background: #fff;
+  color: var(--legal-ink);
 }
 
-.legal-page__header {
-  border-bottom: 1px solid color-mix(in srgb, var(--brand-ink) 14%, transparent);
-  background: var(--brand-paper);
+.legal-page__hero {
+  border-bottom: 1px solid color-mix(in srgb, var(--legal-ink) 12%, transparent);
+  background: #fff;
 }
 
-.site-footer--legal {
-  border-top: 1px solid color-mix(in srgb, var(--brand-ink) 14%, transparent);
-  background: var(--brand-paper);
-  color: var(--brand-ink);
+.legal-page__hero-inner {
+  display: grid;
+  gap: 0.85rem;
+  padding-block: clamp(2rem, 4vw, 3.25rem) clamp(2.25rem, 4vw, 3.5rem);
 }
 
-.site-footer--legal .site-footer__brand p,
-.site-footer--legal .site-footer__links a,
-.site-footer--legal .site-footer__email,
-.site-footer--legal .site-footer__instagram {
-  color: color-mix(in srgb, var(--brand-ink) 78%, transparent);
+.legal-page__eyebrow {
+  width: fit-content;
+  color: color-mix(in srgb, var(--legal-ink) 58%, transparent);
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
-.site-footer--legal .site-footer__contact .eyebrow {
-  color: var(--brand-red);
+.legal-page__eyebrow::before {
+  display: none;
 }
 
-.site-footer--legal .site-footer__instagram {
-  text-decoration-color: var(--brand-orange);
+.legal-page__title-row {
+  display: grid;
+  align-items: end;
+  gap: 0.65rem;
 }
 
-.site-footer--legal .site-footer__bottom {
-  border-top-color: color-mix(in srgb, var(--brand-ink) 14%, transparent);
-  color: color-mix(in srgb, var(--brand-ink) 58%, transparent);
+.legal-page__title-row h1 {
+  max-width: 16ch;
+  color: var(--legal-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.4rem, 4vw, 4.25rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.legal-page__updated {
+  margin: 0;
+  color: color-mix(in srgb, var(--legal-ink) 58%, transparent);
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+  line-height: 1.45;
+}
+
+.legal-copy {
+  width: min(100% - 2rem, 58rem);
+  padding-block: clamp(3rem, 6vw, 5rem) clamp(4rem, 7vw, 6.5rem);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(0.93rem, 1.1vw, 1rem);
+  line-height: 1.75;
+}
+
+.legal-copy h2 {
+  margin-top: clamp(2.75rem, 5vw, 4rem);
+  color: var(--legal-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.legal-copy h2:first-child {
+  margin-top: 0;
+}
+
+.legal-copy h2::before {
+  display: none;
+}
+
+.legal-copy p {
+  max-width: 65ch;
+  margin-top: 1.15rem;
+  color: color-mix(in srgb, var(--legal-ink) 82%, transparent);
+  text-wrap: pretty;
+}
+
+.legal-copy h2 + p {
+  margin-top: 1.35rem;
+}
+
+.legal-copy a {
+  color: color-mix(in srgb, var(--legal-ink) 92%, var(--legal-orange));
+  font-weight: 600;
+  text-decoration-color: var(--legal-orange);
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.2em;
+}
+
+@media (min-width: 48rem) {
+  .legal-page__title-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .legal-page__updated {
+    padding-bottom: 0.35rem;
+  }
+}
+
+@media (max-width: 39.99rem) {
+  .legal-page .site-container {
+    width: calc(100% - 1.5rem);
+  }
+
+  .legal-page__hero-inner {
+    padding-block: 2rem 2.5rem;
+  }
+
+  .legal-page__title-row h1 {
+    max-width: 14ch;
+    font-size: clamp(2.35rem, 10vw, 3.35rem);
+    line-height: 1;
+  }
+
+  .legal-copy {
+    width: calc(100% - 1.5rem);
+    padding-block: 2.75rem 4.5rem;
+    font-size: 0.96rem;
+    line-height: 1.7;
+  }
+
+  .legal-copy h2 {
+    margin-top: 2.8rem;
+    font-size: 1.35rem;
+  }
 }
