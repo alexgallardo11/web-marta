@@ -6,7 +6,13 @@ import { InstagramIcon } from "@/components/icons/instagram-icon";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { CLUB_URL } from "@/lib/site-links";
 
-export function SiteFooter({ variant = "default" }: { variant?: "default" | "reference" }) {
+export function SiteFooter({
+  variant = "default",
+  showGames = true,
+}: {
+  variant?: "default" | "reference";
+  showGames?: boolean;
+}) {
   const currentYear = new Date().getFullYear();
 
   if (variant === "reference") {
@@ -36,7 +42,10 @@ export function SiteFooter({ variant = "default" }: { variant?: "default" | "ref
   }
 
   return (
-    <footer id="contacto" className="site-footer">
+    <footer
+      id="contacto"
+      className={`site-footer${showGames ? "" : " site-footer--legal"}`}
+    >
       <div className="site-container site-footer__main">
         <div className="site-footer__brand">
           <div className="site-footer__brand-lockup">
@@ -81,7 +90,7 @@ export function SiteFooter({ variant = "default" }: { variant?: "default" | "ref
           <a href={CLUB_URL} target="_blank" rel="noreferrer">
             Mi Club de Ilustración
           </a>
-          <Link href="/juegos/personajes-locos">Juegos creativos</Link>
+          {showGames ? <Link href="/juegos/personajes-locos">Juegos creativos</Link> : null}
           <Link href="/aviso-legal">Aviso legal</Link>
           <Link href="/privacidad">Privacidad</Link>
           <Link href="/cookies">Cookies</Link>

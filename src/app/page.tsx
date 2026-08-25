@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Mail } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ReferenceBookCarousel } from "@/components/reference-book-carousel";
 import { ReferenceTestimonialsCarousel } from "@/components/reference-testimonials-carousel";
 import { SiteFooter } from "@/components/site-footer";
@@ -196,7 +196,7 @@ export default function Home() {
               </p>
               <a
                 className="reference-button"
-                href="#sobre-mi"
+                href="#libros"
               >
                 Conoce mi trabajo <ArrowRight aria-hidden="true" />
               </a>
@@ -282,6 +282,7 @@ export default function Home() {
                 width={2534}
                 height={1198}
                 sizes="(max-width: 767px) 100vw, (max-width: 1439px) 96vw, 88rem"
+                quality={95}
               />
             </figure>
           </div>
@@ -304,26 +305,25 @@ export default function Home() {
                 “
               </span>
               <p>
-                Marta Moreno nació en Barcelona y se formó en Ilustración en l&apos;Escola
-                d&apos;Art i Disseny de Tarragona y en Magisterio en la Universidad de
-                Barcelona.
+                Nací en Barcelona y me formé en Ilustración en l&apos;Escola d&apos;Art i
+                Disseny de Tarragona y en Magisterio en la Universidad de Barcelona.
               </p>
               <p>
-                Es autora e ilustradora de álbumes infantiles que han emocionado a
+                Soy autora e ilustradora de álbumes infantiles que han emocionado a
                 miles de lectores, entre ellos <em>El hilo invisible</em>, la colección
-                <em> Antón Piñón</em>, <em>Martina Futbolista</em>, <em>Gracias, Profe</em>
-                y <em>¿Dónde está mi escoba?</em>.
+                <em> Antón Piñón</em>, <em>Martina Futbolista</em>, <em>Gracias, Profe</em> y
+                <em> ¿Dónde está mi escoba?</em>.
               </p>
               <p>
-                Durante más de 20 años ha compaginado la creación artística con su
+                Durante más de 20 años he compaginado la creación artística con mi
                 vocación como maestra de primaria en escuelas rurales. Ese contacto
-                diario con la infancia le ha permitido comprender cómo sienten,
+                diario con la infancia me ha permitido comprender cómo sienten,
                 imaginan y se relacionan los niños con las historias, convirtiéndose
-                en la mayor fuente de inspiración para su trabajo.
+                en la mayor fuente de inspiración para mi trabajo.
               </p>
               <p>
-                Hoy combina la creación de libros con la formación de personas que
-                desean crecer a través de la ilustración infantil. Acompaña tanto a
+                Hoy combino la creación de libros con la formación de personas que
+                desean crecer a través de la ilustración infantil. Acompaño tanto a
                 quienes sueñan con dedicarse profesionalmente a este oficio como a
                 quienes encuentran en el dibujo un espacio de disfrute, creatividad y
                 bienestar.
@@ -344,14 +344,6 @@ export default function Home() {
                 acompañamiento para avanzar a tu ritmo.
               </p>
               <div className="reference-club__actions">
-                <a
-                  className="reference-button reference-button--dark"
-                  href={NEWSLETTER_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Mail aria-hidden="true" /> Apuntarme a la newsletter
-                </a>
                 <a
                   className="reference-button reference-button--dark"
                   href={CLUB_URL}

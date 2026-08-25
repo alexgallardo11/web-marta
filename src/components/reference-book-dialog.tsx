@@ -43,8 +43,10 @@ function ReferenceBookDialogContent({ book }: { book: Book }) {
   return (
     <div className="reference-book-dialog__content">
       <header className="reference-book-dialog__header">
-        <p>{book.eyebrow}</p>
         <h2 id="reference-book-dialog-title">{book.title}</h2>
+        {book.publication ? (
+          <p className="reference-book-dialog__publication">{book.publication}</p>
+        ) : null}
       </header>
 
       <div className="reference-book-dialog__viewer">

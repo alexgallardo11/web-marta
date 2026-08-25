@@ -15,9 +15,21 @@
   display: block;
 }
 
+.reference-home .reference-hero h1 {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.1;
+}
+
 .reference-home .reference-hero__statement {
   margin-top: 0;
-  line-height: 1.02;
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.1;
 }
 
 .reference-home section[id] {
@@ -134,14 +146,14 @@
 
   .reference-home .reference-hero h1 {
     max-width: 12ch;
-    font-size: clamp(2.45rem, 12.5vw, 3.05rem);
-    line-height: 0.96;
+    font-size: clamp(2.15rem, 11vw, 2.75rem);
+    line-height: 1.08;
   }
 
   .reference-home .reference-hero__statement {
     margin-top: 0;
-    font-size: clamp(1.9rem, 9.6vw, 2.45rem);
-    line-height: 0.96;
+    font-size: clamp(1.7rem, 8.4vw, 2.15rem);
+    line-height: 1.1;
   }
 
   .reference-home .reference-hero__lead {
@@ -482,7 +494,8 @@
 
 .site-header.site-header--reference {
   background: #fff8dc;
-  box-shadow: 0 1px 0 rgb(18 23 34 / 0.12);
+  border-bottom: 0;
+  box-shadow: none;
   backdrop-filter: none;
   isolation: isolate;
 }
@@ -667,17 +680,12 @@
   padding-right: 4.25rem;
 }
 
-.reference-book-dialog__header p,
 .reference-review-dialog__eyebrow {
   color: color-mix(in srgb, var(--reference-ink) 64%, transparent);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-}
-
-.reference-book-dialog__header p {
-  color: var(--reference-orange-text, #b85c00);
 }
 
 .reference-book-dialog__header h2,
@@ -692,11 +700,21 @@
 
 .reference-book-dialog__header h2 {
   color: var(--reference-ink, #121722);
-  font-family: var(--font-display), sans-serif;
-  font-size: clamp(2rem, 5.4vw, 4.15rem);
-  font-weight: 800;
-  letter-spacing: -0.065em;
-  line-height: 0.93;
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.05;
+}
+
+.reference-book-dialog__publication {
+  margin-top: 0.65rem;
+  color: color-mix(in srgb, var(--reference-ink) 68%, transparent);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(0.82rem, 1.4vw, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
 }
 
 .reference-book-dialog__viewer {
@@ -2013,4 +2031,40 @@
 .game-page-shell .game-hero__lead,
 .game-page-shell .game-narrator__bubble p {
   color: #000;
+}
+
+.legal-page {
+  background: var(--brand-paper);
+  color: var(--brand-ink);
+}
+
+.legal-page__header {
+  border-bottom: 1px solid color-mix(in srgb, var(--brand-ink) 14%, transparent);
+  background: var(--brand-paper);
+}
+
+.site-footer--legal {
+  border-top: 1px solid color-mix(in srgb, var(--brand-ink) 14%, transparent);
+  background: var(--brand-paper);
+  color: var(--brand-ink);
+}
+
+.site-footer--legal .site-footer__brand p,
+.site-footer--legal .site-footer__links a,
+.site-footer--legal .site-footer__email,
+.site-footer--legal .site-footer__instagram {
+  color: color-mix(in srgb, var(--brand-ink) 78%, transparent);
+}
+
+.site-footer--legal .site-footer__contact .eyebrow {
+  color: var(--brand-red);
+}
+
+.site-footer--legal .site-footer__instagram {
+  text-decoration-color: var(--brand-orange);
+}
+
+.site-footer--legal .site-footer__bottom {
+  border-top-color: color-mix(in srgb, var(--brand-ink) 14%, transparent);
+  color: color-mix(in srgb, var(--brand-ink) 58%, transparent);
 }

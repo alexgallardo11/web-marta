@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowLeft, Mail } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight } from "lucide-react";
 import { ReferenceBooksFilter } from "@/components/reference-books-filter";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { books, referenceLibraryItems } from "@/lib/books-data";
-import { NEWSLETTER_URL } from "@/lib/site-links";
+import { CLUB_URL } from "@/lib/site-links";
 
 const booksBySlug = new Map(books.map((book) => [book.slug, book]));
 const libraryBooks = referenceLibraryItems.flatMap((item) => {
@@ -125,11 +125,11 @@ export default function BooksPage() {
               <div className="reference-club__actions">
                 <a
                   className="reference-button reference-button--dark"
-                  href={NEWSLETTER_URL}
+                  href={CLUB_URL}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Mail aria-hidden="true" /> Apuntarme a la newsletter
+                  Conocer Mi Club <ArrowRight aria-hidden="true" />
                 </a>
               </div>
             </div>

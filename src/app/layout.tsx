@@ -15,7 +15,7 @@ const bodyFont = Poppins({
 
 const displayFont = Poppins({
   subsets: ["latin"],
-  weight: ["700", "800", "900"],
+  weight: ["600", "700", "800", "900"],
   variable: "--font-display",
   display: "swap",
 });
@@ -32,6 +32,10 @@ export const metadata: Metadata = {
   description:
     "Aprende a dibujar, encuentra tu estilo y crea ilustraciones con emoción junto a Marta Moreno, ilustradora infantil y maestra.",
   alternates: { canonical: "/" },
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+  },
   openGraph: {
     type: "website",
     locale: "es_ES",

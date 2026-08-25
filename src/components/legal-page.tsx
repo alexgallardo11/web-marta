@@ -16,8 +16,8 @@ export function LegalPage({
   return (
     <>
       <SiteHeader />
-      <main id="contenido" className="paper-grain">
-        <header className="border-b-2 border-foreground">
+      <main id="contenido" className="paper-grain legal-page">
+        <header className="legal-page__header">
           <div className="site-container py-14 sm:py-20">
             <p className="eyebrow text-[var(--pink)]">{eyebrow}</p>
             <h1 className="mt-4 max-w-[14ch] font-display text-6xl leading-none sm:text-8xl">
@@ -32,7 +32,7 @@ export function LegalPage({
           {children}
         </article>
       </main>
-      <SiteFooter />
+      <SiteFooter showGames={false} />
     </>
   );
 }
