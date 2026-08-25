@@ -449,7 +449,7 @@ export function DocumentsDashboard({
       <form
         action="/admin/documentos"
         method="get"
-        className="admin-library-toolbar flex flex-col gap-3 border-y border-foreground/20 py-4 md:flex-row md:items-end md:justify-between"
+        className={`admin-library-toolbar flex flex-col gap-3 border-y border-foreground/20 py-4 md:flex-row md:items-end md:justify-between${total === 0 ? " is-empty" : ""}`}
       >
         <label className="relative block w-full max-w-md">
           <span className="sr-only">Buscar documentos</span>

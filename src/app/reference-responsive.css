@@ -396,6 +396,621 @@
   }
 }
 
+/* Admin workspace: a quiet editorial utility layer that shares the landing's
+   paper palette without importing its expressive marketing compositions. */
+
+.admin-app {
+  --admin-paper: var(--brand-paper);
+  --admin-cream: #fff8dc;
+  --admin-ink: var(--brand-ink);
+  --admin-red: var(--brand-red);
+  --admin-orange: var(--brand-orange);
+  --admin-cyan: var(--brand-cyan);
+  --admin-line: color-mix(in oklch, var(--admin-ink) 14%, transparent);
+  --admin-muted: color-mix(in oklch, var(--admin-ink) 62%, transparent);
+  background: color-mix(in oklch, var(--admin-paper) 94%, var(--admin-orange));
+  color: var(--admin-ink);
+}
+
+.admin-sidebar {
+  border-right-color: var(--admin-line);
+  background: var(--admin-paper);
+  color: var(--admin-ink);
+}
+
+.admin-sidebar-header {
+  gap: 0.75rem;
+  padding: 1.4rem 1.25rem 1.2rem;
+  border-bottom-color: var(--admin-line);
+}
+
+.admin-workspace-label,
+.admin-sidebar .admin-workspace-label,
+.admin-sidebar .admin-nav-label {
+  color: color-mix(in oklch, var(--admin-ink) 54%, transparent);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+}
+
+.admin-nav {
+  gap: 0.25rem;
+  padding: 1.25rem 0.8rem;
+}
+
+.admin-nav-label {
+  padding-inline: 0.7rem;
+}
+
+.admin-sidebar .admin-nav a {
+  min-height: 2.65rem;
+  border-color: transparent;
+  border-radius: 0.25rem;
+  color: color-mix(in oklch, var(--admin-ink) 70%, transparent);
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.admin-sidebar .admin-nav a:hover {
+  border-color: color-mix(in oklch, var(--admin-orange) 38%, transparent);
+  background: color-mix(in oklch, var(--admin-orange) 16%, var(--admin-paper));
+  color: var(--admin-ink);
+}
+
+.admin-sidebar .admin-nav a.is-active {
+  border-color: var(--admin-red);
+  background: var(--admin-red);
+  color: var(--admin-paper);
+}
+
+.admin-sidebar-footer {
+  padding: 1.1rem 1.25rem 1.35rem;
+  border-top-color: var(--admin-line);
+}
+
+.admin-account-mark {
+  width: 2.15rem;
+  height: 2.15rem;
+  border-color: color-mix(in oklch, var(--admin-cyan) 42%, transparent);
+  background: color-mix(in oklch, var(--admin-cyan) 16%, var(--admin-paper));
+  color: var(--admin-ink);
+}
+
+.admin-sidebar-email {
+  color: color-mix(in oklch, var(--admin-ink) 56%, transparent);
+  font-size: 0.7rem;
+}
+
+.admin-content,
+.admin-topbar {
+  background: var(--admin-paper);
+}
+
+.admin-topbar {
+  min-height: 4.5rem;
+  padding-inline: clamp(1rem, 3vw, 2.5rem);
+  border-bottom-color: var(--admin-line);
+}
+
+.admin-topbar-kicker {
+  color: color-mix(in oklch, var(--admin-ink) 48%, transparent);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+}
+
+.admin-topbar-title {
+  color: var(--admin-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.admin-logout-button,
+.admin-small-button,
+.admin-primary-button,
+.admin-main .btn-primary,
+.admin-main .btn-secondary,
+.admin-auth-submit,
+.admin-document-actions a,
+.admin-document-actions button,
+.admin-document-actions label,
+.admin-confirm-dialog button,
+.admin-sidebar .admin-nav a {
+  min-height: 2.55rem;
+  border-color: color-mix(in oklch, var(--admin-ink) 22%, transparent);
+  border-radius: 0.25rem;
+  background: transparent;
+  color: color-mix(in oklch, var(--admin-ink) 72%, transparent);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
+.admin-logout-button:hover,
+.admin-small-button:hover {
+  border-color: var(--admin-orange);
+  background: color-mix(in oklch, var(--admin-orange) 16%, var(--admin-paper));
+  color: var(--admin-ink);
+}
+
+.admin-main {
+  padding-block: clamp(1.5rem, 3.5vw, 2.75rem) 3.5rem;
+}
+
+.admin-page-heading {
+  align-items: end;
+  gap: 1.5rem;
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  padding-bottom: 1.35rem;
+  border-bottom: 0;
+}
+
+.admin-page-heading h1 {
+  margin-top: 0.4rem;
+  color: var(--admin-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.05;
+}
+
+.admin-page-heading p:not(.admin-eyebrow) {
+  margin-top: 0.65rem;
+  color: var(--admin-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.admin-eyebrow {
+  color: color-mix(in oklch, var(--admin-ink) 58%, transparent);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+}
+
+.admin-stat-card {
+  min-width: auto;
+  gap: 0.45rem;
+  border: 0;
+  border-bottom: 1px solid color-mix(in oklch, var(--admin-red) 42%, transparent);
+  border-radius: 0;
+  background: transparent;
+  padding: 0 0 0.35rem;
+}
+
+.admin-stat-card strong {
+  color: var(--admin-red);
+  font-family: var(--font-body), sans-serif;
+  font-size: 1.55rem;
+  font-weight: 650;
+}
+
+.admin-stat-card span {
+  color: var(--admin-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.admin-documents-stack {
+  gap: 1.25rem;
+}
+
+.admin-upload-card {
+  gap: clamp(1.25rem, 3vw, 2rem);
+  border-color: var(--admin-line);
+  border-radius: 0.3rem;
+  background: var(--admin-paper);
+  padding: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.admin-dropzone {
+  min-height: 11rem;
+  border-color: color-mix(in oklch, var(--admin-orange) 48%, transparent);
+  border-radius: 0.25rem;
+  background: color-mix(in oklch, var(--admin-cream) 58%, var(--admin-paper));
+}
+
+.admin-dropzone:hover {
+  border-color: var(--admin-orange);
+  background: color-mix(in oklch, var(--admin-orange) 10%, var(--admin-paper));
+}
+
+.admin-dropzone svg {
+  color: var(--admin-red);
+}
+
+.admin-upload-heading {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.admin-upload-heading h2 {
+  margin-top: 0.35rem;
+  color: var(--admin-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.15;
+}
+
+.admin-upload-heading > p:last-child {
+  margin-top: 0.55rem;
+  color: var(--admin-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.admin-upload-card input,
+.admin-library-toolbar input,
+.admin-library-toolbar select,
+.admin-document-card input,
+.admin-document-card select {
+  border-color: color-mix(in oklch, var(--admin-ink) 22%, transparent);
+  border-radius: 0.25rem;
+  background: var(--admin-paper);
+}
+
+.admin-upload-card input:focus-visible,
+.admin-library-toolbar input:focus-visible,
+.admin-library-toolbar select:focus-visible,
+.admin-document-card input:focus-visible,
+.admin-document-card select:focus-visible,
+.admin-input-with-icon input:focus-visible {
+  border-color: var(--admin-red);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--admin-red) 12%, transparent);
+}
+
+.admin-main .btn-primary,
+.admin-primary-button,
+.admin-auth-submit,
+.admin-document-actions a:first-child {
+  border-color: var(--admin-red);
+  border-radius: 0.25rem;
+  background: var(--admin-red);
+  color: var(--admin-paper);
+}
+
+.admin-main .btn-primary:hover,
+.admin-primary-button:hover,
+.admin-auth-submit:hover,
+.admin-document-actions a:first-child:hover {
+  border-color: var(--admin-orange);
+  background: var(--admin-orange);
+  color: var(--admin-ink);
+}
+
+.admin-library-toolbar {
+  display: flex;
+  gap: 0.7rem;
+  align-items: end;
+  padding: 0.8rem 0 0.2rem;
+  border: 0;
+  border-top: 1px solid var(--admin-line);
+  border-radius: 0;
+  background: transparent;
+}
+
+.admin-library-toolbar.is-empty {
+  display: none;
+}
+
+.admin-library-toolbar label {
+  color: var(--admin-muted);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
+.admin-library-toolbar input,
+.admin-library-toolbar select {
+  min-height: 2.7rem;
+}
+
+.admin-empty-state {
+  padding-block: clamp(3rem, 7vw, 5rem);
+  border-width: 1px;
+  border-color: var(--admin-line);
+  border-radius: 0;
+  background: transparent;
+}
+
+.admin-empty-state svg {
+  color: var(--admin-orange);
+}
+
+.admin-empty-state h2 {
+  margin-top: 1rem;
+  color: var(--admin-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(1.45rem, 2.5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.admin-empty-state p {
+  color: var(--admin-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.admin-document-card {
+  border: 0;
+  border-bottom: 1px solid var(--admin-line);
+  border-radius: 0;
+  background: transparent;
+}
+
+.admin-document-card > div:first-child {
+  padding-block: 1rem;
+}
+
+.admin-document-card > details {
+  border-top: 1px solid var(--admin-line);
+  border-bottom: 0;
+}
+
+.admin-document-card > details > summary {
+  min-height: 3.25rem;
+  color: color-mix(in oklch, var(--admin-ink) 74%, transparent);
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.admin-document-card > details > div {
+  background: color-mix(in oklch, var(--admin-cream) 34%, var(--admin-paper));
+}
+
+.admin-document-actions a,
+.admin-document-actions button,
+.admin-document-actions label {
+  min-height: 2.5rem;
+  border-color: color-mix(in oklch, var(--admin-ink) 20%, transparent);
+  border-radius: 0.25rem;
+  background: transparent;
+  color: color-mix(in oklch, var(--admin-ink) 78%, transparent);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
+.admin-document-actions button:hover,
+.admin-document-actions label:hover {
+  border-color: var(--admin-orange);
+  background: color-mix(in oklch, var(--admin-orange) 14%, var(--admin-paper));
+  color: var(--admin-ink);
+}
+
+.admin-document-actions button:last-child {
+  border-color: color-mix(in oklch, var(--admin-red) 40%, transparent);
+  border-radius: 0.25rem;
+  color: var(--admin-red);
+}
+
+.admin-confirm-dialog {
+  border-color: var(--admin-line);
+  border-radius: 0.3rem;
+  background: var(--admin-paper);
+  box-shadow: 0 1.5rem 4rem oklch(0.2 0.03 335 / 0.16);
+}
+
+.admin-auth-page {
+  --admin-paper: var(--brand-paper);
+  --admin-cream: #fff8dc;
+  --admin-ink: var(--brand-ink);
+  --admin-red: var(--brand-red);
+  --admin-orange: var(--brand-orange);
+  --admin-cyan: var(--brand-cyan);
+  --admin-line: color-mix(in oklch, var(--admin-ink) 14%, transparent);
+  --admin-muted: color-mix(in oklch, var(--admin-ink) 62%, transparent);
+  background: var(--admin-paper);
+  background-image: none;
+}
+
+.admin-auth-frame {
+  min-height: min(40rem, calc(100vh - 4rem));
+  border-color: var(--admin-line);
+  border-radius: 0.35rem;
+  background: var(--admin-paper);
+  box-shadow: 0 1.2rem 3rem oklch(0.3 0.03 335 / 0.07);
+}
+
+.admin-auth-intro {
+  background: color-mix(in oklch, var(--admin-cream) 54%, var(--admin-paper));
+}
+
+.admin-auth-intro::after {
+  display: none;
+}
+
+.admin-auth-intro-copy {
+  padding-block: 3rem 2.5rem;
+}
+
+.admin-auth-intro-copy h2 {
+  max-width: 12ch;
+  color: var(--admin-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.25rem, 4vw, 3.6rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.04;
+}
+
+.admin-auth-intro-copy > p:last-child {
+  max-width: 26rem;
+  margin-top: 1rem;
+  color: var(--admin-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.admin-auth-features li {
+  color: var(--admin-muted);
+  font-size: 0.75rem;
+}
+
+.admin-auth-features svg {
+  color: var(--admin-red);
+}
+
+.admin-auth-folio {
+  color: color-mix(in oklch, var(--admin-ink) 44%, transparent);
+}
+
+.admin-auth-card {
+  border-left-color: var(--admin-line);
+  background: var(--admin-paper);
+}
+
+.admin-auth-card h1 {
+  margin-top: 0.7rem;
+  color: var(--admin-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.3rem, 4vw, 3.3rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.04;
+}
+
+.admin-auth-description {
+  margin-block: 1rem 2rem;
+  color: var(--admin-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.admin-auth-field > label {
+  color: var(--admin-ink);
+  font-size: 0.76rem;
+  font-weight: 650;
+}
+
+.admin-auth-input {
+  min-height: 3rem;
+  border-color: color-mix(in oklch, var(--admin-ink) 22%, transparent);
+  border-radius: 0.25rem;
+  background: var(--admin-paper);
+}
+
+.admin-auth-input:hover {
+  border-color: color-mix(in oklch, var(--admin-ink) 40%, transparent);
+}
+
+.admin-auth-input:focus-visible {
+  border-color: var(--admin-red);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--admin-red) 12%, transparent);
+}
+
+.admin-auth-submit {
+  min-height: 3rem;
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.admin-auth-link {
+  color: color-mix(in oklch, var(--admin-ink) 66%, transparent);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration-color: color-mix(in oklch, var(--admin-orange) 72%, transparent);
+}
+
+.admin-auth-link:hover {
+  color: var(--admin-red);
+}
+
+.admin-auth-message {
+  border-radius: 0.25rem;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 52rem) {
+  .admin-auth-intro {
+    padding: 1.2rem clamp(1.25rem, 6vw, 2.5rem) 1.35rem;
+  }
+
+  .admin-auth-card {
+    min-height: calc(100vh - 6rem);
+    border-top-color: var(--admin-line);
+    padding-block: 2.5rem;
+  }
+}
+
+@media (max-width: 43rem) {
+  .admin-page-heading {
+    gap: 1rem;
+  }
+
+  .admin-stat-card {
+    width: fit-content;
+  }
+
+  .admin-library-toolbar:not(.is-empty) {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+/* The account identity is secondary information; the sidebar owns it now,
+   together with the session action. */
+
+.admin-sidebar-footer {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem 1.2rem;
+  border-top-color: var(--admin-line);
+}
+
+.admin-sidebar-account {
+  gap: 0.22rem;
+}
+
+.admin-role-badge {
+  color: color-mix(in oklch, var(--admin-ink) 54%, transparent);
+  font-size: 0.58rem;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+}
+
+.admin-sidebar-email {
+  font-size: 0.68rem;
+}
+
+.admin-sidebar-logout {
+  width: 100%;
+}
+
+.admin-sidebar-logout .admin-logout-button {
+  width: 100%;
+  justify-content: flex-start;
+  border-color: color-mix(in oklch, var(--admin-ink) 18%, transparent);
+  color: color-mix(in oklch, var(--admin-ink) 68%, transparent);
+}
+
+.admin-sidebar-logout .admin-logout-button:hover {
+  border-color: var(--admin-orange);
+  background: color-mix(in oklch, var(--admin-orange) 14%, var(--admin-paper));
+  color: var(--admin-ink);
+}
+
+@media (max-width: 47.99rem) {
+  .admin-sidebar-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .admin-sidebar-logout {
+    width: auto;
+  }
+
+  .admin-sidebar-logout .admin-logout-button {
+    width: auto;
+  }
+}
+
 @media (min-width: 40rem) and (max-width: 63.99rem) {
   .reference-home .site-container,
   .site-header--reference .site-container,
