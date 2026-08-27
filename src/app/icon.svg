@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>Marta Moreno</title>
+  <path
+    d="M32 8c-13.255 0-24 10.745-24 24s10.745 24 24 24c10.493 0 19-6.507 19-15.5C51 32.491 44.509 26 36.5 26S22 31.596 22 38.5 27.149 50 34 50c5.385 0 10-3.615 10-8.5S40.385 33 35 33c-3.314 0-6 2.239-6 5s2.686 5 6 5c1.657 0 3-.895 3-2s-1.343-2-3-2"
+    fill="none"
+    stroke="#272029"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="5"
+  />
+</svg>

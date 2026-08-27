@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { CupsGame } from "@/components/games/cups-game";
 import { GameShell } from "@/components/games/game-shell";
 
@@ -28,20 +29,37 @@ export default function CrazyCharactersPage() {
   return (
     <GameShell active="vasos">
       <main id="contenido" className="paper-grain">
-        <section className="game-hero game-hero--cups site-container">
-          <span className="game-hero__doodle game-hero__doodle--one" aria-hidden="true">
-            ✦
-          </span>
-          <span className="game-hero__doodle game-hero__doodle--two" aria-hidden="true">
-            ↝
-          </span>
+        <section
+          className="game-hero game-hero--cups site-container"
+          aria-labelledby="game-title"
+        >
           <div className="game-hero__copy">
-            <h1 className="display-title">Crea personajes <em>locos</em></h1>
-          <p className="game-hero__lead">
-            Cuatro pistas inesperadas para desbloquear una idea y empezar a
-            dibujar sin pensarlo demasiado.
-          </p>
-        </div>
+            <h1
+              id="game-title"
+              className="display-title"
+              aria-label="Crea personajes locos"
+            >
+              <strong>Crea personajes</strong>
+              <span>locos</span>
+            </h1>
+            <p className="game-hero__statement">
+              Mezcla pistas <span>y déjate sorprender</span>
+            </p>
+            <p className="game-hero__lead">
+              Cuatro pistas inesperadas para desbloquear una idea y empezar a
+              dibujar sin pensarlo demasiado.
+            </p>
+          </div>
+          <div className="game-hero__image">
+            <Image
+              src="/images/web-2026/characters/martina-futbolista.png"
+              alt="Personaje ilustrado listo para inspirar un nuevo dibujo"
+              width={1428}
+              height={1428}
+              priority
+              sizes="(max-width: 767px) 76vw, 30rem"
+            />
+          </div>
         </section>
         <CupsGame />
       </main>

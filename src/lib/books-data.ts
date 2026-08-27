@@ -2,6 +2,7 @@ export type Book = {
   slug: string;
   title: string;
   eyebrow: string;
+  publication?: string;
   description: string;
   cover: string;
   displayCover?: string;
@@ -30,6 +31,7 @@ export const books = [
     slug: "dormir-sin-miedo",
     title: "Dormir sin miedo",
     eyebrow: "Un cuento para bajar la luz",
+    publication: "Timun Mas Infantil, 2022",
     description:
       "Una historia cálida para acompañar esos momentos en los que la noche se hace un poquito grande.",
     cover: "/images/library-2026/dormir-sin-miedo-cover.jpg",
@@ -46,6 +48,7 @@ export const books = [
     slug: "sant-jordi",
     title: "Sant Jordi",
     eyebrow: "Dragones, rosas y una leyenda",
+    publication: "Barcanova, 2021",
     description:
       "Una mirada juguetona a una historia que vuelve cada primavera para invitarnos a leer y regalar palabras.",
     cover: "/images/library-2026/sant-jordi-cover.jpg",
@@ -67,6 +70,7 @@ export const books = [
     slug: "kai-y-emma",
     title: "Kai y Emma",
     eyebrow: "Dos maneras de mirar",
+    publication: "B de Blok, 2022",
     description:
       "Dos personajes, muchas posibilidades y una colección de escenas llenas de color para quedarse mirando.",
     cover: "/images/library-2026/kai-y-emma-cover.jpg",
@@ -88,6 +92,7 @@ export const books = [
     slug: "anton-pinon-una-carrera-muy-marron",
     title: "Antón Piñón: Una carrera muy marrón",
     eyebrow: "Una competición llena de tropiezos",
+    publication: "SM, 2023",
     description:
       "Antón se prepara para la gran carrera del bosque, aunque sus entrenamientos no salen exactamente como esperaba.",
     cover: "/images/library-2026/anton-pinon-01.jpg",
@@ -105,6 +110,7 @@ export const books = [
     slug: "anton-pinon-una-aventura-sin-pantalon",
     title: "Antón Piñón: Una aventura sin pantalón",
     eyebrow: "Una flor, una abuela y un pequeño desastre",
+    publication: "SM, 2023",
     description:
       "Antón sale en busca de una flor especial para su abuela y, por el camino, pierde el pantalón.",
     cover: "/images/library-2026/anton-pinon-02.jpg",
@@ -122,6 +128,7 @@ export const books = [
     slug: "anton-pinon-en-el-camping",
     title: "Antón Piñón en el cámping El Gran Fogón",
     eyebrow: "Unas vacaciones poco tranquilas",
+    publication: "SM, 2023",
     description:
       "Antón se va de acampada para descansar, pero en el Gran Fogón los problemas aparecen uno detrás de otro.",
     cover: "/images/library-2026/anton-pinon-03.jpg",
@@ -139,6 +146,7 @@ export const books = [
     slug: "anton-pinon-una-dulce-explosion",
     title: "Antón Piñón: Una dulce explosión",
     eyebrow: "Una aventura muy pringosa",
+    publication: "SM, 2023",
     description:
       "Antón intenta ayudar en la pastelería de su abuela y termina rodeado de cacerolas, nata y chocolate.",
     cover: "/images/library-2026/anton-pinon-04.jpg",
@@ -156,6 +164,7 @@ export const books = [
     slug: "anton-pinon-detective-en-accion",
     title: "Antón Piñón: Detective en acción",
     eyebrow: "Un misterio en el Gran Bosque",
+    publication: "SM, 2023",
     description:
       "Cuando desaparece un objeto valioso, Antón decide seguir las pistas y convertirse en detective.",
     cover: "/images/library-2026/anton-pinon-05.jpg",
@@ -173,6 +182,7 @@ export const books = [
     slug: "anton-pinon-en-busca-de-colchon",
     title: "Antón Piñón: En busca de colchón",
     eyebrow: "Una noche con demasiado ruido",
+    publication: "SM, 2023",
     description:
       "Antón no consigue dormir y recorre el bosque buscando un lugar tranquilo donde descansar.",
     cover: "/images/library-2026/anton-pinon-cover.jpg",
@@ -190,6 +200,7 @@ export const books = [
     slug: "anton-pinon-el-cole-mola-un-monton",
     title: "Antón Piñón: El cole mola un montón",
     eyebrow: "Un día de clase con mucho caos",
+    publication: "SM, 2023",
     description:
       "Sumas, palabras difíciles y un aula muy movida convierten el día de Antón en otra aventura.",
     cover: "/images/library-2026/anton-pinon-cole-mola-display.jpg",
@@ -206,6 +217,7 @@ export const books = [
     slug: "anton-pinon-la-navidad",
     title: "La Navidad de Antón Piñón",
     eyebrow: "Preparativos en el Gran Bosque",
+    publication: "SM, 2023",
     description:
       "Todas las familias preparan la Navidad mientras Antón intenta descubrir qué tarea está haciendo cada una.",
     cover: "/images/library-2026/anton-pinon-navidad-display.jpg",
@@ -222,6 +234,7 @@ export const books = [
     slug: "anton-pinon-hermanos-a-mogollon",
     title: "Antón Piñón: Hermanos a mogollón",
     eyebrow: "Una familia imposible de contar",
+    publication: "SM, 2023",
     description:
       "Antón comparte aventura con una familia enorme, ruidosa y llena de personajes inolvidables.",
     cover: "/images/library-2026/anton-pinon-hermanos-display.png",
@@ -257,6 +270,7 @@ export const books = [
     slug: "el-caracol-se-queja",
     title: "El caracol se queja",
     eyebrow: "Una queja con patas",
+    publication: "SM Barco de Vapor, 2020",
     description:
       "Humor, ritmo y una criatura diminuta que tiene algo importante que decir —muy despacio, eso sí.",
     cover: "/images/library-2026/el-caracol-se-queja-cover.jpg",
@@ -277,6 +291,7 @@ export const books = [
     slug: "don-croqueto",
     title: "Don Croqueto",
     eyebrow: "Una aventura crujiente",
+    publication: "Amigos de papel, 2020",
     description:
       "Un álbum con mucha personalidad, humor y ese pequeño caos que hace que un personaje se vuelva inolvidable.",
     cover: "/images/library-2026/don-croqueto-cover.jpg",
@@ -299,6 +314,7 @@ export const books = [
     slug: "la-fuente",
     title: "La fuente escondida",
     eyebrow: "Hay lugares que aparecen al mirar",
+    publication: "B de Blok, 2021",
     description:
       "Una historia de descubrimientos, rincones secretos y personajes que saben seguir el hilo de una pista.",
     cover: "/images/library-2026/la-fuente-cover.jpg",
@@ -319,6 +335,7 @@ export const books = [
     slug: "que-frio",
     title: "¡Qué frío!",
     eyebrow: "Un abrigo para la imaginación",
+    publication: "Combel, 2019",
     description:
       "Una escena invernal que invita a mirar de cerca, reconocer emociones y encontrar calor en los detalles.",
     cover: "/images/library-2026/que-frio-cover.jpg",
@@ -335,6 +352,7 @@ export const books = [
     slug: "el-monstruo-comepueblos",
     title: "El monstruo comepueblos",
     eyebrow: "Grande, raro y un poco hambriento",
+    publication: "Onada Edicions, 2020",
     description:
       "Una criatura enorme para jugar con las escalas, el miedo y las ganas de saber qué hay detrás de cada página.",
     cover: "/images/library-2026/el-monstruo-comepueblos-cover.jpg",
@@ -357,6 +375,7 @@ export const books = [
     slug: "cocodrilo",
     title: "Cocodrilo",
     eyebrow: "Una mirada que no se olvida",
+    publication: "La Galera, 2020",
     description:
       "Un personaje de gesto expresivo y mucha presencia, para mirar cómo el dibujo construye una historia antes de leerla.",
     cover: "/images/library-2026/cocodrilo-cover.jpg",
@@ -394,6 +413,7 @@ export const books = [
     slug: "gracias-profe",
     title: "Gracias, profe",
     eyebrow: "Para quien acompaña cada comienzo",
+    publication: "Planeta, 2023",
     description:
       "Un homenaje luminoso a las personas que enseñan con paciencia, curiosidad y un montón de pequeñas historias.",
     cover: "/images/library-2026/gracias-profe-cover.jpg",
@@ -417,6 +437,7 @@ export const books = [
     slug: "sensibles",
     title: "Sensibles",
     eyebrow: "Sentir también es una forma de mirar",
+    publication: "B de Blok, 2022",
     description:
       "Una propuesta para hablar de lo que pasa por dentro con imágenes honestas, delicadas y llenas de matices.",
     cover: "/images/library-2026/sensibles-cover.jpg",
@@ -438,6 +459,7 @@ export const books = [
     slug: "martina-futbolista",
     title: "Martina futbolista",
     eyebrow: "Jugar también es encontrar tu sitio",
+    publication: "NubeOcho, 2024",
     description:
       "Una protagonista con energía y ganas de demostrar que el campo, como el papel, también puede ser para ti.",
     cover: "/images/library-2026/martina-futbolista-cover.jpg",
@@ -470,6 +492,7 @@ export const books = [
     slug: "victor-no-quiere-compartir",
     title: "Víctor no quiere compartir",
     eyebrow: "Cuando cuesta abrir la mano",
+    publication: "Penguin Kids, 2022",
     description:
       "Una historia cercana para reconocer lo que sentimos, probar otras maneras y volver a encontrarnos.",
     cover: "/images/library-2026/victor-no-quiere-compartir-cover.jpg",
@@ -489,6 +512,7 @@ export const books = [
     slug: "el-hilo",
     title: "El hilo",
     eyebrow: "Una historia para acompañarse",
+    publication: "B de Blok, 2020",
     description:
       "Un hilo invisible que conecta personas, recuerdos y momentos en los que necesitamos sentirnos cerca.",
     cover: "/images/library-2026/el-hilo-cover.jpg",

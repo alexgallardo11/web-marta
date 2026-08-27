@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FileText, LogOut, ShieldCheck, Users } from "lucide-react";
+import { FileText, LogOut, Users } from "lucide-react";
 import type { ReactNode } from "react";
 import { logoutAction } from "@/app/admin/actions";
 import { BrandLockup } from "@/components/brand-lockup";
@@ -51,33 +51,22 @@ export function AdminShell({
           )}
         </nav>
         <div className="admin-sidebar-footer">
-          <div className="admin-account-mark" aria-hidden="true">
-            <ShieldCheck />
-          </div>
           <div className="admin-sidebar-account">
             <span className="admin-role-badge">
               {role === "owner" ? "Propietaria" : "Administradora"}
             </span>
             <span className="admin-sidebar-email">{email}</span>
           </div>
-        </div>
-      </aside>
-
-      <div className="admin-content">
-        <header className="admin-topbar">
-          <div>
-            <p className="admin-topbar-kicker">Marta Moreno</p>
-            <p className="admin-topbar-title">
-              {section === "documents" ? "Biblioteca de documentos" : "Accesos al panel"}
-            </p>
-          </div>
-          <form action={logoutAction}>
+          <form action={logoutAction} className="admin-sidebar-logout">
             <button type="submit" className="admin-logout-button">
               <LogOut aria-hidden="true" />
               <span>Cerrar sesión</span>
             </button>
           </form>
-        </header>
+        </div>
+      </aside>
+
+      <div className="admin-content">
         <main id="contenido" className="admin-main">
           {children}
         </main>

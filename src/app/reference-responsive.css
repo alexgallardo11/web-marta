@@ -15,9 +15,21 @@
   display: block;
 }
 
+.reference-home .reference-hero h1 {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.1;
+}
+
 .reference-home .reference-hero__statement {
   margin-top: 0;
-  line-height: 1.02;
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.1;
 }
 
 .reference-home section[id] {
@@ -134,14 +146,14 @@
 
   .reference-home .reference-hero h1 {
     max-width: 12ch;
-    font-size: clamp(2.45rem, 12.5vw, 3.05rem);
-    line-height: 0.96;
+    font-size: clamp(2.15rem, 11vw, 2.75rem);
+    line-height: 1.08;
   }
 
   .reference-home .reference-hero__statement {
     margin-top: 0;
-    font-size: clamp(1.9rem, 9.6vw, 2.45rem);
-    line-height: 0.96;
+    font-size: clamp(1.7rem, 8.4vw, 2.15rem);
+    line-height: 1.1;
   }
 
   .reference-home .reference-hero__lead {
@@ -384,6 +396,621 @@
   }
 }
 
+/* Admin workspace: a quiet editorial utility layer that shares the landing's
+   paper palette without importing its expressive marketing compositions. */
+
+.admin-app {
+  --admin-paper: var(--brand-paper);
+  --admin-cream: #fff8dc;
+  --admin-ink: var(--brand-ink);
+  --admin-red: var(--brand-red);
+  --admin-orange: var(--brand-orange);
+  --admin-cyan: var(--brand-cyan);
+  --admin-line: color-mix(in oklch, var(--admin-ink) 14%, transparent);
+  --admin-muted: color-mix(in oklch, var(--admin-ink) 62%, transparent);
+  background: color-mix(in oklch, var(--admin-paper) 94%, var(--admin-orange));
+  color: var(--admin-ink);
+}
+
+.admin-sidebar {
+  border-right-color: var(--admin-line);
+  background: var(--admin-paper);
+  color: var(--admin-ink);
+}
+
+.admin-sidebar-header {
+  gap: 0.75rem;
+  padding: 1.4rem 1.25rem 1.2rem;
+  border-bottom-color: var(--admin-line);
+}
+
+.admin-workspace-label,
+.admin-sidebar .admin-workspace-label,
+.admin-sidebar .admin-nav-label {
+  color: color-mix(in oklch, var(--admin-ink) 54%, transparent);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+}
+
+.admin-nav {
+  gap: 0.25rem;
+  padding: 1.25rem 0.8rem;
+}
+
+.admin-nav-label {
+  padding-inline: 0.7rem;
+}
+
+.admin-sidebar .admin-nav a {
+  min-height: 2.65rem;
+  border-color: transparent;
+  border-radius: 0.25rem;
+  color: color-mix(in oklch, var(--admin-ink) 70%, transparent);
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.admin-sidebar .admin-nav a:hover {
+  border-color: color-mix(in oklch, var(--admin-orange) 38%, transparent);
+  background: color-mix(in oklch, var(--admin-orange) 16%, var(--admin-paper));
+  color: var(--admin-ink);
+}
+
+.admin-sidebar .admin-nav a.is-active {
+  border-color: var(--admin-red);
+  background: var(--admin-red);
+  color: var(--admin-paper);
+}
+
+.admin-sidebar-footer {
+  padding: 1.1rem 1.25rem 1.35rem;
+  border-top-color: var(--admin-line);
+}
+
+.admin-account-mark {
+  width: 2.15rem;
+  height: 2.15rem;
+  border-color: color-mix(in oklch, var(--admin-cyan) 42%, transparent);
+  background: color-mix(in oklch, var(--admin-cyan) 16%, var(--admin-paper));
+  color: var(--admin-ink);
+}
+
+.admin-sidebar-email {
+  color: color-mix(in oklch, var(--admin-ink) 56%, transparent);
+  font-size: 0.7rem;
+}
+
+.admin-content,
+.admin-topbar {
+  background: var(--admin-paper);
+}
+
+.admin-topbar {
+  min-height: 4.5rem;
+  padding-inline: clamp(1rem, 3vw, 2.5rem);
+  border-bottom-color: var(--admin-line);
+}
+
+.admin-topbar-kicker {
+  color: color-mix(in oklch, var(--admin-ink) 48%, transparent);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+}
+
+.admin-topbar-title {
+  color: var(--admin-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.admin-logout-button,
+.admin-small-button,
+.admin-primary-button,
+.admin-main .btn-primary,
+.admin-main .btn-secondary,
+.admin-auth-submit,
+.admin-document-actions a,
+.admin-document-actions button,
+.admin-document-actions label,
+.admin-confirm-dialog button,
+.admin-sidebar .admin-nav a {
+  min-height: 2.55rem;
+  border-color: color-mix(in oklch, var(--admin-ink) 22%, transparent);
+  border-radius: 0.25rem;
+  background: transparent;
+  color: color-mix(in oklch, var(--admin-ink) 72%, transparent);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
+.admin-logout-button:hover,
+.admin-small-button:hover {
+  border-color: var(--admin-orange);
+  background: color-mix(in oklch, var(--admin-orange) 16%, var(--admin-paper));
+  color: var(--admin-ink);
+}
+
+.admin-main {
+  padding-block: clamp(1.5rem, 3.5vw, 2.75rem) 3.5rem;
+}
+
+.admin-page-heading {
+  align-items: end;
+  gap: 1.5rem;
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  padding-bottom: 1.35rem;
+  border-bottom: 0;
+}
+
+.admin-page-heading h1 {
+  margin-top: 0.4rem;
+  color: var(--admin-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.05;
+}
+
+.admin-page-heading p:not(.admin-eyebrow) {
+  margin-top: 0.65rem;
+  color: var(--admin-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.admin-eyebrow {
+  color: color-mix(in oklch, var(--admin-ink) 58%, transparent);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+}
+
+.admin-stat-card {
+  min-width: auto;
+  gap: 0.45rem;
+  border: 0;
+  border-bottom: 1px solid color-mix(in oklch, var(--admin-red) 42%, transparent);
+  border-radius: 0;
+  background: transparent;
+  padding: 0 0 0.35rem;
+}
+
+.admin-stat-card strong {
+  color: var(--admin-red);
+  font-family: var(--font-body), sans-serif;
+  font-size: 1.55rem;
+  font-weight: 650;
+}
+
+.admin-stat-card span {
+  color: var(--admin-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.admin-documents-stack {
+  gap: 1.25rem;
+}
+
+.admin-upload-card {
+  gap: clamp(1.25rem, 3vw, 2rem);
+  border-color: var(--admin-line);
+  border-radius: 0.3rem;
+  background: var(--admin-paper);
+  padding: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.admin-dropzone {
+  min-height: 11rem;
+  border-color: color-mix(in oklch, var(--admin-orange) 48%, transparent);
+  border-radius: 0.25rem;
+  background: color-mix(in oklch, var(--admin-cream) 58%, var(--admin-paper));
+}
+
+.admin-dropzone:hover {
+  border-color: var(--admin-orange);
+  background: color-mix(in oklch, var(--admin-orange) 10%, var(--admin-paper));
+}
+
+.admin-dropzone svg {
+  color: var(--admin-red);
+}
+
+.admin-upload-heading {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.admin-upload-heading h2 {
+  margin-top: 0.35rem;
+  color: var(--admin-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.15;
+}
+
+.admin-upload-heading > p:last-child {
+  margin-top: 0.55rem;
+  color: var(--admin-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.admin-upload-card input,
+.admin-library-toolbar input,
+.admin-library-toolbar select,
+.admin-document-card input,
+.admin-document-card select {
+  border-color: color-mix(in oklch, var(--admin-ink) 22%, transparent);
+  border-radius: 0.25rem;
+  background: var(--admin-paper);
+}
+
+.admin-upload-card input:focus-visible,
+.admin-library-toolbar input:focus-visible,
+.admin-library-toolbar select:focus-visible,
+.admin-document-card input:focus-visible,
+.admin-document-card select:focus-visible,
+.admin-input-with-icon input:focus-visible {
+  border-color: var(--admin-red);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--admin-red) 12%, transparent);
+}
+
+.admin-main .btn-primary,
+.admin-primary-button,
+.admin-auth-submit,
+.admin-document-actions a:first-child {
+  border-color: var(--admin-red);
+  border-radius: 0.25rem;
+  background: var(--admin-red);
+  color: var(--admin-paper);
+}
+
+.admin-main .btn-primary:hover,
+.admin-primary-button:hover,
+.admin-auth-submit:hover,
+.admin-document-actions a:first-child:hover {
+  border-color: var(--admin-orange);
+  background: var(--admin-orange);
+  color: var(--admin-ink);
+}
+
+.admin-library-toolbar {
+  display: flex;
+  gap: 0.7rem;
+  align-items: end;
+  padding: 0.8rem 0 0.2rem;
+  border: 0;
+  border-top: 1px solid var(--admin-line);
+  border-radius: 0;
+  background: transparent;
+}
+
+.admin-library-toolbar.is-empty {
+  display: none;
+}
+
+.admin-library-toolbar label {
+  color: var(--admin-muted);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
+.admin-library-toolbar input,
+.admin-library-toolbar select {
+  min-height: 2.7rem;
+}
+
+.admin-empty-state {
+  padding-block: clamp(3rem, 7vw, 5rem);
+  border-width: 1px;
+  border-color: var(--admin-line);
+  border-radius: 0;
+  background: transparent;
+}
+
+.admin-empty-state svg {
+  color: var(--admin-orange);
+}
+
+.admin-empty-state h2 {
+  margin-top: 1rem;
+  color: var(--admin-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(1.45rem, 2.5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.admin-empty-state p {
+  color: var(--admin-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.admin-document-card {
+  border: 0;
+  border-bottom: 1px solid var(--admin-line);
+  border-radius: 0;
+  background: transparent;
+}
+
+.admin-document-card > div:first-child {
+  padding-block: 1rem;
+}
+
+.admin-document-card > details {
+  border-top: 1px solid var(--admin-line);
+  border-bottom: 0;
+}
+
+.admin-document-card > details > summary {
+  min-height: 3.25rem;
+  color: color-mix(in oklch, var(--admin-ink) 74%, transparent);
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.admin-document-card > details > div {
+  background: color-mix(in oklch, var(--admin-cream) 34%, var(--admin-paper));
+}
+
+.admin-document-actions a,
+.admin-document-actions button,
+.admin-document-actions label {
+  min-height: 2.5rem;
+  border-color: color-mix(in oklch, var(--admin-ink) 20%, transparent);
+  border-radius: 0.25rem;
+  background: transparent;
+  color: color-mix(in oklch, var(--admin-ink) 78%, transparent);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
+.admin-document-actions button:hover,
+.admin-document-actions label:hover {
+  border-color: var(--admin-orange);
+  background: color-mix(in oklch, var(--admin-orange) 14%, var(--admin-paper));
+  color: var(--admin-ink);
+}
+
+.admin-document-actions button:last-child {
+  border-color: color-mix(in oklch, var(--admin-red) 40%, transparent);
+  border-radius: 0.25rem;
+  color: var(--admin-red);
+}
+
+.admin-confirm-dialog {
+  border-color: var(--admin-line);
+  border-radius: 0.3rem;
+  background: var(--admin-paper);
+  box-shadow: 0 1.5rem 4rem oklch(0.2 0.03 335 / 0.16);
+}
+
+.admin-auth-page {
+  --admin-paper: var(--brand-paper);
+  --admin-cream: #fff8dc;
+  --admin-ink: var(--brand-ink);
+  --admin-red: var(--brand-red);
+  --admin-orange: var(--brand-orange);
+  --admin-cyan: var(--brand-cyan);
+  --admin-line: color-mix(in oklch, var(--admin-ink) 14%, transparent);
+  --admin-muted: color-mix(in oklch, var(--admin-ink) 62%, transparent);
+  background: var(--admin-paper);
+  background-image: none;
+}
+
+.admin-auth-frame {
+  min-height: min(40rem, calc(100vh - 4rem));
+  border-color: var(--admin-line);
+  border-radius: 0.35rem;
+  background: var(--admin-paper);
+  box-shadow: 0 1.2rem 3rem oklch(0.3 0.03 335 / 0.07);
+}
+
+.admin-auth-intro {
+  background: color-mix(in oklch, var(--admin-cream) 54%, var(--admin-paper));
+}
+
+.admin-auth-intro::after {
+  display: none;
+}
+
+.admin-auth-intro-copy {
+  padding-block: 3rem 2.5rem;
+}
+
+.admin-auth-intro-copy h2 {
+  max-width: 12ch;
+  color: var(--admin-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.25rem, 4vw, 3.6rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.04;
+}
+
+.admin-auth-intro-copy > p:last-child {
+  max-width: 26rem;
+  margin-top: 1rem;
+  color: var(--admin-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.admin-auth-features li {
+  color: var(--admin-muted);
+  font-size: 0.75rem;
+}
+
+.admin-auth-features svg {
+  color: var(--admin-red);
+}
+
+.admin-auth-folio {
+  color: color-mix(in oklch, var(--admin-ink) 44%, transparent);
+}
+
+.admin-auth-card {
+  border-left-color: var(--admin-line);
+  background: var(--admin-paper);
+}
+
+.admin-auth-card h1 {
+  margin-top: 0.7rem;
+  color: var(--admin-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.3rem, 4vw, 3.3rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.04;
+}
+
+.admin-auth-description {
+  margin-block: 1rem 2rem;
+  color: var(--admin-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.admin-auth-field > label {
+  color: var(--admin-ink);
+  font-size: 0.76rem;
+  font-weight: 650;
+}
+
+.admin-auth-input {
+  min-height: 3rem;
+  border-color: color-mix(in oklch, var(--admin-ink) 22%, transparent);
+  border-radius: 0.25rem;
+  background: var(--admin-paper);
+}
+
+.admin-auth-input:hover {
+  border-color: color-mix(in oklch, var(--admin-ink) 40%, transparent);
+}
+
+.admin-auth-input:focus-visible {
+  border-color: var(--admin-red);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--admin-red) 12%, transparent);
+}
+
+.admin-auth-submit {
+  min-height: 3rem;
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.admin-auth-link {
+  color: color-mix(in oklch, var(--admin-ink) 66%, transparent);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration-color: color-mix(in oklch, var(--admin-orange) 72%, transparent);
+}
+
+.admin-auth-link:hover {
+  color: var(--admin-red);
+}
+
+.admin-auth-message {
+  border-radius: 0.25rem;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 52rem) {
+  .admin-auth-intro {
+    padding: 1.2rem clamp(1.25rem, 6vw, 2.5rem) 1.35rem;
+  }
+
+  .admin-auth-card {
+    min-height: calc(100vh - 6rem);
+    border-top-color: var(--admin-line);
+    padding-block: 2.5rem;
+  }
+}
+
+@media (max-width: 43rem) {
+  .admin-page-heading {
+    gap: 1rem;
+  }
+
+  .admin-stat-card {
+    width: fit-content;
+  }
+
+  .admin-library-toolbar:not(.is-empty) {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+/* The account identity is secondary information; the sidebar owns it now,
+   together with the session action. */
+
+.admin-sidebar-footer {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem 1.2rem;
+  border-top-color: var(--admin-line);
+}
+
+.admin-sidebar-account {
+  gap: 0.22rem;
+}
+
+.admin-role-badge {
+  color: color-mix(in oklch, var(--admin-ink) 54%, transparent);
+  font-size: 0.58rem;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+}
+
+.admin-sidebar-email {
+  font-size: 0.68rem;
+}
+
+.admin-sidebar-logout {
+  width: 100%;
+}
+
+.admin-sidebar-logout .admin-logout-button {
+  width: 100%;
+  justify-content: flex-start;
+  border-color: color-mix(in oklch, var(--admin-ink) 18%, transparent);
+  color: color-mix(in oklch, var(--admin-ink) 68%, transparent);
+}
+
+.admin-sidebar-logout .admin-logout-button:hover {
+  border-color: var(--admin-orange);
+  background: color-mix(in oklch, var(--admin-orange) 14%, var(--admin-paper));
+  color: var(--admin-ink);
+}
+
+@media (max-width: 47.99rem) {
+  .admin-sidebar-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .admin-sidebar-logout {
+    width: auto;
+  }
+
+  .admin-sidebar-logout .admin-logout-button {
+    width: auto;
+  }
+}
+
 @media (min-width: 40rem) and (max-width: 63.99rem) {
   .reference-home .site-container,
   .site-header--reference .site-container,
@@ -481,10 +1108,22 @@
 /* Final visual refinements from the annotated review. */
 
 .site-header.site-header--reference {
+  --reference-ink: #121722;
+  --reference-orange: #ffbd5d;
+  --reference-cream: #fff8dc;
   background: #fff8dc;
-  box-shadow: 0 1px 0 rgb(18 23 34 / 0.12);
+  border-bottom: 0;
+  box-shadow: none;
   backdrop-filter: none;
   isolation: isolate;
+}
+
+.site-footer--reference {
+  --reference-ink: #121722;
+  --reference-orange: #ffbd5d;
+  border-top: 0;
+  background: var(--reference-orange);
+  color: var(--reference-ink);
 }
 
 .reference-home .reference-book-card {
@@ -667,17 +1306,12 @@
   padding-right: 4.25rem;
 }
 
-.reference-book-dialog__header p,
 .reference-review-dialog__eyebrow {
   color: color-mix(in srgb, var(--reference-ink) 64%, transparent);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-}
-
-.reference-book-dialog__header p {
-  color: var(--reference-orange-text, #b85c00);
 }
 
 .reference-book-dialog__header h2,
@@ -692,11 +1326,21 @@
 
 .reference-book-dialog__header h2 {
   color: var(--reference-ink, #121722);
-  font-family: var(--font-display), sans-serif;
-  font-size: clamp(2rem, 5.4vw, 4.15rem);
-  font-weight: 800;
-  letter-spacing: -0.065em;
-  line-height: 0.93;
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.05;
+}
+
+.reference-book-dialog__publication {
+  margin-top: 0.65rem;
+  color: color-mix(in srgb, var(--reference-ink) 68%, transparent);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(0.82rem, 1.4vw, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
 }
 
 .reference-book-dialog__viewer {
@@ -2013,4 +2657,867 @@
 .game-page-shell .game-hero__lead,
 .game-page-shell .game-narrator__bubble p {
   color: #000;
+}
+
+/* Legal pages use the same visual system as the reference landing. The
+   content stays quiet and readable while the page chrome remains identical. */
+
+.legal-page {
+  --legal-ink: #121722;
+  --legal-orange: #ffbd5d;
+  --legal-cream: #fff8dc;
+  overflow: clip;
+  background: #fff;
+  color: var(--legal-ink);
+}
+
+.legal-page__hero {
+  border-bottom: 1px solid color-mix(in srgb, var(--legal-ink) 12%, transparent);
+  background: #fff;
+}
+
+.legal-page__hero-inner {
+  display: grid;
+  gap: 0.85rem;
+  padding-block: clamp(2rem, 4vw, 3.25rem) clamp(2.25rem, 4vw, 3.5rem);
+}
+
+.legal-page__eyebrow {
+  width: fit-content;
+  color: color-mix(in srgb, var(--legal-ink) 58%, transparent);
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.legal-page__eyebrow::before {
+  display: none;
+}
+
+.legal-page__title-row {
+  display: grid;
+  align-items: end;
+  gap: 0.65rem;
+}
+
+.legal-page__title-row h1 {
+  max-width: 16ch;
+  color: var(--legal-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.4rem, 4vw, 4.25rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.legal-page__updated {
+  margin: 0;
+  color: color-mix(in srgb, var(--legal-ink) 58%, transparent);
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+  line-height: 1.45;
+}
+
+.legal-copy {
+  width: min(100% - 2rem, 58rem);
+  padding-block: clamp(3rem, 6vw, 5rem) clamp(4rem, 7vw, 6.5rem);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(0.93rem, 1.1vw, 1rem);
+  line-height: 1.75;
+}
+
+.legal-copy h2 {
+  margin-top: clamp(2.75rem, 5vw, 4rem);
+  color: var(--legal-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.legal-copy h2:first-child {
+  margin-top: 0;
+}
+
+.legal-copy h2::before {
+  display: none;
+}
+
+.legal-copy p {
+  max-width: 65ch;
+  margin-top: 1.15rem;
+  color: color-mix(in srgb, var(--legal-ink) 82%, transparent);
+  text-wrap: pretty;
+}
+
+.legal-copy h2 + p {
+  margin-top: 1.35rem;
+}
+
+.legal-copy a {
+  color: color-mix(in srgb, var(--legal-ink) 92%, var(--legal-orange));
+  font-weight: 600;
+  text-decoration-color: var(--legal-orange);
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.2em;
+}
+
+@media (min-width: 48rem) {
+  .legal-page__title-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .legal-page__updated {
+    padding-bottom: 0.35rem;
+  }
+}
+
+@media (max-width: 39.99rem) {
+  .legal-page .site-container {
+    width: calc(100% - 1.5rem);
+  }
+
+  .legal-page__hero-inner {
+    padding-block: 2rem 2.5rem;
+  }
+
+  .legal-page__title-row h1 {
+    max-width: 14ch;
+    font-size: clamp(2.35rem, 10vw, 3.35rem);
+    line-height: 1;
+  }
+
+  .legal-copy {
+    width: calc(100% - 1.5rem);
+    padding-block: 2.75rem 4.5rem;
+    font-size: 0.96rem;
+    line-height: 1.7;
+  }
+
+  .legal-copy h2 {
+    margin-top: 2.8rem;
+    font-size: 1.35rem;
+  }
+}
+
+/* Personajes locos: editorial landing chrome around the existing cup game. */
+
+.game-world--vasos {
+  --game-paper: #fffdf7;
+  --game-ink: var(--reference-ink, #121722);
+  --game-cream: var(--reference-cream, #fff8dc);
+  --game-orange: var(--reference-orange, #ffbd5d);
+  --game-red: var(--brand-red, #c52e65);
+  min-height: 100vh;
+  background: var(--game-paper);
+  color: var(--game-ink);
+}
+
+.game-world--vasos .game-route-nav {
+  width: min(100% - 2rem, 82rem);
+  padding-block: 1.15rem 0.65rem;
+  border-bottom: 0;
+}
+
+.game-world--vasos .game-route-nav a {
+  color: color-mix(in srgb, var(--game-ink) 78%, transparent);
+  font-size: 0.64rem;
+  letter-spacing: 0.075em;
+}
+
+.game-world--vasos .game-route-nav__back {
+  color: var(--game-ink);
+  font-weight: 700;
+}
+
+.game-world--vasos .game-route-nav__links a {
+  padding-bottom: 0.5rem;
+}
+
+.game-world--vasos .game-route-nav__links a.is-active {
+  color: var(--game-ink);
+}
+
+.game-world--vasos .game-route-nav__links a::after {
+  height: 0.16rem;
+  background: var(--game-orange);
+}
+
+.game-world--vasos .paper-grain {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(
+      circle at 97% 7%,
+      color-mix(in srgb, var(--game-orange) 38%, transparent) 0 8rem,
+      transparent 8.1rem
+    ),
+    radial-gradient(
+      circle at -3% 63%,
+      color-mix(in srgb, #efbfd0 44%, transparent) 0 10rem,
+      transparent 10.1rem
+    ),
+    var(--game-paper);
+}
+
+.game-world--vasos .game-hero {
+  position: relative;
+  width: min(100% - 2rem, 82rem);
+  min-height: 0;
+  margin: 0 auto;
+  padding-block: clamp(3.5rem, 8vw, 6rem) clamp(3rem, 5vw, 4.25rem);
+  overflow: clip;
+  background: transparent;
+}
+
+.game-world--vasos .game-hero::before {
+  position: absolute;
+  top: 2rem;
+  right: -8rem;
+  width: clamp(18rem, 38vw, 32rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--game-orange) 30%, transparent);
+  content: "";
+  pointer-events: none;
+}
+
+.game-world--vasos .game-hero::after {
+  position: absolute;
+  right: 12%;
+  bottom: 2.75rem;
+  width: 4.8rem;
+  height: 0.2rem;
+  background: var(--game-red);
+  content: "";
+  transform: rotate(-5deg);
+}
+
+.game-world--vasos .game-hero__copy {
+  position: relative;
+  z-index: 1;
+  max-width: 52rem;
+  gap: 0;
+}
+
+.game-world--vasos .game-hero__eyebrow {
+  margin-bottom: 0.85rem;
+  color: color-mix(in srgb, var(--game-red) 86%, var(--game-ink));
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.game-world--vasos .game-hero .display-title {
+  max-width: 10ch;
+  color: var(--game-ink);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(3.2rem, 8vw, 6.8rem);
+  font-weight: 800;
+  letter-spacing: -0.065em;
+  line-height: 0.91;
+}
+
+.game-world--vasos .game-hero .display-title em {
+  color: var(--game-red);
+  font-style: normal;
+}
+
+.game-world--vasos .game-hero__lead {
+  max-width: 34rem;
+  margin-top: 1.35rem;
+  color: color-mix(in srgb, var(--game-ink) 72%, transparent);
+  font-size: clamp(0.92rem, 1.2vw, 1.08rem);
+  line-height: 1.62;
+}
+
+.game-world--vasos .game-hero__doodle {
+  display: block;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.game-world--vasos .game-hero__doodle--one {
+  top: 16%;
+  right: 14%;
+  color: var(--game-orange);
+  font-size: clamp(3.5rem, 7vw, 6.5rem);
+  opacity: 0.86;
+}
+
+.game-world--vasos .game-hero__doodle--two {
+  right: 34%;
+  bottom: 12%;
+  color: var(--game-red);
+  font-size: clamp(2.75rem, 5vw, 4.5rem);
+  opacity: 0.76;
+}
+
+.game-world--vasos .cups-lab {
+  width: min(100% - 2rem, 82rem);
+  padding-top: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.game-world--vasos .game-section-intro {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(0.85rem, 2vw, 1.5rem);
+  max-width: 56rem;
+}
+
+.game-world--vasos .game-section-intro > span {
+  display: block;
+  color: var(--game-orange);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.6rem, 5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 0.78;
+}
+
+.game-world--vasos .game-section-intro p {
+  color: color-mix(in srgb, var(--game-red) 86%, var(--game-ink));
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.game-world--vasos .game-section-intro h2 {
+  max-width: none;
+  margin-top: 0.55rem;
+  color: var(--game-ink);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2rem, 4.2vw, 4.25rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 0.96;
+}
+
+.game-world--vasos .cups-lab__controls {
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+.game-world--vasos .game-action {
+  min-height: 2.75rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+}
+
+.game-world--vasos .game-action--primary {
+  background: var(--game-orange);
+  color: var(--game-ink);
+}
+
+.game-world--vasos .game-action--secondary {
+  border-color: color-mix(in srgb, var(--game-ink) 28%, transparent);
+  background: transparent;
+  color: var(--game-ink);
+}
+
+.game-world--vasos .game-action--primary:not(:disabled):hover {
+  border-color: var(--game-ink);
+  background: var(--game-ink);
+  color: var(--game-paper);
+}
+
+.game-world--vasos .game-action--secondary:not(:disabled):hover {
+  border-color: var(--game-orange);
+  background: color-mix(in srgb, var(--game-orange) 25%, transparent);
+}
+
+.game-world--vasos .cups-result {
+  border-color: color-mix(in srgb, var(--game-ink) 18%, transparent);
+  background: var(--game-cream);
+}
+
+@media (max-width: 47.99rem) {
+  .game-world--vasos .game-route-nav,
+  .game-world--vasos .game-hero,
+  .game-world--vasos .cups-lab {
+    width: calc(100% - 1.5rem);
+  }
+
+  .game-world--vasos .game-route-nav {
+    padding-top: 0.9rem;
+  }
+
+  .game-world--vasos .game-hero {
+    padding-block: 3.25rem 2.75rem;
+  }
+
+  .game-world--vasos .game-hero::before {
+    top: 3.5rem;
+    right: -8rem;
+    width: 19rem;
+  }
+
+  .game-world--vasos .game-hero::after {
+    right: 8%;
+    bottom: 1.9rem;
+  }
+
+  .game-world--vasos .game-hero__doodle--one {
+    top: 12%;
+    right: -0.75rem;
+  }
+
+  .game-world--vasos .game-hero__doodle--two {
+    right: 17%;
+    bottom: 7%;
+  }
+
+  .game-world--vasos .game-section-intro {
+    gap: 0.8rem;
+  }
+
+  .game-world--vasos .game-section-intro > span {
+    font-size: 2.35rem;
+  }
+
+  .game-world--vasos .game-section-intro h2 {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .game-world--vasos .cups-lab__controls {
+    align-items: stretch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-world--vasos .game-hero__doodle,
+  .game-world--vasos .game-hero::after {
+    transition: none;
+  }
+}
+
+/* Match the landing hero structure: editorial copy on the left, one visual
+   anchor on the right. The cups remain owned by their original styles. */
+
+.game-world--vasos .paper-grain {
+  background: #fff;
+}
+
+.game-world--vasos .game-route-nav {
+  background: #fff;
+}
+
+.game-world--vasos .game-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.82fr);
+  align-items: center;
+  gap: clamp(2.5rem, 7vw, 7rem);
+  min-height: 0;
+  padding-block: clamp(4rem, 8vw, 7rem) clamp(3.5rem, 6vw, 5.5rem);
+  overflow: visible;
+}
+
+.game-world--vasos .game-hero::before,
+.game-world--vasos .game-hero::after,
+.game-world--vasos .game-hero__doodle {
+  display: none;
+}
+
+.game-world--vasos .game-hero__copy {
+  max-width: 35rem;
+}
+
+.game-world--vasos .game-hero__eyebrow {
+  display: none;
+}
+
+.game-world--vasos .game-hero .display-title {
+  display: grid;
+  max-width: 9ch;
+  color: var(--game-ink);
+  font-size: clamp(3.4rem, 7.4vw, 6.5rem);
+  letter-spacing: -0.065em;
+  line-height: 0.92;
+}
+
+.game-world--vasos .game-hero .display-title strong,
+.game-world--vasos .game-hero .display-title > span {
+  display: block;
+  color: inherit;
+  font: inherit;
+}
+
+.game-world--vasos .game-hero .display-title strong {
+  font-weight: 800;
+}
+
+.game-world--vasos .game-hero .display-title > span {
+  font-weight: 600;
+}
+
+.game-world--vasos .game-hero__statement {
+  max-width: 12ch;
+  margin-top: 1.4rem;
+  color: var(--game-ink);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2rem, 4vw, 3.35rem);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.game-world--vasos .game-hero__statement span {
+  color: var(--game-red);
+}
+
+.game-world--vasos .game-hero__lead {
+  max-width: 27rem;
+  margin-top: 1.15rem;
+}
+
+.game-world--vasos .game-hero__image {
+  position: relative;
+  display: flex;
+  min-height: clamp(22rem, 47vw, 35rem);
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--game-cream);
+}
+
+.game-world--vasos .game-hero__image::before {
+  position: absolute;
+  top: 7%;
+  left: 10%;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--game-orange) 70%, #fff);
+  content: "";
+}
+
+.game-world--vasos .game-hero__image::after {
+  position: absolute;
+  right: 9%;
+  bottom: 12%;
+  width: 4rem;
+  height: 0.18rem;
+  background: var(--game-red);
+  content: "";
+  transform: rotate(-5deg);
+}
+
+.game-world--vasos .game-hero__image img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: min(112%, 32rem);
+  height: auto;
+  object-fit: contain;
+  transform: translateY(4%);
+}
+
+.game-world--vasos .game-section-intro {
+  display: block;
+  max-width: 52rem;
+}
+
+.game-world--vasos .game-section-intro > span {
+  display: none;
+}
+
+.game-world--vasos .game-section-intro p {
+  margin-bottom: 0.55rem;
+}
+
+.game-world--vasos .game-section-intro h2 {
+  max-width: 17ch;
+}
+
+@media (max-width: 47.99rem) {
+  .game-world--vasos .game-hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.25rem;
+    padding-block: 3rem 3.5rem;
+  }
+
+  .game-world--vasos .game-hero__copy {
+    max-width: 31rem;
+  }
+
+  .game-world--vasos .game-hero .display-title {
+    font-size: clamp(3.1rem, 14vw, 5.3rem);
+  }
+
+  .game-world--vasos .game-hero__statement {
+    max-width: 14ch;
+    font-size: clamp(1.85rem, 8.8vw, 3rem);
+  }
+
+  .game-world--vasos .game-hero__image {
+    width: min(100%, 25rem);
+    min-height: 20rem;
+    margin-inline: auto;
+  }
+
+  .game-world--vasos .game-section-intro h2 {
+    max-width: 15ch;
+  }
+}
+
+/* Typography parity with the reference landing. */
+
+.game-world--vasos .game-hero .display-title,
+.game-world--vasos .game-hero__statement {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.1;
+}
+
+.game-world--vasos .game-hero .display-title {
+  display: block;
+  max-width: 11ch;
+}
+
+.game-world--vasos .game-hero .display-title strong,
+.game-world--vasos .game-hero .display-title > span {
+  display: block;
+  font: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+}
+
+.game-world--vasos .game-hero .display-title strong,
+.game-world--vasos .game-hero .display-title > span,
+.game-world--vasos .game-hero__statement,
+.game-world--vasos .game-hero__statement span {
+  color: var(--game-ink);
+}
+
+.game-world--vasos .game-hero__statement {
+  max-width: 12ch;
+  margin-top: 0;
+}
+
+.game-world--vasos .game-hero__statement span {
+  font: inherit;
+}
+
+.game-world--vasos .game-section-intro h2 {
+  max-width: 17ch;
+  color: var(--game-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.1;
+}
+
+/* The second game uses the same landing-led shell; only its cauldron remains
+   game-specific. */
+
+:is(.game-world--vasos, .game-world--caldero) {
+  --game-paper: #fffdf7;
+  --game-ink: var(--reference-ink, #121722);
+  --game-cream: var(--reference-cream, #fff8dc);
+  --game-orange: var(--reference-orange, #ffbd5d);
+  --game-red: var(--brand-red, #c52e65);
+}
+
+:is(.game-world--vasos, .game-world--caldero) .paper-grain,
+:is(.game-world--vasos, .game-world--caldero) .game-route-nav {
+  background: #fff;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-route-nav {
+  width: min(100% - 2rem, 82rem);
+  padding-block: 1.15rem 0.65rem;
+  border-bottom: 0;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-route-nav a {
+  color: color-mix(in srgb, var(--game-ink) 78%, transparent);
+  font-size: 0.64rem;
+  letter-spacing: 0.075em;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-route-nav__back {
+  color: var(--game-ink);
+  font-weight: 700;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-route-nav__links a {
+  padding-bottom: 0.5rem;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-route-nav__links a::after {
+  height: 0.16rem;
+  background: var(--game-orange);
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.82fr);
+  align-items: center;
+  gap: clamp(2.5rem, 7vw, 7rem);
+  width: min(100% - 2rem, 82rem);
+  min-height: 0;
+  margin: 0 auto;
+  padding-block: clamp(4rem, 8vw, 7rem) clamp(3.5rem, 6vw, 5.5rem);
+  overflow: visible;
+  background: transparent;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero::before,
+:is(.game-world--vasos, .game-world--caldero) .game-hero::after,
+:is(.game-world--vasos, .game-world--caldero) .game-hero__doodle,
+:is(.game-world--vasos, .game-world--caldero) .game-hero__eyebrow {
+  display: none;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero__copy {
+  position: relative;
+  z-index: 1;
+  max-width: 35rem;
+  gap: 0;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero .display-title,
+:is(.game-world--vasos, .game-world--caldero) .game-hero__statement {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.1;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero .display-title {
+  display: block;
+  max-width: 11ch;
+  color: var(--game-ink);
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero .display-title strong,
+:is(.game-world--vasos, .game-world--caldero) .game-hero .display-title > span {
+  display: block;
+  color: var(--game-ink);
+  font: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero__statement {
+  max-width: 12ch;
+  margin-top: 0;
+  color: var(--game-ink);
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero__statement span {
+  color: inherit;
+  font: inherit;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero__lead {
+  max-width: 27rem;
+  margin-top: 1.15rem;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero__image {
+  position: relative;
+  display: flex;
+  min-height: clamp(22rem, 47vw, 35rem);
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--game-cream);
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero__image::before {
+  position: absolute;
+  top: 7%;
+  left: 10%;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--game-orange) 70%, #fff);
+  content: "";
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero__image::after {
+  position: absolute;
+  right: 9%;
+  bottom: 12%;
+  width: 4rem;
+  height: 0.18rem;
+  background: var(--game-red);
+  content: "";
+  transform: rotate(-5deg);
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero__image img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: min(112%, 32rem);
+  height: auto;
+  object-fit: contain;
+  transform: translateY(4%);
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-section-intro {
+  display: block;
+  max-width: 52rem;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-section-intro > span {
+  display: none;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-section-intro p {
+  margin-bottom: 0.55rem;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-section-intro h2 {
+  max-width: 17ch;
+  color: var(--game-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1.1;
+}
+
+@media (max-width: 47.99rem) {
+  :is(.game-world--vasos, .game-world--caldero) .game-route-nav,
+  :is(.game-world--vasos, .game-world--caldero) .game-hero {
+    width: calc(100% - 1.5rem);
+  }
+
+  :is(.game-world--vasos, .game-world--caldero) .game-hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.25rem;
+    padding-block: 3rem 3.5rem;
+  }
+
+  :is(.game-world--vasos, .game-world--caldero) .game-hero__copy {
+    max-width: 31rem;
+  }
+
+  :is(.game-world--vasos, .game-world--caldero) .game-hero__image {
+    width: min(100%, 25rem);
+    min-height: 20rem;
+    margin-inline: auto;
+  }
+
+  :is(.game-world--vasos, .game-world--caldero) .game-section-intro h2 {
+    max-width: 15ch;
+  }
 }
