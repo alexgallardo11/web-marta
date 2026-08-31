@@ -3521,3 +3521,120 @@
     max-width: 15ch;
   }
 }
+
+/* Quiet game hero and the full landing palette. The interactive objects keep
+   their existing structure and behaviour; only their visual language changes. */
+
+:is(.game-world--vasos, .game-world--caldero) {
+  --game-paper: var(--brand-paper);
+  --game-ink: var(--reference-ink, #121722);
+  --game-orange: var(--brand-orange);
+  --game-red: var(--brand-red);
+  --game-cyan: var(--brand-cyan);
+  --game-lime: var(--brand-lime);
+  --game-cream: var(--reference-cream, var(--brand-paper));
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: auto;
+  padding-block: clamp(3.75rem, 9vw, 7rem) clamp(3rem, 7vw, 5.5rem);
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero__copy {
+  width: 100%;
+  max-width: none;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero .display-title {
+  width: 100%;
+  max-width: none;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero .display-title strong,
+:is(.game-world--vasos, .game-world--caldero) .game-hero .display-title > span {
+  display: inline;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero__statement {
+  width: 100%;
+  max-width: none;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero__statement span {
+  display: inline;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero__lead {
+  width: 100%;
+  max-width: 44rem;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-hero__image {
+  display: none;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .cups-grid {
+  background:
+    radial-gradient(
+      circle at 7% 12%,
+      color-mix(in srgb, var(--game-orange) 30%, transparent) 0 4rem,
+      transparent 4.1rem
+    ),
+    radial-gradient(
+      circle at 93% 88%,
+      color-mix(in srgb, var(--game-cyan) 34%, transparent) 0 6rem,
+      transparent 6.1rem
+    ),
+    color-mix(in srgb, var(--game-cyan) 12%, var(--game-paper)) !important;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .magic-workbench {
+  background:
+    radial-gradient(
+      circle at 18% 22%,
+      color-mix(in srgb, var(--game-red) 18%, transparent) 0 6.5rem,
+      transparent 6.6rem
+    ),
+    radial-gradient(
+      circle at 86% 76%,
+      color-mix(in srgb, var(--game-orange) 22%, transparent) 0 7rem,
+      transparent 7.1rem
+    ),
+    color-mix(in srgb, var(--game-cyan) 14%, var(--game-paper)) !important;
+}
+
+.game-page-shell .magic-ingredient:nth-child(1) {
+  border-top-color: var(--game-orange) !important;
+  background: color-mix(in srgb, var(--game-orange) 86%, var(--game-paper)) !important;
+}
+
+.game-page-shell .magic-ingredient:nth-child(2) {
+  border-top-color: var(--game-red) !important;
+  background: color-mix(in srgb, var(--game-red) 18%, var(--game-paper)) !important;
+}
+
+.game-page-shell .magic-ingredient:nth-child(3) {
+  border-top-color: var(--game-cyan) !important;
+  background: color-mix(in srgb, var(--game-cyan) 23%, var(--game-paper)) !important;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-action--primary {
+  background: var(--game-orange) !important;
+  color: var(--game-ink) !important;
+}
+
+:is(.game-world--vasos, .game-world--caldero) .game-action--camera:hover:not(:disabled) {
+  background: var(--game-red) !important;
+  color: var(--game-paper) !important;
+}
+
+@media (max-width: 47.99rem) {
+  :is(.game-world--vasos, .game-world--caldero) .game-hero {
+    padding-block: 3.25rem 3.75rem;
+  }
+
+  :is(.game-world--vasos, .game-world--caldero) .game-hero__statement {
+    max-width: none;
+  }
+}

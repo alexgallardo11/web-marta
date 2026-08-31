@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { CupsGame } from "@/components/games/cups-game";
 import { GameShell } from "@/components/games/game-shell";
 
@@ -39,7 +38,7 @@ export default function CrazyCharactersPage() {
               className="display-title"
               aria-label="Crea personajes locos"
             >
-              <strong>Crea personajes</strong>
+              <strong>Crea personajes</strong>{" "}
               <span>locos</span>
             </h1>
             <p className="game-hero__statement">
@@ -49,16 +48,6 @@ export default function CrazyCharactersPage() {
               Cuatro pistas inesperadas para desbloquear una idea y empezar a
               dibujar sin pensarlo demasiado.
             </p>
-          </div>
-          <div className="game-hero__image">
-            <Image
-              src="/images/web-2026/characters/martina-futbolista.png"
-              alt="Personaje ilustrado listo para inspirar un nuevo dibujo"
-              width={1428}
-              height={1428}
-              priority
-              sizes="(max-width: 767px) 76vw, 30rem"
-            />
           </div>
         </section>
         <CupsGame />

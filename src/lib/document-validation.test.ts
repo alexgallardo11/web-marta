@@ -45,12 +45,29 @@ describe("validación de documentos", () => {
         sizeBytes: 2048,
       }).success,
     ).toBe(true);
+    expect(createLinkSchema.safeParse({}).success).toBe(true);
     expect(
       createLinkSchema.safeParse({
+        policy: "permanent",
+      }).success,
+    ).toBe(true);
+    expect(
+      createLinkSchema.safeParse({
+        policy: "one_time",
         expiresAt: "2030-01-01T23:59:59.000Z",
       }).success,
     ).toBe(true);
-    expect(createLinkSchema.safeParse({}).success).toBe(false);
+    expect(
+      createLinkSchema.safeParse({
+        policy: "one_time",
+      }).success,
+    ).toBe(false);
+    expect(
+      createLinkSchema.safeParse({
+        policy: "permanent",
+        expiresAt: "2030-01-01T23:59:59.000Z",
+      }).success,
+    ).toBe(false);
     const now = Date.parse("2026-01-01T00:00:00.000Z");
     expect(isValidLinkExpiry("2026-01-02T00:00:00.000Z", now)).toBe(true);
     expect(isValidLinkExpiry("2027-01-02T00:00:00.000Z", now)).toBe(false);

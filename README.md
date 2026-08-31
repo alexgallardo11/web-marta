@@ -9,12 +9,16 @@ la gestión privada de PDFs de Marta Moreno.
 - Juegos `/juegos/personajes-locos` y `/juegos/caldero-magico`.
 - Exportación del Caldero Mágico a PNG de 1080 × 1920.
 - Panel privado en `/admin/documentos` con subida directa a Supabase Storage.
-- Renombrado, sustitución segura, borrado y enlaces de un solo uso con
-  caducidad obligatoria (24 horas, 7 días, 30 días o fecha personalizada).
-- Descarga anónima mediante tokens de 256 bits; en base de datos solo se guarda
-  su hash SHA-256. Abrir `/recursos/:token` no consume la descarga; el botón
-  hace un `POST /recursos/:token/download` y la base de datos lo consume de
-  forma atómica.
+- Renombrado, sustitución segura, borrado y enlaces configurables. Los enlaces
+  permanentes, la opción por defecto, permiten descargas ilimitadas; también se
+  pueden crear enlaces de un solo uso con caducidad obligatoria (24 horas, 7
+  días, 30 días o fecha personalizada).
+- Descarga anónima mediante tokens de 256 bits; en base de datos se guarda su
+  hash SHA-256 y, solo para los enlaces permanentes, una copia cifrada que el
+  panel puede recuperar bajo demanda. Abrir `/recursos/:token` no consume la
+  descarga; el botón hace un `POST /recursos/:token/download`. En los enlaces
+  de un solo uso, la base de datos consume el token de forma atómica; los
+  permanentes registran cada descarga sin consumir el enlace.
 - SEO, sitemap, datos estructurados, páginas legales y redirección de la URL
   antigua.
 - Pruebas unitarias, E2E multinavegador y auditoría WCAG 2.2 AA.
@@ -139,10 +143,19 @@ la autoría, la rama de destino y el SHA exacto antes de fusionar.
 ## Decisiones de seguridad
 
 - Los PDFs tienen rutas UUID opacas y se sirven con URLs firmadas de 60 segundos.
-- Los enlaces públicos no contienen IDs y su token en claro solo se muestra al
-  crearlo.
-- Los enlaces revocados, usados o caducados responden `410` al intentar
-  descargarlos; los desconocidos, `404`.
+- Los enlaces públicos no contienen IDs. El token no se guarda en claro y solo
+  se puede recuperar desde el panel autenticado para enlaces permanentes; los
+  enlaces de un solo uso se muestran una sola vez al crearlos.
+- Los enlaces permanentes no caducan y pueden descargarse varias veces hasta
+  que se revoquen. Los enlaces de un solo uso, revocados o caducados responden
+  `410` al intentar descargarlos; los desconocidos, `404`.
+- Los enlaces existentes se conservan como enlaces de un solo uso al activar
+  esta política; los nuevos son permanentes por defecto.
+- La clave `SHARE_LINK_ENCRYPTION_KEY` debe mantenerse estable si se configura;
+  si se omite, se utiliza la clave secreta de Supabase.
+- Los enlaces permanentes creados antes de guardar el token cifrado siguen
+  funcionando, pero hay que crear uno nuevo si se necesita recuperarlo desde el
+  panel.
 - Sustituir un archivo conserva el documento y todos sus enlaces.
 - Desactivar una cuenta invalida el acceso aunque conserve una sesión antigua.
 - No se registran IP, user-agent, correo ni otros datos personales en las

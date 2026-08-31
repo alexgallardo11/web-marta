@@ -28,6 +28,7 @@ import { createClient } from "@/lib/supabase/client";
 import {
   MAX_PDF_BYTES,
   hasPdfSignature,
+  type ShareLinkPolicy,
 } from "@/lib/document-validation";
 import type { AdminDocument } from "@/types/database";
 
@@ -138,7 +139,13 @@ export function DocumentsDashboard({
   const [customExpiryByDocument, setCustomExpiryByDocument] = useState<
     Record<string, string>
   >({});
+  const [linkPolicyByDocument, setLinkPolicyByDocument] = useState<
+    Record<string, ShareLinkPolicy>
+  >({});
   const [createdLinks, setCreatedLinks] = useState<Record<string, string>>({});
+  const [permanentLinks, setPermanentLinks] = useState<Record<string, string>>(
+    {},
+  );
   const fileInput = useRef<HTMLInputElement>(null);
 
   const visibleDocuments = initialDocuments;
@@ -294,34 +301,37 @@ export function DocumentsDashboard({
 
   async function createLink(documentId: string) {
     setBusy(`link:${documentId}`);
-    const choice = expiryChoiceByDocument[documentId] ?? "24h";
-    let expiresAt: string;
-    if (choice === "custom") {
-      const customExpiry = customExpiryByDocument[documentId];
-      if (!customExpiry) {
-        setBusy(null);
-        setMessage({ kind: "error", text: "Elige una fecha de caducidad." });
-        return;
+    const policy = linkPolicyByDocument[documentId] ?? "permanent";
+    let expiresAt: string | undefined;
+    if (policy === "one_time") {
+      const choice = expiryChoiceByDocument[documentId] ?? "24h";
+      if (choice === "custom") {
+        const customExpiry = customExpiryByDocument[documentId];
+        if (!customExpiry) {
+          setBusy(null);
+          setMessage({ kind: "error", text: "Elige una fecha de caducidad." });
+          return;
+        }
+        const customDate = new Date(customExpiry);
+        if (Number.isNaN(customDate.getTime())) {
+          setBusy(null);
+          setMessage({ kind: "error", text: "La fecha de caducidad no es válida." });
+          return;
+        }
+        expiresAt = customDate.toISOString();
+      } else {
+        expiresAt = new Date(
+          Date.now() +
+            Number.parseInt(choice.replace("h", ""), 10) * 60 * 60 * 1000,
+        ).toISOString();
       }
-      const customDate = new Date(customExpiry);
-      if (Number.isNaN(customDate.getTime())) {
-        setBusy(null);
-        setMessage({ kind: "error", text: "La fecha de caducidad no es válida." });
-        return;
-      }
-      expiresAt = customDate.toISOString();
-    } else {
-      expiresAt = new Date(
-        Date.now() +
-          Number.parseInt(choice.replace("h", ""), 10) * 60 * 60 * 1000,
-      ).toISOString();
     }
     const response = await fetch(
       `/api/admin/documents/${documentId}/links`,
       {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ expiresAt }),
+        body: JSON.stringify({ policy, ...(expiresAt ? { expiresAt } : {}) }),
       },
     );
     setBusy(null);
@@ -333,7 +343,10 @@ export function DocumentsDashboard({
     setCreatedLinks((current) => ({ ...current, [documentId]: data.url }));
     setMessage({
       kind: "success",
-      text: "Enlace creado. Cópialo ahora: por seguridad no se volverá a mostrar.",
+      text:
+        policy === "permanent"
+          ? "Enlace permanente creado. Ya podrás verlo y copiarlo desde su historial."
+          : "Enlace de un solo uso creado. Cópialo ahora: por seguridad no se volverá a mostrar.",
     });
     router.refresh();
   }
@@ -343,6 +356,42 @@ export function DocumentsDashboard({
     if (!url) return;
     await navigator.clipboard.writeText(url);
     setMessage({ kind: "success", text: "Enlace copiado al portapapeles." });
+  }
+
+  async function loadPermanentLink(linkId: string) {
+    setBusy(`view-link:${linkId}`);
+    try {
+      const response = await fetch(`/api/admin/links/${linkId}`, {
+        headers: { accept: "application/json" },
+      });
+      if (!response.ok) throw new Error(await readError(response));
+      const data = (await response.json()) as { url?: string };
+      const url = data.url;
+      if (!url) throw new Error("No se ha podido recuperar el enlace.");
+      setPermanentLinks((current) => ({ ...current, [linkId]: url }));
+      return url;
+    } catch (error) {
+      setMessage({
+        kind: "error",
+        text:
+          error instanceof Error
+            ? error.message
+            : "No se ha podido recuperar el enlace.",
+      });
+      return null;
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  async function copyPermanentLink(linkId: string) {
+    const url = permanentLinks[linkId] ?? (await loadPermanentLink(linkId));
+    if (!url) return;
+    await navigator.clipboard.writeText(url);
+    setMessage({
+      kind: "success",
+      text: "Enlace permanente copiado al portapapeles.",
+    });
   }
 
   async function revokeLink(linkId: string) {
@@ -492,7 +541,7 @@ export function DocumentsDashboard({
           </h2>
           <p className="mx-auto mt-2 max-w-md text-foreground/60">
             {total === 0
-              ? "Sube el primer PDF para crear un enlace privado y compartirlo con tus alumnas."
+              ? "Sube el primer PDF para crear un enlace y compartirlo con tus alumnas."
               : "Prueba con otra palabra o borra el texto de búsqueda."}
           </p>
         </div>
@@ -503,7 +552,9 @@ export function DocumentsDashboard({
               (link) =>
                 !link.revokedAt &&
                 !link.usedAt &&
-                new Date(link.expiresAt).getTime() > Date.now(),
+                (link.policy === "permanent" ||
+                  (link.expiresAt !== null &&
+                    new Date(link.expiresAt).getTime() > Date.now())),
             );
             return (
               <article
@@ -620,36 +671,62 @@ export function DocumentsDashboard({
                     <Link2 className="size-5 text-[var(--pink)]" aria-hidden="true" />
                     Enlaces de descarga
                     <span className="ml-auto text-sm font-normal text-foreground/55">
-                      {document.links.length} creados
+                      {document.links.length} en historial
                     </span>
                   </summary>
                   <div className="grid gap-6 border-t border-foreground/20 bg-background p-5 lg:grid-cols-[.8fr_1.2fr] lg:p-6">
                     <div>
                       <h3 className="font-black">Crear un enlace nuevo</h3>
                       <p className="mt-1 text-sm text-foreground/60">
-                        El enlace se muestra una sola vez y siempre caduca.
+                        Los enlaces permanentes permiten descargas ilimitadas.
+                        También puedes crear uno de un solo uso.
                       </p>
                       <div className="mt-4 flex flex-col gap-3">
                         <label className="text-sm font-bold">
-                          Caducidad obligatoria
+                          Política del enlace
                           <select
-                            value={expiryChoiceByDocument[document.id] ?? "24h"}
+                            value={linkPolicyByDocument[document.id] ?? "permanent"}
                             onChange={(event) =>
-                              setExpiryChoiceByDocument((current) => ({
+                              setLinkPolicyByDocument((current) => ({
                                 ...current,
-                                [document.id]: event.target.value,
+                                [document.id]: event.target.value as ShareLinkPolicy,
                               }))
                             }
                             className="mt-2 min-h-11 w-full border-2 border-foreground bg-[var(--paper)] px-3"
                           >
-                            <option value="24h">24 horas (recomendado)</option>
-                            <option value="168h">7 días</option>
-                            <option value="720h">30 días</option>
-                            <option value="custom">Fecha personalizada</option>
+                            <option value="permanent">
+                              Permanente · descargas ilimitadas
+                            </option>
+                            <option value="one_time">
+                              Un solo uso · caducidad obligatoria
+                            </option>
                           </select>
                         </label>
-                        {(expiryChoiceByDocument[document.id] ?? "24h") ===
-                          "custom" && (
+                        {(linkPolicyByDocument[document.id] ?? "permanent") ===
+                          "one_time" && (
+                          <label className="text-sm font-bold">
+                            Caducidad
+                            <select
+                              value={expiryChoiceByDocument[document.id] ?? "24h"}
+                              onChange={(event) =>
+                                setExpiryChoiceByDocument((current) => ({
+                                  ...current,
+                                  [document.id]: event.target.value,
+                                }))
+                              }
+                              className="mt-2 min-h-11 w-full border-2 border-foreground bg-[var(--paper)] px-3"
+                            >
+                              <option value="24h">24 horas (recomendado)</option>
+                              <option value="168h">7 días</option>
+                              <option value="720h">30 días</option>
+                              <option value="custom">Fecha personalizada</option>
+                            </select>
+                          </label>
+                        )}
+                        {(linkPolicyByDocument[document.id] ?? "permanent") ===
+                          "one_time" &&
+                          (expiryChoiceByDocument[document.id] ?? "24h") ===
+                            "custom" && (
                           <label className="text-sm font-bold">
                             Fecha y hora de caducidad
                             <input
@@ -707,7 +784,9 @@ export function DocumentsDashboard({
                         <ul className="mt-3 divide-y divide-foreground/20 border-y border-foreground/20">
                           {document.links.map((link) => {
                             const expired =
-                              new Date(link.expiresAt).getTime() <= Date.now();
+                              link.policy === "one_time" &&
+                              (link.expiresAt === null ||
+                                new Date(link.expiresAt).getTime() <= Date.now());
                             const active =
                               !link.revokedAt && !link.usedAt && !expired;
                             return (
@@ -731,7 +810,9 @@ export function DocumentsDashboard({
                                 <div className="min-w-0 flex-1 text-sm">
                                   <p className="font-black">
                                     {active
-                                      ? "Enlace activo"
+                                      ? link.policy === "permanent"
+                                        ? "Enlace permanente"
+                                        : "Enlace activo"
                                       : link.usedAt
                                         ? "Enlace utilizado"
                                         : link.revokedAt
@@ -745,10 +826,56 @@ export function DocumentsDashboard({
                                     </span>
                                     <span className="inline-flex items-center gap-1">
                                       <Clock3 className="size-3.5" />
-                                      {`Caduca ${formatDate(link.expiresAt)}`}
+                                      {link.policy === "permanent"
+                                        ? "Sin caducidad"
+                                        : `Caduca ${formatDate(link.expiresAt!)}`}
                                     </span>
                                   </p>
                                 </div>
+                                {link.policy === "permanent" &&
+                                  !link.revokedAt &&
+                                  link.canRecover && (
+                                  <div className="flex flex-col gap-2 border-t border-foreground/15 pt-3 sm:border-t-0 sm:pt-0">
+                                    {permanentLinks[link.id] && (
+                                      <p className="max-w-full break-all text-xs text-foreground/60 sm:max-w-sm">
+                                        {permanentLinks[link.id]}
+                                      </p>
+                                    )}
+                                    <div className="flex flex-wrap gap-2">
+                                      <button
+                                        type="button"
+                                        onClick={() => loadPermanentLink(link.id)}
+                                        disabled={busy === `view-link:${link.id}`}
+                                        className="inline-flex min-h-10 items-center gap-2 border-2 border-foreground px-3 text-sm font-black hover:bg-muted disabled:opacity-50"
+                                      >
+                                        <Eye className="size-4" aria-hidden="true" />
+                                        {busy === `view-link:${link.id}`
+                                          ? "Cargando…"
+                                          : permanentLinks[link.id]
+                                            ? "Actualizar enlace"
+                                            : "Ver enlace"}
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => copyPermanentLink(link.id)}
+                                        disabled={busy === `view-link:${link.id}`}
+                                        className="inline-flex min-h-10 items-center gap-2 border-2 border-foreground bg-[var(--yellow)] px-3 text-sm font-black hover:bg-[var(--yellow)]/70 disabled:opacity-50"
+                                      >
+                                        <Copy className="size-4" aria-hidden="true" />
+                                        Copiar enlace
+                                      </button>
+                                    </div>
+                                  </div>
+                                )}
+                                {link.policy === "permanent" &&
+                                  !link.revokedAt &&
+                                  !link.canRecover && (
+                                  <p className="max-w-sm border-t border-foreground/15 pt-3 text-xs text-foreground/60 sm:border-t-0 sm:pt-0">
+                                    Este enlace es anterior a la recuperación de
+                                    enlaces. Crea uno permanente nuevo para
+                                    volver a verlo y copiarlo desde aquí.
+                                  </p>
+                                )}
                                 {active && (
                                   <button
                                     type="button"

@@ -23,8 +23,27 @@ export const renameDocumentSchema = z.object({
   title: z.string().trim().min(1).max(160),
 });
 
+export const shareLinkPolicySchema = z.enum(["permanent", "one_time"]);
+export type ShareLinkPolicy = z.infer<typeof shareLinkPolicySchema>;
+
 export const createLinkSchema = z.object({
-  expiresAt: z.string().datetime(),
+  policy: shareLinkPolicySchema.default("permanent"),
+  expiresAt: z.string().datetime().optional(),
+}).superRefine((data, context) => {
+  if (data.policy === "one_time" && !data.expiresAt) {
+    context.addIssue({
+      code: "custom",
+      path: ["expiresAt"],
+      message: "La política de un solo uso necesita una caducidad.",
+    });
+  }
+  if (data.policy === "permanent" && data.expiresAt) {
+    context.addIssue({
+      code: "custom",
+      path: ["expiresAt"],
+      message: "Un enlace permanente no puede tener caducidad.",
+    });
+  }
 });
 
 export const adminInvitationSchema = z.object({

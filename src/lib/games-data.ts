@@ -3,7 +3,7 @@ export const CUP_CATEGORIES = [
     id: "character",
     label: "Personaje",
     number: "01",
-    color: "var(--yellow)",
+    color: "var(--brand-orange)",
     items: [
       "Una abuela",
       "Un mago",
@@ -36,7 +36,7 @@ export const CUP_CATEGORIES = [
     id: "adjective",
     label: "Adjetivo",
     number: "02",
-    color: "var(--pink-soft)",
+    color: "var(--brand-red)",
     items: [
       "tenebroso",
       "alucinante",
@@ -67,7 +67,7 @@ export const CUP_CATEGORIES = [
     id: "action",
     label: "Acción",
     number: "03",
-    color: "var(--turquoise)",
+    color: "var(--brand-cyan)",
     items: [
       "haciendo una pócima",
       "bailando en mitad de la calle",
@@ -95,7 +95,7 @@ export const CUP_CATEGORIES = [
     id: "detail",
     label: "Complemento",
     number: "04",
-    color: "oklch(0.78 0.11 235)",
+    color: "var(--brand-lime)",
     items: [
       "con espinas",
       "con unas zapatillas molonas",

@@ -46,10 +46,16 @@ export default async function ResourcePage({ params }: Context) {
   return (
     <main className="resource-page">
       <section className="resource-card" aria-labelledby="resource-title">
-        <p className="resource-kicker">Recurso privado · Marta Moreno</p>
+        <p className="resource-kicker">
+          {resource.policy === "permanent"
+            ? "Recurso compartido · Marta Moreno"
+            : "Recurso privado · Marta Moreno"}
+        </p>
         <h1 id="resource-title">{resource.documentTitle}</h1>
         <p>
-          Este enlace permite una única descarga y caduca el {formatDate(resource.expiresAt)}.
+          {resource.policy === "permanent"
+            ? "Este enlace es permanente y permite descargar el PDF todas las veces que quieras."
+            : `Este enlace permite una única descarga y caduca el ${formatDate(resource.expiresAt!)}.`}
         </p>
         <ResourceDownloadForm action={`/recursos/${token}/download`} />
         <p className="resource-note">La descarga empezará en una nueva petición segura.</p>

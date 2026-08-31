@@ -16,6 +16,7 @@ import {
   type ChangeEvent,
 } from "react";
 import { wrapCanvasText } from "@/lib/game-utils";
+import { BRAND_COLORS } from "@/lib/brand-colors";
 
 type StoryDetail = {
   label: string;
@@ -34,15 +35,15 @@ type FlowStep = "camera" | "photo" | "story";
 const gameConfig = {
   cups: {
     label: "Personajes locos",
-    accent: "#f99a2e",
-    secondary: "#2ed9f7",
+    accent: BRAND_COLORS.orange,
+    secondary: BRAND_COLORS.cyan,
     character: "/images/web-2026/characters/martina-futbolista.png",
     filename: "mi-dibujo-personajes-locos-marta-moreno.png",
   },
   cauldron: {
     label: "Caldero mágico",
-    accent: "#f82e2e",
-    secondary: "#f99a2e",
+    accent: BRAND_COLORS.red,
+    secondary: BRAND_COLORS.orange,
     character: "/images/web-2026/characters/perro-cocinero.png",
     filename: "mi-dibujo-caldero-magico-marta-moreno.png",
   },
@@ -122,7 +123,7 @@ async function composePhotoStory({
   const displayFont =
     rootStyle.getPropertyValue("--font-display").trim() || "sans-serif";
 
-  context.fillStyle = "#fffdf7";
+  context.fillStyle = BRAND_COLORS.paper;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   context.fillStyle = "rgba(39, 32, 41, 0.07)";
@@ -144,7 +145,7 @@ async function composePhotoStory({
   context.fill();
 
   context.drawImage(brandMark, 62, 45, 74, 74);
-  context.fillStyle = "#272029";
+  context.fillStyle = BRAND_COLORS.ink;
   context.textAlign = "left";
   context.font = `800 30px ${displayFont}`;
   context.fillText("Marta Moreno", 150, 79);
@@ -164,7 +165,7 @@ async function composePhotoStory({
   context.clip();
   drawImageCover(context, photo, 55, 155, 970, 1245);
   context.restore();
-  context.strokeStyle = "#272029";
+  context.strokeStyle = BRAND_COLORS.ink;
   context.lineWidth = 6;
   context.beginPath();
   context.roundRect(55, 155, 970, 1245, 48);
@@ -180,7 +181,7 @@ async function composePhotoStory({
   context.font = `900 18px ${bodyFont}`;
   context.fillText("ESTA IDEA YA ESTÁ EN EL PAPEL", 120, 1110);
 
-  context.fillStyle = "#272029";
+  context.fillStyle = BRAND_COLORS.ink;
   const titleSize = challengeTitle.length > 52 ? 43 : 51;
   context.font = `400 ${titleSize}px ${displayFont}`;
   const titleLines = wrapCanvasText(context, challengeTitle, 800).slice(0, 2);
@@ -201,8 +202,8 @@ async function composePhotoStory({
   context.ellipse(955, 1510, 220, 165, -0.18, 0, Math.PI * 2);
   context.fill();
 
-  context.fillStyle = "#fffdf7";
-  context.strokeStyle = "#272029";
+  context.fillStyle = BRAND_COLORS.paper;
+  context.strokeStyle = BRAND_COLORS.ink;
   context.lineWidth = 5;
   context.beginPath();
   context.roundRect(70, 1445, 720, 220, 34);
@@ -216,7 +217,7 @@ async function composePhotoStory({
   context.fill();
   context.stroke();
 
-  context.fillStyle = "#272029";
+  context.fillStyle = BRAND_COLORS.ink;
   context.font = `400 50px ${displayFont}`;
   context.fillText("¡Mira lo que has creado!", 110, 1530);
   context.font = `800 27px ${bodyFont}`;
@@ -232,11 +233,11 @@ async function composePhotoStory({
 
   context.drawImage(character, 815, 1435, 230, 230);
 
-  context.fillStyle = "#272029";
+  context.fillStyle = BRAND_COLORS.ink;
   context.beginPath();
   context.roundRect(70, 1705, 940, 82, 999);
   context.fill();
-  context.fillStyle = "#fffdf7";
+  context.fillStyle = BRAND_COLORS.paper;
   context.textAlign = "center";
   context.font = `900 26px ${bodyFont}`;
   context.fillText("HECHO CON MARTA · @MARTAMORENO.ART", 540, 1757);

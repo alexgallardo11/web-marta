@@ -1,12 +1,13 @@
 begin;
 
-select plan(23);
+select plan(30);
 
 select has_table('public', 'admin_users', 'Existe la tabla de administradores');
 select has_table('public', 'documents', 'Existe la tabla de documentos');
 select has_table('public', 'share_links', 'Existe la tabla de enlaces');
 select has_table('public', 'download_events', 'Existe la tabla de descargas');
 select has_type('public', 'admin_role', 'Existe el enum de roles');
+select has_type('public', 'share_link_policy', 'Existe el enum de políticas de enlace');
 
 insert into auth.users (id, email)
 values
@@ -119,6 +120,7 @@ select lives_ok(
       id,
       document_id,
       token_hash,
+      policy,
       expires_at,
       created_by
     )
@@ -126,11 +128,34 @@ select lives_ok(
       '66666666-6666-4666-8666-666666666666',
       '55555555-5555-4555-8555-555555555555',
       repeat('a', 64),
+      'one_time',
       '2030-01-01T00:00:00Z',
       '11111111-1111-4111-8111-111111111111'
     )
   $$,
   'La administradora activa puede crear enlaces con caducidad'
+);
+select lives_ok(
+  $$
+    insert into public.share_links (
+      id,
+      document_id,
+      token_hash,
+      created_by
+    )
+    values (
+      '77777777-7777-4777-8777-777777777777',
+      '55555555-5555-4555-8555-555555555555',
+      repeat('b', 64),
+      '11111111-1111-4111-8111-111111111111'
+    )
+  $$,
+  'Los enlaces nuevos son permanentes por defecto'
+);
+select is(
+  (select policy::text from public.share_links where id = '77777777-7777-4777-8777-777777777777'),
+  'permanent',
+  'La política por defecto es permanente'
 );
 
 reset role;
@@ -212,14 +237,30 @@ select is(
   0,
   'El segundo consumo no devuelve el enlace'
 );
-select throws_ok(
-  $$
-    insert into public.download_events (share_link_id)
-    values ('66666666-6666-4666-8666-666666666666')
-  $$,
-  '23505',
-  null,
-  'La base de datos impide un segundo evento de descarga'
+select is(
+  (select count(*)::integer from public.consume_share_link(repeat('b', 64))),
+  1,
+  'Un enlace permanente permite la primera descarga'
+);
+select is(
+  (select count(*)::integer from public.download_events where share_link_id = '77777777-7777-4777-8777-777777777777'),
+  1,
+  'La primera descarga permanente queda registrada'
+);
+select is(
+  (select used_at is null from public.share_links where id = '77777777-7777-4777-8777-777777777777'),
+  true,
+  'Un enlace permanente no se marca como utilizado'
+);
+select is(
+  (select count(*)::integer from public.consume_share_link(repeat('b', 64))),
+  1,
+  'Un enlace permanente permite descargas posteriores'
+);
+select is(
+  (select count(*)::integer from public.download_events where share_link_id = '77777777-7777-4777-8777-777777777777'),
+  2,
+  'Las descargas posteriores permanentes quedan registradas'
 );
 
 select is(

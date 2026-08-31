@@ -2,6 +2,7 @@ export type Database = {
   public: {
     Enums: {
       admin_role: "owner" | "admin";
+      share_link_policy: "permanent" | "one_time";
     };
     Tables: {
       admin_users: {
@@ -75,7 +76,9 @@ export type Database = {
           id: string;
           document_id: string;
           token_hash: string;
-          expires_at: string;
+          token_ciphertext: string | null;
+          policy: Database["public"]["Enums"]["share_link_policy"];
+          expires_at: string | null;
           revoked_at: string | null;
           used_at: string | null;
           created_by: string;
@@ -85,14 +88,17 @@ export type Database = {
           id?: string;
           document_id: string;
           token_hash: string;
-          expires_at: string;
+          token_ciphertext?: string | null;
+          policy?: Database["public"]["Enums"]["share_link_policy"];
+          expires_at?: string | null;
           revoked_at?: string | null;
           used_at?: string | null;
           created_by: string;
           created_at?: string;
         };
         Update: {
-          expires_at?: string;
+          token_ciphertext?: string | null;
+          expires_at?: string | null;
           revoked_at?: string | null;
           used_at?: string | null;
         };
@@ -141,7 +147,9 @@ export type AdminDocument = {
   updatedAt: string;
   links: {
     id: string;
-    expiresAt: string;
+    policy: Database["public"]["Enums"]["share_link_policy"];
+    canRecover: boolean;
+    expiresAt: string | null;
     revokedAt: string | null;
     usedAt: string | null;
     createdAt: string;

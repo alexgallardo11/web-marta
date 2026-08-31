@@ -70,7 +70,7 @@ export async function listDocuments(
 
   if (linksResult.error) throw linksResult.error;
 
-  const links = linksResult.data ?? [];
+  const links = (linksResult.data ?? []).filter((link) => !link.revoked_at);
   const linkIds = links.map((link) => link.id);
   const downloadsResult = linkIds.length
     ? await supabase
@@ -98,6 +98,8 @@ export async function listDocuments(
       .filter((link) => link.document_id === document.id)
       .map((link) => ({
         id: link.id,
+        policy: link.policy,
+        canRecover: link.policy === "permanent" && link.token_ciphertext !== null,
         expiresAt: link.expires_at,
         revokedAt: link.revoked_at,
         usedAt: link.used_at,

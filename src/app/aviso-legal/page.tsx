@@ -38,8 +38,11 @@ export default function LegalNoticePage() {
         permiso previo y por escrito.
       </p>
       <p>
-        Los enlaces privados a recursos son personales para quienes los reciben.
-        No deben publicarse ni redistribuirse sin autorización.
+        Los enlaces de un solo uso a recursos son personales para quienes los
+        reciben y no deben publicarse ni redistribuirse sin autorización. Marta
+        también puede crear enlaces permanentes para recursos que quiera
+        publicar: cualquier persona que tenga uno de esos enlaces podrá
+        descargar el PDF mientras el enlace no sea revocado.
       </p>
 
       <h2>Enlaces externos y responsabilidad</h2>

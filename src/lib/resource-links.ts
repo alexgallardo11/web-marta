@@ -1,7 +1,11 @@
 import "server-only";
 
-import { createHash } from "node:crypto";
 import { createAdminClient } from "@/lib/supabase/admin";
+import type { ShareLinkPolicy } from "@/lib/document-validation";
+import {
+  hashShareToken,
+  isShareToken,
+} from "@/lib/share-link-tokens";
 
 export type ResourceState =
   | { status: "invalid" | "missing" }
@@ -11,16 +15,9 @@ export type ResourceState =
       linkId: string;
       documentId: string;
       documentTitle: string;
-      expiresAt: string;
+      policy: ShareLinkPolicy;
+      expiresAt: string | null;
     };
-
-export function hashShareToken(token: string) {
-  return createHash("sha256").update(token).digest("hex");
-}
-
-export function isShareToken(token: string) {
-  return /^[A-Za-z0-9_-]{43}$/.test(token);
-}
 
 export async function getResourceState(token: string): Promise<ResourceState> {
   if (!isShareToken(token)) return { status: "invalid" };
@@ -28,7 +25,7 @@ export async function getResourceState(token: string): Promise<ResourceState> {
   const admin = createAdminClient();
   const { data: link, error } = await admin
     .from("share_links")
-    .select("id, document_id, expires_at, revoked_at, used_at")
+    .select("id, document_id, policy, expires_at, revoked_at, used_at")
     .eq("token_hash", hashShareToken(token))
     .maybeSingle();
 
@@ -42,9 +39,11 @@ export async function getResourceState(token: string): Promise<ResourceState> {
   const documentTitle = document?.title;
 
   if (link.revoked_at) return { status: "revoked", documentTitle };
-  if (link.used_at) return { status: "used", documentTitle };
-  if (new Date(link.expires_at).getTime() <= Date.now()) {
-    return { status: "expired", documentTitle };
+  if (link.policy === "one_time") {
+    if (link.used_at) return { status: "used", documentTitle };
+    if (!link.expires_at || new Date(link.expires_at).getTime() <= Date.now()) {
+      return { status: "expired", documentTitle };
+    }
   }
   if (!document) return { status: "missing" };
 
@@ -53,6 +52,7 @@ export async function getResourceState(token: string): Promise<ResourceState> {
     linkId: link.id,
     documentId: link.document_id,
     documentTitle: document.title,
+    policy: link.policy,
     expiresAt: link.expires_at,
   };
 }

@@ -10,9 +10,15 @@ import {
 } from "@/lib/game-utils";
 import { useHydrated } from "@/lib/use-hydrated";
 import { DrawingCameraShare } from "@/components/games/drawing-camera-share";
+import { BRAND_COLORS } from "@/lib/brand-colors";
 
 const emptyValues = CUP_CATEGORIES.map(() => "Toca para mezclar");
-const storyColors = ["#f2d45f", "#efbfd0", "#70c3bc", "#72b8e8"];
+const storyColors = [
+  BRAND_COLORS.orange,
+  BRAND_COLORS.red,
+  BRAND_COLORS.cyan,
+  BRAND_COLORS.lime,
+];
 
 function getCupTextClass(value: string) {
   if (value === "Toca para mezclar") return "is-empty is-long";
@@ -64,7 +70,7 @@ function drawStoryNote({
   context.translate(x + width / 2, y + height / 2);
   context.rotate(rotation);
 
-  context.fillStyle = "#302530";
+  context.fillStyle = BRAND_COLORS.ink;
   context.beginPath();
   context.roundRect(
     -width / 2 + 12,
@@ -76,7 +82,7 @@ function drawStoryNote({
   context.fill();
 
   context.fillStyle = color;
-  context.strokeStyle = "#302530";
+  context.strokeStyle = BRAND_COLORS.ink;
   context.lineWidth = 4;
   context.beginPath();
   context.roundRect(-width / 2, -height / 2, width, height, 28);
@@ -86,7 +92,7 @@ function drawStoryNote({
   context.fillStyle = "rgba(251, 245, 233, 0.72)";
   context.fillRect(-58, -height / 2 - 12, 116, 30);
 
-  context.fillStyle = "#302530";
+  context.fillStyle = BRAND_COLORS.ink;
   context.textAlign = "center";
   context.font = `800 22px ${bodyFont}`;
   context.fillText(label.toUpperCase(), 0, -height / 2 + 68);
@@ -196,7 +202,7 @@ export function CupsGame() {
       const displayFont =
         rootStyle.getPropertyValue("--font-display").trim() || "sans-serif";
 
-      context.fillStyle = "#fbf5e9";
+      context.fillStyle = BRAND_COLORS.paper;
       context.fillRect(0, 0, canvas.width, canvas.height);
 
       context.fillStyle = "rgba(48, 37, 48, 0.08)";
@@ -208,17 +214,17 @@ export function CupsGame() {
         context.fill();
       }
 
-      context.fillStyle = "#f2d45f";
+      context.fillStyle = BRAND_COLORS.orange;
       context.beginPath();
       context.arc(1010, 90, 205, 0, Math.PI * 2);
       context.fill();
 
-      context.fillStyle = "#efbfd0";
+      context.fillStyle = BRAND_COLORS.lime;
       context.beginPath();
       context.arc(-15, 720, 170, 0, Math.PI * 2);
       context.fill();
 
-      context.fillStyle = "#70c3bc";
+      context.fillStyle = BRAND_COLORS.cyan;
       context.beginPath();
       context.arc(1070, 1110, 145, 0, Math.PI * 2);
       context.fill();
@@ -226,13 +232,13 @@ export function CupsGame() {
       if (logo) {
         context.drawImage(logo, 390, 62, 300, 80);
       } else {
-        context.fillStyle = "#302530";
+        context.fillStyle = BRAND_COLORS.ink;
         context.textAlign = "center";
         context.font = `800 31px ${bodyFont}`;
         context.fillText("MARTA MORENO", 540, 115);
       }
 
-      context.fillStyle = "#302530";
+      context.fillStyle = BRAND_COLORS.ink;
       context.textAlign = "center";
       context.font = `800 23px ${bodyFont}`;
       context.fillText("PERSONAJES LOCOS · RETO CREATIVO", 540, 210);
@@ -272,34 +278,34 @@ export function CupsGame() {
         context.beginPath();
         context.roundRect(70, 1190, 940, 420, 60);
         context.clip();
-        context.fillStyle = "#fffdf8";
+        context.fillStyle = BRAND_COLORS.paper;
         context.fillRect(70, 1190, 940, 420);
         context.drawImage(characters, 70, 1190, 940, 443);
         context.restore();
       }
 
-      context.fillStyle = "#302530";
-      context.strokeStyle = "#302530";
+      context.fillStyle = BRAND_COLORS.ink;
+      context.strokeStyle = BRAND_COLORS.ink;
       context.lineWidth = 4;
       context.beginPath();
       context.roundRect(680, 1218, 285, 108, 28);
-      context.fillStyle = "#fbf5e9";
+      context.fillStyle = BRAND_COLORS.paper;
       context.fill();
       context.stroke();
       context.font = `800 27px ${bodyFont}`;
       context.textAlign = "center";
-      context.fillStyle = "#302530";
+      context.fillStyle = BRAND_COLORS.ink;
       context.fillText("¡Ahora te toca a ti!", 822, 1280);
 
-      context.fillStyle = "#c52e65";
+      context.fillStyle = BRAND_COLORS.orange;
       context.fillRect(0, 1615, 1080, 305);
-      context.fillStyle = "#fbf5e9";
+      context.fillStyle = BRAND_COLORS.ink;
       context.font = `400 78px ${displayFont}`;
       context.fillText("Dibújalo a tu manera", 540, 1730);
       context.font = `800 27px ${bodyFont}`;
       context.fillText("Compártelo y etiqueta a @martamoreno.art", 540, 1800);
 
-      context.strokeStyle = "#f2d45f";
+      context.strokeStyle = BRAND_COLORS.red;
       context.lineWidth = 9;
       context.beginPath();
       context.moveTo(365, 1762);

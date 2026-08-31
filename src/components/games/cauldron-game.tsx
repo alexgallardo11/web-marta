@@ -12,6 +12,7 @@ import {
 import { pickRandom, wrapCanvasText } from "@/lib/game-utils";
 import { useHydrated } from "@/lib/use-hydrated";
 import { DrawingCameraShare } from "@/components/games/drawing-camera-share";
+import { BRAND_COLORS } from "@/lib/brand-colors";
 
 type Result = {
   character: CauldronOption;
@@ -105,7 +106,7 @@ function drawStoryCauldron(
 ) {
   context.save();
 
-  context.strokeStyle = "#272029";
+  context.strokeStyle = BRAND_COLORS.ink;
   context.lineWidth = 16;
   context.beginPath();
   context.ellipse(centerX - 205, centerY + 28, 58, 72, 0, 0, Math.PI * 2);
@@ -120,17 +121,16 @@ function drawStoryCauldron(
     centerX + 210,
     centerY,
   );
-  bodyGradient.addColorStop(0, "#7d1e3e");
-  bodyGradient.addColorStop(0.28, "#f82e2e");
-  bodyGradient.addColorStop(0.52, "#ff6a58");
-  bodyGradient.addColorStop(0.76, "#f82e2e");
-  bodyGradient.addColorStop(1, "#731d3a");
+  bodyGradient.addColorStop(0, BRAND_COLORS.red);
+  bodyGradient.addColorStop(0.45, BRAND_COLORS.orange);
+  bodyGradient.addColorStop(0.72, BRAND_COLORS.red);
+  bodyGradient.addColorStop(1, BRAND_COLORS.ink);
 
   context.fillStyle = bodyGradient;
   context.beginPath();
   context.roundRect(centerX - 215, centerY - 20, 430, 230, [32, 32, 110, 110]);
   context.fill();
-  context.strokeStyle = "#272029";
+  context.strokeStyle = BRAND_COLORS.ink;
   context.lineWidth = 7;
   context.stroke();
 
@@ -139,27 +139,27 @@ function drawStoryCauldron(
   context.ellipse(centerX - 112, centerY + 64, 27, 78, 0.15, 0, Math.PI * 2);
   context.fill();
 
-  context.fillStyle = "#f82e2e";
-  context.strokeStyle = "#272029";
+  context.fillStyle = BRAND_COLORS.red;
+  context.strokeStyle = BRAND_COLORS.ink;
   context.lineWidth = 7;
   context.beginPath();
   context.ellipse(centerX, centerY - 24, 245, 60, 0, 0, Math.PI * 2);
   context.fill();
   context.stroke();
 
-  context.fillStyle = "#272029";
+  context.fillStyle = BRAND_COLORS.ink;
   context.beginPath();
   context.ellipse(centerX, centerY - 24, 205, 38, 0, 0, Math.PI * 2);
   context.fill();
 
   [
-    { x: -115, y: -95, radius: 14, color: "#f99a2e" },
-    { x: -28, y: -132, radius: 18, color: "#2ed9f7" },
-    { x: 72, y: -105, radius: 12, color: "#fee0e8" },
-    { x: 142, y: -154, radius: 10, color: "#64e41f" },
+    { x: -115, y: -95, radius: 14, color: BRAND_COLORS.orange },
+    { x: -28, y: -132, radius: 18, color: BRAND_COLORS.cyan },
+    { x: 72, y: -105, radius: 12, color: BRAND_COLORS.red },
+    { x: 142, y: -154, radius: 10, color: BRAND_COLORS.lime },
   ].forEach((bubble) => {
     context.fillStyle = bubble.color;
-    context.strokeStyle = "#272029";
+    context.strokeStyle = BRAND_COLORS.ink;
     context.lineWidth = 4;
     context.beginPath();
     context.arc(
@@ -174,16 +174,16 @@ function drawStoryCauldron(
   });
 
   const flames = [
-    { x: -72, height: 104, color: "#f99a2e", tilt: -0.1 },
-    { x: 0, height: 132, color: "#f82e2e", tilt: 0 },
-    { x: 72, height: 96, color: "#f99a2e", tilt: 0.12 },
+    { x: -72, height: 104, color: BRAND_COLORS.orange, tilt: -0.1 },
+    { x: 0, height: 132, color: BRAND_COLORS.red, tilt: 0 },
+    { x: 72, height: 96, color: BRAND_COLORS.orange, tilt: 0.12 },
   ];
   flames.forEach((flame) => {
     context.save();
     context.translate(centerX + flame.x, centerY + 245);
     context.rotate(flame.tilt);
     context.fillStyle = flame.color;
-    context.strokeStyle = "#272029";
+    context.strokeStyle = BRAND_COLORS.ink;
     context.lineWidth = 5;
     context.beginPath();
     context.moveTo(0, -flame.height);
@@ -219,14 +219,14 @@ function drawStoryIngredient({
   displayFont: string;
 }) {
   context.fillStyle = color;
-  context.strokeStyle = "#272029";
+  context.strokeStyle = BRAND_COLORS.ink;
   context.lineWidth = 4;
   context.beginPath();
   context.roundRect(70, y, 940, 108, 30);
   context.fill();
   context.stroke();
 
-  context.fillStyle = "#272029";
+  context.fillStyle = BRAND_COLORS.ink;
   context.textAlign = "left";
   context.font = `900 20px ${bodyFont}`;
   context.fillText(`${number} · ${label.toUpperCase()}`, 100, y + 36);
@@ -338,7 +338,7 @@ export function CauldronGame() {
       const displayFont =
         rootStyle.getPropertyValue("--font-display").trim() || "sans-serif";
 
-      context.fillStyle = "#fffdf7";
+      context.fillStyle = BRAND_COLORS.paper;
       context.fillRect(0, 0, canvas.width, canvas.height);
 
       context.fillStyle = "rgba(39, 32, 41, 0.08)";
@@ -350,12 +350,12 @@ export function CauldronGame() {
         context.fill();
       }
 
-      context.fillStyle = "#2ed9f7";
+      context.fillStyle = BRAND_COLORS.cyan;
       context.beginPath();
       context.ellipse(1010, 190, 255, 330, -0.18, 0, Math.PI * 2);
       context.fill();
 
-      context.fillStyle = "#f99a2e";
+      context.fillStyle = BRAND_COLORS.orange;
       context.beginPath();
       context.arc(-35, 830, 185, 0, Math.PI * 2);
       context.fill();
@@ -364,7 +364,7 @@ export function CauldronGame() {
         context.drawImage(brandMark, 70, 52, 78, 78);
       }
 
-      context.fillStyle = "#272029";
+      context.fillStyle = BRAND_COLORS.ink;
       context.textAlign = "left";
       context.font = `800 31px ${displayFont}`;
       context.fillText("Marta Moreno", 165, 88);
@@ -373,19 +373,19 @@ export function CauldronGame() {
       context.fillText("ILUSTRADORA INFANTIL", 166, 116);
       context.letterSpacing = "0px";
 
-      context.fillStyle = "#f82e2e";
+      context.fillStyle = BRAND_COLORS.red;
       context.font = `900 21px ${bodyFont}`;
       context.fillText("CALDERO MÁGICO · RETO CREATIVO", 70, 205);
 
-      context.fillStyle = "#272029";
+      context.fillStyle = BRAND_COLORS.ink;
       context.font = `400 82px ${displayFont}`;
       context.fillText("Tu próxima historia", 70, 300);
-      context.fillStyle = "#f82e2e";
+      context.fillStyle = BRAND_COLORS.red;
       context.fillText("ya está hirviendo.", 70, 382);
 
       drawStoryCauldron(context, 540, 610);
 
-      context.fillStyle = "#272029";
+      context.fillStyle = BRAND_COLORS.ink;
       context.textAlign = "center";
       const resultTitle = `${storyResult.character.name} ${storyResult.personality.name}`;
       const resultTitleSize = resultTitle.length > 30 ? 53 : 64;
@@ -398,7 +398,7 @@ export function CauldronGame() {
       drawStoryIngredient({
         context,
         y: 1040,
-        color: "#f99a2e",
+        color: BRAND_COLORS.orange,
         number: "01",
         label: "Ingrediente base",
         value: storyResult.character.name,
@@ -409,7 +409,7 @@ export function CauldronGame() {
       drawStoryIngredient({
         context,
         y: 1165,
-        color: "#fee0e8",
+        color: BRAND_COLORS.lime,
         number: "02",
         label: "Especia secreta",
         value: storyResult.personality.name,
@@ -420,7 +420,7 @@ export function CauldronGame() {
       drawStoryIngredient({
         context,
         y: 1290,
-        color: "#2ed9f7",
+        color: BRAND_COLORS.cyan,
         number: "03",
         label: "Poción transformadora",
         value: storyResult.context.name,
@@ -429,8 +429,8 @@ export function CauldronGame() {
         displayFont,
       });
 
-      context.fillStyle = "#fffdf7";
-      context.strokeStyle = "#272029";
+      context.fillStyle = BRAND_COLORS.paper;
+      context.strokeStyle = BRAND_COLORS.ink;
       context.lineWidth = 5;
       context.beginPath();
       context.roundRect(70, 1440, 735, 265, 36);
@@ -444,11 +444,11 @@ export function CauldronGame() {
       context.fill();
       context.stroke();
 
-      context.fillStyle = "#f82e2e";
+      context.fillStyle = BRAND_COLORS.red;
       context.textAlign = "left";
       context.font = `900 19px ${bodyFont}`;
       context.fillText("EL PERRO COCINERO TE CUENTA…", 105, 1488);
-      context.fillStyle = "#272029";
+      context.fillStyle = BRAND_COLORS.ink;
       const bioSize = storyResult.bio.length > 175 ? 27 : 31;
       context.font = `700 ${bioSize}px ${bodyFont}`;
       const bioLines = wrapCanvasText(context, storyResult.bio, 650).slice(0, 5);
@@ -460,9 +460,9 @@ export function CauldronGame() {
         context.drawImage(narrator, 810, 1465, 235, 235);
       }
 
-      context.fillStyle = "#f82e2e";
+      context.fillStyle = BRAND_COLORS.orange;
       context.fillRect(0, 1750, 1080, 170);
-      context.fillStyle = "#fffdf7";
+      context.fillStyle = BRAND_COLORS.ink;
       context.textAlign = "center";
       context.font = `400 46px ${displayFont}`;
       context.fillText("Ahora dibújalo a tu manera", 540, 1820);

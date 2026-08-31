@@ -1,4 +1,4 @@
-import { createHash, randomBytes } from "node:crypto";
+import { randomBytes } from "node:crypto";
 import { requireAdmin } from "@/lib/auth";
 import { handleRouteError, jsonError, requireSameOrigin } from "@/lib/api";
 import {
@@ -6,6 +6,10 @@ import {
   isValidLinkExpiry,
   uuidSchema,
 } from "@/lib/document-validation";
+import {
+  encryptShareToken,
+  hashShareToken,
+} from "@/lib/share-link-tokens";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 type Context = { params: Promise<{ id: string }> };
@@ -19,10 +23,12 @@ export async function POST(request: Request, context: Context) {
       return jsonError("El identificador no es válido.", 404);
     }
     const parsed = createLinkSchema.safeParse(await request.json());
-    if (!parsed.success) return jsonError("La fecha de caducidad no es válida.");
+    if (!parsed.success) {
+      return jsonError("Revisa la política del enlace y su caducidad.");
+    }
 
-    const expiresAt = parsed.data.expiresAt;
-    if (!isValidLinkExpiry(expiresAt)) {
+    const { policy, expiresAt } = parsed.data;
+    if (policy === "one_time" && (!expiresAt || !isValidLinkExpiry(expiresAt))) {
       return jsonError(
         "La caducidad debe estar en el futuro y como máximo a 365 días.",
       );
@@ -37,13 +43,16 @@ export async function POST(request: Request, context: Context) {
     if (!document) return jsonError("El documento no existe.", 404);
 
     const token = randomBytes(32).toString("base64url");
-    const tokenHash = createHash("sha256").update(token).digest("hex");
+    const tokenHash = hashShareToken(token);
     const { data: link, error } = await admin
       .from("share_links")
       .insert({
         document_id: id,
         token_hash: tokenHash,
-        expires_at: expiresAt,
+        token_ciphertext:
+          policy === "permanent" ? encryptShareToken(token) : null,
+        policy,
+        expires_at: expiresAt ?? null,
         created_by: user.id,
       })
       .select("id")

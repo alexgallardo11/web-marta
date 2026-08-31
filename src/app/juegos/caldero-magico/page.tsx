@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { CauldronGame } from "@/components/games/cauldron-game";
 import { GameShell } from "@/components/games/game-shell";
 
@@ -39,7 +38,7 @@ export default function MagicCauldronPage() {
               className="display-title"
               aria-label="Caldero mágico"
             >
-              <strong>Caldero</strong>
+              <strong>Caldero</strong>{" "}
               <span>mágico</span>
             </h1>
             <p className="game-hero__statement">
@@ -49,16 +48,6 @@ export default function MagicCauldronPage() {
               Mezcla un personaje, una forma de ser y una situación imposible.
               El resto lo pone tu imaginación.
             </p>
-          </div>
-          <div className="game-hero__image">
-            <Image
-              src="/images/web-2026/characters/perro-cocinero.png"
-              alt="Personaje ilustrado junto a su caldero mágico"
-              width={531}
-              height={531}
-              priority
-              sizes="(max-width: 767px) 76vw, 30rem"
-            />
           </div>
         </section>
         <CauldronGame />

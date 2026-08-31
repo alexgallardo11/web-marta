@@ -51,7 +51,7 @@ export default async function DocumentsPage({
           <h1>Documentos PDF</h1>
           <p>
             Gestiona recursos, sustituye versiones y crea enlaces de descarga
-            de un solo uso.
+            configurables.
           </p>
         </div>
         <div className="admin-stat-card">
