@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function MagicCauldronPage() {
   return (
-    <GameShell active="caldero">
+    <GameShell game="caldero">
       <main id="contenido" className="paper-grain">
         <section
           className="game-hero game-hero--cauldron site-container"

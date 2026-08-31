@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function CrazyCharactersPage() {
   return (
-    <GameShell active="vasos">
+    <GameShell game="vasos">
       <main id="contenido" className="paper-grain">
         <section
           className="game-hero game-hero--cups site-container"
