@@ -3732,3 +3732,16 @@
     max-width: none;
   }
 }
+
+/* Bigger books: the source photos are 3:2 with wide white margins, so a 5:4
+   frame with `cover` trims only that empty space (books and shadows fit). */
+.reference-home .reference-book-card figure,
+.reference-library-card figure {
+  aspect-ratio: 5 / 4;
+}
+
+.reference-home .reference-book-card img,
+.reference-library-card figure img {
+  object-fit: cover;
+  object-position: center;
+}
