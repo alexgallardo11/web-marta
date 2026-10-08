@@ -3747,3 +3747,25 @@
   object-fit: cover;
   object-position: center;
 }
+
+/* Carousel covers with more presence: a tighter frame (still clear of every
+   book's shadow) and fewer books per view, with the next one peeking in. */
+.reference-home .reference-book-card figure {
+  aspect-ratio: 23 / 20;
+}
+
+.reference-home .reference-books__rail {
+  grid-auto-columns: 40%;
+}
+
+@media (min-width: 40rem) and (max-width: 63.99rem) {
+  .reference-home .reference-books__rail {
+    grid-auto-columns: 45%;
+  }
+}
+
+@media (max-width: 39.99rem) {
+  .reference-home .reference-books__rail {
+    grid-auto-columns: 80%;
+  }
+}
