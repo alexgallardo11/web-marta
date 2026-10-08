@@ -459,12 +459,19 @@ export const books = [
     slug: "martina-futbolista",
     title: "Martina futbolista",
     eyebrow: "Jugar también es encontrar tu sitio",
-    publication: "NubeOcho, 2024",
+    publication: "Nube Ocho, 2025",
     description:
       "Una protagonista con energía y ganas de demostrar que el campo, como el papel, también puede ser para ti.",
     cover: "/images/library-2026/martina-futbolista-cover.jpg",
     displayCover: "/images/library-2026/martina-futbolista-display-tight.jpg",
-    spreads: [],
+    spreads: [
+      "/images/library-2026/martina-futbolista-01.jpg",
+      "/images/library-2026/martina-futbolista-02.jpg",
+      "/images/library-2026/martina-futbolista-03.jpg",
+      "/images/library-2026/martina-futbolista-04.jpg",
+      "/images/library-2026/martina-futbolista-05.jpg",
+      "/images/library-2026/martina-futbolista-06.jpg",
+    ],
     accent: "#3b8f62",
     accentSoft: "#d5eed9",
     numberLabel: "15",
@@ -474,13 +481,19 @@ export const books = [
   },
   {
     slug: "vera-astronauta",
-    title: "Vera, la astronauta valiente",
+    title: "Vera astronauta",
     eyebrow: "Un viaje empieza con una pregunta",
+    publication: "Nube Ocho, 2025",
     description:
       "Una invitación a levantar la vista, inventar mundos y llevar la imaginación tan lejos como haga falta.",
     cover: "/images/library-2026/vera-astronauta-cover.jpg",
     displayCover: "/images/library-2026/vera-astronauta-display-tight.jpg",
-    spreads: [],
+    spreads: [
+      "/images/library-2026/vera-astronauta-01.jpg",
+      "/images/library-2026/vera-astronauta-02.jpg",
+      "/images/library-2026/vera-astronauta-03.jpg",
+      "/images/library-2026/vera-astronauta-04.jpg",
+    ],
     accent: "#4e6db1",
     accentSoft: "#dae4f7",
     numberLabel: "16",
@@ -535,6 +548,7 @@ export const books = [
     slug: "como-estas-hoy",
     title: "¿Cómo estás hoy?",
     eyebrow: "Una pregunta que abre espacio",
+    publication: "Destino, 2025",
     description:
       "Colores, criaturas y preguntas sencillas para poner nombre a lo que sentimos y compartirlo sin prisa.",
     cover: "/images/library-2026/como-estas-hoy-cover.jpg",
@@ -550,11 +564,83 @@ export const books = [
     coverAspect: 1,
     shelfScale: 0.84,
   },
+  {
+    slug: "donde-esta-mi-escoba",
+    title: "¿Dónde está mi escoba?",
+    eyebrow: "Una bruja, un bosque y muchos GRRRR",
+    publication: "Nube Ocho, 2025",
+    description:
+      "Una brujita busca su escoba por todo el bosque mientras algo enorme se acerca cada vez más.",
+    cover: "/images/library-2026/donde-esta-mi-escoba-cover.jpg",
+    spreads: [
+      "/images/library-2026/donde-esta-mi-escoba-01.jpg",
+      "/images/library-2026/donde-esta-mi-escoba-02.jpg",
+      "/images/library-2026/donde-esta-mi-escoba-03.jpg",
+      "/images/library-2026/donde-esta-mi-escoba-04.jpg",
+      "/images/library-2026/donde-esta-mi-escoba-05.jpg",
+      "/images/library-2026/donde-esta-mi-escoba-06.jpg",
+    ],
+    accent: "#6b3fa0",
+    accentSoft: "#e6dbf4",
+    numberLabel: "20",
+    coverAspect: 0.78,
+    shelfScale: 0.96,
+  },
+  {
+    slug: "el-pequeno-guru",
+    title: "El pequeño Gurú / El petit Gurú",
+    eyebrow: "Un camino que solo tú puedes recorrer",
+    publication: "Destino, 2026",
+    description:
+      "El sherpa te guía, pero debes llegar tú a la cima: una historia para acompañar y dejar crecer.",
+    cover: "/images/library-2026/el-pequeno-guru-01.jpg",
+    spreads: [],
+    accent: "#2b8fc8",
+    accentSoft: "#d6ecf8",
+    numberLabel: "21",
+    coverAspect: 1.89,
+    shelfScale: 0.9,
+  },
 ] satisfies readonly Book[];
 
 export type ReferenceLibraryCategory = "author" | "anton" | "parenting";
 
 export const referenceLibraryItems = [
+  {
+    bookSlug: "el-hilo",
+    image: "/images/reference-carousel/FT3S3992-1536x1024.jpeg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "anton-pinon-una-carrera-muy-marron",
+    image: "/images/reference-carousel/FT3S4002-1536x1024.jpeg",
+    category: "anton",
+  },
+  {
+    bookSlug: "el-pequeno-guru",
+    image: "/images/reference-carousel/el-pequeno-guru.jpg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "donde-esta-mi-escoba",
+    image: "/images/reference-carousel/donde-esta-mi-escoba.jpg",
+    category: "author",
+  },
+  {
+    bookSlug: "como-estas-hoy",
+    image: "/images/reference-carousel/como-estas-hoy.jpg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "martina-futbolista",
+    image: "/images/reference-carousel/martina-futbolista.jpg",
+    category: "parenting",
+  },
+  {
+    bookSlug: "vera-astronauta",
+    image: "/images/reference-carousel/vera-astronauta.jpg",
+    category: "parenting",
+  },
   {
     bookSlug: "el-monstruo-comepueblos",
     image: "/images/reference-carousel/FT3S3979-1536x1024.jpeg",
@@ -577,11 +663,6 @@ export const referenceLibraryItems = [
   },
   {
     bookSlug: "el-hilo",
-    image: "/images/reference-carousel/FT3S3992-1536x1024.jpeg",
-    category: "parenting",
-  },
-  {
-    bookSlug: "el-hilo",
     image: "/images/reference-carousel/FT3S3993-1536x1024.jpeg",
     category: "parenting",
   },
@@ -589,11 +670,6 @@ export const referenceLibraryItems = [
     bookSlug: "el-caracol-se-queja",
     image: "/images/reference-carousel/FT3S3999-1536x1024.jpeg",
     category: "parenting",
-  },
-  {
-    bookSlug: "anton-pinon-una-carrera-muy-marron",
-    image: "/images/reference-carousel/FT3S4002-1536x1024.jpeg",
-    category: "anton",
   },
   {
     bookSlug: "anton-pinon-una-aventura-sin-pantalon",
