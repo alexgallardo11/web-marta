@@ -1,6 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   agreeAdjectiveWithCharacter,
+  formatCountdown,
+  pickDifferentIndex,
   pickRandom,
   wrapCanvasText,
 } from "@/lib/game-utils";
@@ -50,5 +52,31 @@ describe("wrapCanvasText", () => {
       "tres",
       "cuatro",
     ]);
+  });
+});
+
+describe("pickDifferentIndex", () => {
+  it("nunca repite la forma anterior", () => {
+    expect(pickDifferentIndex(5, 2, () => 0.5)).toBe(3);
+    expect(pickDifferentIndex(5, 2, () => 0.3)).toBe(1);
+    expect(pickDifferentIndex(5, 4, () => 0.999)).toBe(3);
+  });
+
+  it("elige libremente cuando no hay forma anterior", () => {
+    expect(pickDifferentIndex(5, null, () => 0.999)).toBe(4);
+    expect(pickDifferentIndex(1, 0, () => 0.7)).toBe(0);
+  });
+
+  it("rechaza colecciones vacías", () => {
+    expect(() => pickDifferentIndex(0, null)).toThrow();
+  });
+});
+
+describe("formatCountdown", () => {
+  it("muestra minutos y segundos redondeando hacia arriba", () => {
+    expect(formatCountdown(180_000)).toBe("3:00");
+    expect(formatCountdown(61_200)).toBe("1:02");
+    expect(formatCountdown(400)).toBe("0:01");
+    expect(formatCountdown(-5)).toBe("0:00");
   });
 });

@@ -206,3 +206,35 @@ export const BIO_TEMPLATES = [
   (character: string, personality: string, context: string) =>
     `Sobrevivir ${context} no es fácil para ${character.toLowerCase()} tan ${personality.toLowerCase()}. Por suerte, lleva tres galletas y una idea imposible.`,
 ] as const;
+
+export const SHAPE_CHALLENGES = [
+  "una montaña",
+  "dos hojas",
+  "una espiral cuadrada",
+  "un triángulo con ventana",
+  "un pájaro",
+  "un trapecio",
+  "una casita",
+  "una chincheta",
+  "dos globos",
+  "una luna",
+  "un gusano",
+  "una copa",
+  "una G",
+  "una nube con curvas",
+  "un comecocos",
+  "una mancha",
+  "un arco mordido",
+  "un triángulo pequeño",
+  "un rayo",
+  "unos pantalones",
+  "una piedra",
+  "un tronco",
+  "un charco",
+  "un cartel",
+  "una campana",
+].map((name, index) => ({
+  id: index + 1,
+  name,
+  src: `/images/games/formas/forma-${String(index + 1).padStart(2, "0")}.png`,
+}));
