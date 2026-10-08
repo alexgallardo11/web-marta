@@ -89,6 +89,7 @@
 
 .shape-desk__photo {
   display: block;
+  border-radius: 0.35rem;
   width: 100%;
   height: auto;
   user-select: none;
@@ -97,10 +98,10 @@
 /* The blank page of the notebook in the photo (measured on the cut-out). */
 .shape-desk__page {
   position: absolute;
-  top: 32.4%;
-  left: 23.3%;
-  width: 59.8%;
-  height: 64.8%;
+  top: 36%;
+  left: 14.5%;
+  width: 73%;
+  height: 52%;
   display: grid;
   place-items: center;
   padding: 0;
@@ -161,7 +162,6 @@
   justify-content: center;
   gap: 0.4rem;
   margin-top: 0.6rem;
-  padding-left: 23%;
   color: color-mix(in srgb, var(--shape-ink) 66%, transparent);
   font-size: 0.75rem;
 }

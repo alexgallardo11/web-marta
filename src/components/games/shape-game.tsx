@@ -229,7 +229,7 @@ export function ShapeGame() {
   }
 
   const hourglassLabel = {
-    idle: "Primero toca la libreta para descubrir tu forma",
+    idle: "Primero toca la hoja para descubrir tu forma",
     ready: "Dar la vuelta al reloj de arena y empezar los 3 minutos",
     flipping: "Dando la vuelta al reloj",
     running: "Pausar el reloj",
@@ -239,7 +239,7 @@ export function ShapeGame() {
 
   const hourglassHint =
     phase === "idle"
-      ? "Primero, la libreta"
+      ? "Primero, la hoja"
       : phase === "flipping"
         ? "¡Allá vamos!"
         : "¡Tiempo!";
@@ -251,10 +251,10 @@ export function ShapeGame() {
       <div className="shape-desk">
         <Image
           className="shape-desk__photo"
-          src="/images/games/crea-multiples-dibujos/escritorio.webp"
-          alt="Lápices de colores, pinceles y acuarelas alrededor de una libreta de espiral. Encima, escrito a mano: «A partir de esta forma»."
-          width={635}
-          height={840}
+          src="/images/games/crea-multiples-dibujos/a-partir-de-esta-forma.webp"
+          alt="Hoja de papel rodeada de lápices de colores, pinceles, acuarelas y una planta. En la hoja, escrito a mano: «a partir de esta forma»."
+          width={1240}
+          height={1754}
           priority
           sizes="(max-width: 860px) 92vw, 34rem"
         />
@@ -265,8 +265,8 @@ export function ShapeGame() {
           disabled={!hydrated || phase === "flipping" || timerActive}
           aria-label={
             shape
-              ? `Tu forma es ${shape.name}. Toca la libreta para cambiarla`
-              : "Toca la libreta para descubrir una forma"
+              ? `Tu forma es ${shape.name}. Toca la hoja para cambiarla`
+              : "Toca la hoja para descubrir una forma"
           }
         >
           {shape ? (
@@ -289,7 +289,7 @@ export function ShapeGame() {
         </button>
         {shape && !timerActive && phase !== "flipping" ? (
           <p className="shape-desk__swap">
-            <Shuffle aria-hidden="true" /> Toca la libreta para cambiar de forma
+            <Shuffle aria-hidden="true" /> Toca la hoja para cambiar de forma
           </p>
         ) : null}
       </div>
@@ -297,7 +297,7 @@ export function ShapeGame() {
       <div className="shape-panel">
         <p className={`shape-panel__step ${step === 1 ? "is-current" : "is-done"}`}>
           <span aria-hidden="true">1</span>
-          Haz click en la libreta y te saldrá una forma simple.
+          Haz click en la hoja y te saldrá una forma simple.
         </p>
         <p className={`shape-panel__step ${step === 2 ? "is-current" : step > 2 ? "is-done" : ""}`}>
           <span aria-hidden="true">2</span>

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { ShapeGame } from "@/components/games/shape-game";
@@ -32,14 +31,6 @@ export default function ShapeGamePage() {
     <div className="shape-page">
       <SiteHeader variant="reference" />
       <main id="contenido" className="shape-scene">
-        <Image
-          className="shape-scene__plant"
-          src="/images/games/crea-multiples-dibujos/planta.webp"
-          alt=""
-          width={150}
-          height={255}
-          aria-hidden="true"
-        />
         <div className="site-container shape-scene__inner">
           <nav className="shape-scene__nav" aria-label="Volver a la web de Marta Moreno">
             <Link href="/">
