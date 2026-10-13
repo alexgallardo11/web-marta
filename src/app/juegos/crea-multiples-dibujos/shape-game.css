@@ -1,0 +1,641 @@
+/* "Crea múltiples dibujos": desk scene from Marta's reference, dressed in the
+   landing language — Poppins, ink #121722, orange #ffbd5d, pill buttons. */
+
+.shape-page {
+  --shape-ink: #121722;
+  --shape-orange: #ffbd5d;
+  --shape-orange-strong: var(--brand-orange, #f99a2e);
+  --shape-cream: #fff8dc;
+  --shape-line: color-mix(in srgb, var(--shape-ink) 14%, transparent);
+  --reference-ink: var(--shape-ink);
+  --reference-orange: var(--shape-orange);
+  --reference-cream: var(--shape-cream);
+  overflow-x: clip;
+  background: #fff;
+  color: var(--shape-ink);
+  font-family: var(--font-body), sans-serif;
+}
+
+/* Scene ------------------------------------------------------------------ */
+
+.shape-scene {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+
+.shape-scene__plant {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: clamp(4.5rem, 9vw, 8rem);
+  height: auto;
+  pointer-events: none;
+}
+
+.shape-scene__inner {
+  position: relative;
+  padding-block: 0.75rem clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.shape-scene__nav {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.shape-scene__nav a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--shape-ink);
+  font-size: 0.67rem;
+  font-weight: 750;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.shape-scene__nav svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.shape-scene__title {
+  margin-top: 0.25rem;
+  color: var(--shape-ink);
+  font-size: clamp(2rem, 4.4vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.shape-game {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  margin-top: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+/* Desk with the notebook -------------------------------------------------- */
+
+.shape-desk {
+  position: relative;
+  width: min(100%, 34rem);
+  justify-self: center;
+}
+
+.shape-desk__photo {
+  display: block;
+  border-radius: 0.35rem;
+  width: 100%;
+  height: auto;
+  user-select: none;
+}
+
+/* The blank page of the notebook in the photo (measured on the cut-out). */
+.shape-desk__page {
+  position: absolute;
+  top: 36%;
+  left: 14.5%;
+  width: 73%;
+  height: 52%;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--shape-ink);
+  cursor: pointer;
+}
+
+.shape-desk__page:disabled {
+  cursor: default;
+}
+
+.shape-desk__page:focus-visible {
+  outline: 3px solid var(--shape-ink);
+  outline-offset: 0.35rem;
+}
+
+.shape-desk__page:not(:disabled):hover .shape-desk__shape {
+  transform: rotate(-3deg) scale(1.03);
+}
+
+.shape-desk__hint {
+  display: grid;
+  justify-items: center;
+  gap: 0.7rem;
+  font-size: clamp(0.62rem, 1.1vw, 0.72rem);
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.shape-desk__tap {
+  display: grid;
+  width: clamp(3rem, 6vw, 4rem);
+  height: clamp(3rem, 6vw, 4rem);
+  place-items: center;
+  border-radius: 50%;
+  background: var(--shape-orange);
+  animation: shape-pulse 1.8s ease-in-out infinite;
+}
+
+.shape-desk__tap svg {
+  width: 45%;
+  height: 45%;
+}
+
+.shape-desk__shape {
+  width: 70%;
+  height: auto;
+  animation: shape-reveal 520ms cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+  transition: transform 220ms ease;
+}
+
+.shape-desk__swap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  color: color-mix(in srgb, var(--shape-ink) 66%, transparent);
+  font-size: 0.75rem;
+}
+
+.shape-desk__swap svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+/* Instructions + hourglass ------------------------------------------------ */
+
+.shape-panel {
+  display: grid;
+  gap: 1.1rem;
+  padding-top: clamp(1rem, 6vw, 5.5rem);
+}
+
+.shape-panel__step {
+  position: relative;
+  padding-left: 2.6rem;
+  color: color-mix(in srgb, var(--shape-ink) 70%, transparent);
+  font-size: clamp(0.95rem, 1.35vw, 1.12rem);
+  line-height: 1.5;
+  transition: color 200ms ease;
+}
+
+.shape-panel__step > span {
+  position: absolute;
+  top: 0.05rem;
+  left: 0;
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--shape-ink) 22%, transparent);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--shape-ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: background 200ms ease, color 200ms ease;
+}
+
+.shape-panel__step strong {
+  font-weight: 700;
+}
+
+.shape-panel__step.is-current {
+  color: var(--shape-ink);
+}
+
+.shape-panel__step.is-current > span {
+  border-color: var(--shape-ink);
+  background: var(--shape-orange);
+}
+
+.shape-panel__step.is-done > span {
+  border-color: var(--shape-ink);
+  background: var(--shape-ink);
+  color: #fff;
+}
+
+.shape-panel__timer-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+}
+
+.shape-hourglass {
+  display: grid;
+  justify-items: center;
+  gap: 0.15rem;
+}
+
+.shape-hourglass {
+  position: relative;
+}
+
+.shape-hourglass__callout {
+  position: absolute;
+  z-index: 2;
+  top: -0.6rem;
+  right: -0.4rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: var(--shape-ink);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: shape-bob 1.4s ease-in-out infinite;
+}
+
+.shape-hourglass__callout::after {
+  position: absolute;
+  bottom: -0.3rem;
+  left: 1.1rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  background: inherit;
+  content: "";
+  transform: rotate(45deg);
+}
+
+.shape-hourglass__halo {
+  position: absolute;
+  inset: 8% -6% 10%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--shape-orange) 70%, transparent), transparent);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.shape-hourglass__button.is-ready .shape-hourglass__halo {
+  opacity: 1;
+  animation: shape-halo 1.6s ease-in-out infinite;
+}
+
+.shape-hourglass__action {
+  margin-top: 0.5rem;
+}
+
+.shape-hourglass__button {
+  position: relative;
+  width: clamp(7.5rem, 11vw, 9.5rem);
+  padding: 0 0 0.6rem;
+  border: 0;
+  border-radius: 1rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.shape-hourglass__button:disabled {
+  cursor: default;
+}
+
+.shape-hourglass__button:focus-visible {
+  outline: 3px solid var(--shape-ink);
+  outline-offset: 0.35rem;
+}
+
+.shape-hourglass__body {
+  position: relative;
+  z-index: 1;
+  display: block;
+  transform-origin: 50% 50%;
+}
+
+.shape-hourglass__button.is-idle .shape-hourglass__body {
+  opacity: 0.55;
+  filter: saturate(0.6);
+}
+
+.shape-hourglass__button.is-ready .shape-hourglass__body {
+  animation: shape-wiggle 2.6s ease-in-out infinite;
+}
+
+.shape-hourglass__button.is-ready:hover .shape-hourglass__body {
+  animation: none;
+  transform: rotate(-10deg);
+  transition: transform 200ms ease;
+}
+
+.shape-hourglass__button.is-flipping .shape-hourglass__body {
+  animation: shape-flip 900ms cubic-bezier(0.6, 0, 0.25, 1) both;
+}
+
+.shape-hourglass__shadow {
+  position: absolute;
+  right: 8%;
+  bottom: 0.15rem;
+  left: 8%;
+  height: 0.9rem;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(18, 23, 34, 0.28), transparent);
+}
+
+.shape-hourglass__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0.15rem 0.3rem 0.35rem rgba(18, 23, 34, 0.18));
+}
+
+.shape-hourglass__glass {
+  fill: none;
+  stroke: rgba(70, 105, 125, 0.55);
+  stroke-width: 2.5;
+}
+
+.shape-hourglass__shine {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-width: 4;
+  opacity: 0.85;
+}
+
+.shape-hourglass__stream {
+  stroke: #e98a2c;
+  stroke-dasharray: 3 3;
+  stroke-width: 2.5;
+  animation: shape-stream 0.35s linear infinite;
+}
+
+.shape-hourglass__time {
+  font-size: clamp(2rem, 3.4vw, 2.75rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.shape-hourglass__hint {
+  font-size: 0.62rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Score ------------------------------------------------------------------- */
+
+.shape-score {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.9rem 1.25rem;
+  margin-top: 0.5rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 0.35rem;
+  background: var(--shape-cream);
+}
+
+.shape-score.is-finished {
+  background: var(--shape-orange);
+  animation: shape-reveal 520ms cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+}
+
+.shape-score__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.shape-score__text {
+  margin-top: 0.15rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.shape-score__actions {
+  display: flex;
+  flex-wrap: wrap;
+  grid-column: 1 / -1;
+  gap: 0.6rem;
+}
+
+.shape-counter {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.shape-counter button {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--shape-ink) 22%, transparent);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--shape-ink);
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.shape-counter button:not(:disabled):hover {
+  background: var(--shape-ink);
+  color: #fff;
+  transform: scale(1.06);
+}
+
+.shape-counter button:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.shape-counter svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.shape-counter output {
+  min-width: 2.5ch;
+  font-size: 2.25rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-align: center;
+}
+
+.shape-score__actions {
+  align-items: center;
+}
+
+.shape-score__actions .reference-button {
+  min-height: 2.75rem;
+}
+
+/* Secondary action: same underlined uppercase link as the landing cards. */
+.shape-score__reset {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--shape-ink);
+  cursor: pointer;
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.67rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+  text-transform: uppercase;
+}
+
+.shape-score__reset svg {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.shape-score__reset:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+
+.shape-score__reset:focus-visible {
+  outline: 2px solid var(--shape-ink);
+  outline-offset: 0.2rem;
+}
+
+.shape-page .reference-button:disabled {
+  cursor: default;
+  opacity: 0.45;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Motion ------------------------------------------------------------------ */
+
+@keyframes shape-reveal {
+  from {
+    opacity: 0;
+    transform: scale(0.6) rotate(-8deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes shape-pulse {
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes shape-wiggle {
+  0%, 70%, 100% {
+    transform: rotate(0deg);
+  }
+  78% {
+    transform: rotate(-8deg);
+  }
+  86% {
+    transform: rotate(6deg);
+  }
+  93% {
+    transform: rotate(-3deg);
+  }
+}
+
+@keyframes shape-flip {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  35% {
+    transform: translateY(-14%) rotate(40deg);
+  }
+  75% {
+    transform: translateY(-10%) rotate(195deg);
+  }
+  100% {
+    transform: translateY(0) rotate(180deg);
+  }
+}
+
+@keyframes shape-bob {
+  50% {
+    transform: translateY(-0.3rem);
+  }
+}
+
+@keyframes shape-halo {
+  50% {
+    transform: scale(1.12);
+    opacity: 0.55;
+  }
+}
+
+@keyframes shape-stream {
+  to {
+    stroke-dashoffset: -6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shape-desk__tap,
+  .shape-desk__shape,
+  .shape-hourglass__body,
+  .shape-hourglass__stream,
+  .shape-hourglass__callout,
+  .shape-hourglass__halo,
+  .shape-score.is-finished {
+    animation: none !important;
+    transition: none;
+  }
+}
+
+/* Responsive -------------------------------------------------------------- */
+
+@media (max-width: 53.99rem) {
+  .shape-game {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .shape-desk {
+    width: min(100%, 28rem);
+  }
+
+  .shape-panel {
+    padding-top: 0;
+  }
+
+  .shape-scene__nav {
+    justify-content: flex-start;
+    padding-left: clamp(3.5rem, 14vw, 5rem);
+  }
+}
+
+@media (max-width: 30rem) {
+  .shape-panel__timer-row {
+    grid-template-columns: minmax(0, 1fr) 7rem;
+    gap: 0.75rem;
+  }
+
+  .shape-hourglass__button {
+    width: 6.5rem;
+  }
+
+  .shape-panel__step {
+    font-size: 0.92rem;
+  }
+
+  .shape-score {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
