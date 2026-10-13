@@ -7,7 +7,7 @@ import { ReferenceTestimonialsCarousel } from "@/components/reference-testimonia
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { books } from "@/lib/books-data";
-import { CLUB_URL, NEWSLETTER_URL } from "@/lib/site-links";
+import { CLUB_URL, CLUB_WAITLIST_URL, NEWSLETTER_URL } from "@/lib/site-links";
 
 export const metadata: Metadata = {
   title: "Marta Moreno · Ilustradora infantil",
@@ -177,6 +177,26 @@ export default function Home() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+
+        <section className="reference-waitlist" aria-labelledby="waitlist-title">
+          <div className="site-container reference-waitlist__inner">
+            <div className="reference-waitlist__copy">
+              <h2 id="waitlist-title">Lista de espera de Mi Club de ilustración</h2>
+              <p className="reference-waitlist__description">
+                Entra en mi grupo privado y descarga la guía de 5 pasos para crear
+                personajes
+              </p>
+            </div>
+            <a
+              className="reference-button reference-button--dark reference-waitlist__button"
+              href={CLUB_WAITLIST_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Quiero la guía <ArrowRight aria-hidden="true" />
+            </a>
+          </div>
+        </section>
 
         <section className="reference-hero" aria-labelledby="hero-title">
           <div className="site-container reference-hero__grid">
