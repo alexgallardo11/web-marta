@@ -589,16 +589,16 @@ export const books = [
   {
     slug: "el-pequeno-guru",
     title: "El pequeño Gurú / El petit Gurú",
-    eyebrow: "Un camino que solo tú puedes recorrer",
+    eyebrow: "Aprende a estar en calma, aquí y ahora",
     publication: "Destino, 2026",
     description:
       "El sherpa te guía, pero debes llegar tú a la cima: una historia para acompañar y dejar crecer.",
-    cover: "/images/library-2026/el-pequeno-guru-01.jpg",
-    spreads: [],
-    accent: "#2b8fc8",
-    accentSoft: "#d6ecf8",
+    cover: "/images/library-2026/el-pequeno-guru-cover.jpg",
+    spreads: ["/images/library-2026/el-pequeno-guru-01.jpg"],
+    accent: "#3f9a32",
+    accentSoft: "#dcf0d2",
     numberLabel: "21",
-    coverAspect: 1.89,
+    coverAspect: 0.92,
     shelfScale: 0.9,
   },
 ] satisfies readonly Book[];
