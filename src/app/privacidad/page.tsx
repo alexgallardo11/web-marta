@@ -31,6 +31,11 @@ export default function PrivacyPage() {
         El acceso de administración trata únicamente los datos necesarios para
         autenticar a Marta y proteger el panel.
       </p>
+      <p>
+        Para conocer de forma agregada cuántas personas visitan la web se usa
+        Vercel Analytics, que funciona sin cookies y sin identificar a cada
+        visitante ni seguirlo entre sitios.
+      </p>
 
       <h2>Finalidad y base jurídica</h2>
       <p>

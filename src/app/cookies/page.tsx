@@ -19,6 +19,11 @@ export default function CookiesPage() {
         La zona pública y los juegos no instalan cookies publicitarias ni de
         analítica. Por eso no aparece un banner de aceptación al entrar.
       </p>
+      <p>
+        Se usa Vercel Analytics para medir las visitas de forma agregada. Esta
+        herramienta funciona sin cookies y no identifica a cada visitante ni lo
+        sigue entre sitios web.
+      </p>
 
       <h2>Cookies técnicas</h2>
       <p>
