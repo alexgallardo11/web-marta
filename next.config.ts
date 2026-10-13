@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
   // Without the LAN hostname, the page renders but Client Components never
   // hydrate, leaving every game control disabled.
   allowedDevOrigins: ["127.0.0.1", "192.168.1.30"],
+  images: {
+    // Every `quality` used by <Image> must be listed (Next 16.4+), otherwise
+    // the reviews illustration and book viewer fall back to 75.
+    qualities: [75, 88, 92, 95],
+  },
   async headers() {
     return [
       {
