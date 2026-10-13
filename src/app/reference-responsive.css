@@ -3769,3 +3769,10 @@
     grid-auto-columns: 80%;
   }
 }
+
+/* Room for one pagination dot per book between the carousel arrows. */
+@media (min-width: 48rem) {
+  .reference-home .reference-books__controls {
+    width: min(100%, 34rem);
+  }
+}
