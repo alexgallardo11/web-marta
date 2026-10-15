@@ -37,14 +37,14 @@ const gameConfig = {
     label: "Personajes locos",
     accent: BRAND_COLORS.orange,
     secondary: BRAND_COLORS.cyan,
-    character: "/images/web-2026/characters/martina-futbolista.png",
+    character: "/images/web-2026/characters/martina-futbolista.webp",
     filename: "mi-dibujo-personajes-locos-marta-moreno.png",
   },
   cauldron: {
     label: "Caldero mágico",
     accent: BRAND_COLORS.red,
     secondary: BRAND_COLORS.orange,
-    character: "/images/web-2026/characters/perro-cocinero.png",
+    character: "/images/web-2026/characters/perro-cocinero.webp",
     filename: "mi-dibujo-caldero-magico-marta-moreno.png",
   },
 } as const;
@@ -108,7 +108,7 @@ async function composePhotoStory({
   const config = gameConfig[game];
   const [photo, brandMark, character] = await Promise.all([
     loadCanvasImage(photoUrl),
-    loadCanvasImage("/images/web-2026/marta-illustration.png"),
+    loadCanvasImage("/images/web-2026/marta-illustration.webp"),
     loadCanvasImage(config.character),
   ]);
   const canvas = document.createElement("canvas");

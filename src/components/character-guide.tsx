@@ -24,7 +24,7 @@ export function CharacterGuide({
     <div className={`brand-guide brand-guide--${character} ${className}`}>
       <p className="brand-guide__bubble">{children}</p>
       <Image
-        src={`/images/web-2026/characters/${character}.png`}
+        src={`/images/web-2026/characters/${character}.webp`}
         alt=""
         width={709}
         height={709}

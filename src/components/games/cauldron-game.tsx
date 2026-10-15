@@ -324,8 +324,8 @@ export function CauldronGame() {
     try {
       await document.fonts.ready;
       const [brandMark, narrator] = await Promise.all([
-        loadCanvasImage("/images/web-2026/marta-illustration.png"),
-        loadCanvasImage("/images/web-2026/characters/perro-cocinero.png"),
+        loadCanvasImage("/images/web-2026/marta-illustration.webp"),
+        loadCanvasImage("/images/web-2026/characters/perro-cocinero.webp"),
       ]);
       const canvas = document.createElement("canvas");
       canvas.width = 1080;

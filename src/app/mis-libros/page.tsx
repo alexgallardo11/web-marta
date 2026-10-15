@@ -134,7 +134,7 @@ export default function BooksPage() {
               </div>
             </div>
             <Image
-              src="/images/newsletter.jpg"
+              src="/images/newsletter.webp"
               alt="Personaje ilustrado de Marta Moreno"
               width={400}
               height={400}
