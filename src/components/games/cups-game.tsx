@@ -188,8 +188,8 @@ export function CupsGame() {
     try {
       await document.fonts.ready;
       const [logo, characters] = await Promise.all([
-        loadCanvasImage("/images/marta-moreno-logo.png"),
-        loadCanvasImage("/images/fondo-resenas.jpg"),
+        loadCanvasImage("/images/marta-moreno-logo.webp"),
+        loadCanvasImage("/images/fondo-resenas.webp"),
       ]);
       const canvas = document.createElement("canvas");
       canvas.width = 1080;

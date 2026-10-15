@@ -4,7 +4,7 @@ export function BrandLockup({ preload = false }: { preload?: boolean }) {
   return (
     <>
       <Image
-        src="/images/web-2026/marta-illustration.png"
+        src="/images/web-2026/marta-illustration.webp"
         alt=""
         width={1525}
         height={1576}

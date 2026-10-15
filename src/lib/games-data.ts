@@ -236,5 +236,5 @@ export const SHAPE_CHALLENGES = [
 ].map((name, index) => ({
   id: index + 1,
   name,
-  src: `/images/games/formas/forma-${String(index + 1).padStart(2, "0")}.png`,
+  src: `/images/games/formas/forma-${String(index + 1).padStart(2, "0")}.webp`,
 }));

@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 
 const supportPaths = [
   {
-    image: "/images/newsletter.jpg",
+    image: "/images/newsletter.webp",
     alt: "Personaje ilustrado que acompaña la newsletter de Marta",
     title: "Recibe ideas creativas en tu mail cada semana",
     text: "Recibe cada martes en tu mail ideas, retos de dibujo y trucos para ilustrar personajes que emocionen.",
@@ -43,7 +43,7 @@ const supportPaths = [
     external: true,
   },
   {
-    image: "/images/marta-2026/marta-bio.jpg",
+    image: "/images/marta-2026/marta-bio.webp",
     alt: "Marta Moreno dibujando en su estudio",
     title: "Mi Club de Ilustración",
     text: "Te acompaño a crear ilustraciones memorables y transformar tus ideas en historias con emoción.",
@@ -312,7 +312,7 @@ export default function Home() {
           <div className="site-container reference-bio__inner">
             <figure className="reference-bio__portrait">
               <Image
-                src="/images/marta-2026/marta-bio.jpg"
+                src="/images/marta-2026/marta-bio.webp"
                 alt="Marta Moreno dibujando en su estudio"
                 width={1657}
                 height={1657}
@@ -375,7 +375,7 @@ export default function Home() {
               </div>
             </div>
             <Image
-              src="/images/newsletter.jpg"
+              src="/images/newsletter.webp"
               alt="Personaje ilustrado de Marta Moreno"
               width={400}
               height={400}
