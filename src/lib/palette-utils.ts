@@ -51,25 +51,60 @@ export function hslToHex(h: number, s: number, l: number): string {
   return `#${channel(0)}${channel(8)}${channel(4)}`.toUpperCase();
 }
 
+/** Tono (0–360°) de un color hexadecimal, o null si no es válido. */
+export function hexToHue(hex: string): number | null {
+  const normalized = normalizeHex(hex);
+  if (!normalized) return null;
+  const [r, g, b] = [1, 3, 5].map(
+    (index) => parseInt(normalized.slice(index, index + 2), 16) / 255,
+  );
+  const max = Math.max(r, g, b);
+  const delta = max - Math.min(r, g, b);
+  if (delta === 0) return 0;
+  const hue =
+    max === r
+      ? ((g - b) / delta) % 6
+      : max === g
+        ? (b - r) / delta + 2
+        : (r - g) / delta + 4;
+  return (hue * 60 + 360) % 360;
+}
+
 function between(random: () => number, min: number, max: number) {
   return min + random() * (max - min);
 }
 
+export type LockedColors = readonly [
+  string | null,
+  string | null,
+  string | null,
+];
+
 /**
  * Crea una paleta 60/30/10: el dominante es un tono sereno, el secundario
  * acompaña (más claro o más apagado) y el acento es el más vivo.
+ *
+ * Los colores bloqueados se mantienen tal cual y el resto se genera a partir
+ * de su tono, de modo que la paleta nueva siga combinando con ellos.
  */
 export function generatePalette(
   random: () => number = Math.random,
   harmony: Harmony = HARMONIES[Math.floor(random() * HARMONIES.length)],
+  locked: LockedColors = [null, null, null],
 ): Palette {
-  const base = Math.floor(random() * 360);
   const offsets: Record<Harmony, [number, number]> = {
     análoga: [between(random, 25, 40), between(random, -150, -120)],
     complementaria: [between(random, -20, 20), 180],
     triádica: [120, 240],
   };
   const [secondaryShift, accentShift] = offsets[harmony];
+  const roleShifts = [0, secondaryShift, accentShift];
+
+  const anchor = locked.findIndex((color) => color && hexToHue(color) !== null);
+  const base =
+    anchor >= 0
+      ? hexToHue(locked[anchor]!)! - roleShifts[anchor]
+      : Math.floor(random() * 360);
   const darkBase = random() < 0.5;
 
   const dominant = hslToHex(
@@ -88,12 +123,15 @@ export function generatePalette(
     between(random, 42, 55),
   );
 
-  return [dominant, secondary, accent];
+  const generated = [dominant, secondary, accent];
+  return generated.map((color, index) =>
+    locked[index] && normalizeHex(locked[index]!) ? locked[index]! : color,
+  ) as Palette;
 }
 
 /** Intercambia el dominante (60 %) con el acento (10 %). */
-export function swapDominantAndAccent(palette: Palette): Palette {
-  return [palette[2], palette[1], palette[0]];
+export function swapDominantAndAccent<T>(items: [T, T, T]): [T, T, T] {
+  return [items[2], items[1], items[0]];
 }
 
 /** Elige texto oscuro o claro según la luminosidad del fondo. */

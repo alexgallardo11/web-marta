@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeftRight, Check, Copy, Shuffle } from "lucide-react";
+import {
+  ArrowLeftRight,
+  Check,
+  Copy,
+  Lock,
+  LockOpen,
+  Shuffle,
+} from "lucide-react";
 import {
   HARMONIES,
   PALETTE_ROLES,
@@ -23,16 +30,36 @@ export function PaletteGenerator() {
   const [harmony, setHarmony] = useState<Harmony | "al-azar">("al-azar");
   const [palette, setPalette] = useState<Palette>(INITIAL_PALETTE);
   const [drafts, setDrafts] = useState<(string | null)[]>([null, null, null]);
+  const [locked, setLocked] = useState<[boolean, boolean, boolean]>([
+    false,
+    false,
+    false,
+  ]);
   const [copied, setCopied] = useState(false);
+
+  const allLocked = locked.every(Boolean);
 
   function regenerate(nextHarmony = harmony) {
     setPalette(
       generatePalette(
         Math.random,
         nextHarmony === "al-azar" ? undefined : nextHarmony,
+        palette.map((color, index) => (locked[index] ? color : null)) as [
+          string | null,
+          string | null,
+          string | null,
+        ],
       ),
     );
     setDrafts([null, null, null]);
+  }
+
+  function toggleLock(index: number) {
+    setLocked((current) => {
+      const next = [...current] as [boolean, boolean, boolean];
+      next[index] = !next[index];
+      return next;
+    });
   }
 
   function setColor(index: number, value: string) {
@@ -107,6 +134,8 @@ export function PaletteGenerator() {
               type="button"
               className="palette-button palette-button--primary"
               onClick={() => regenerate()}
+              disabled={allLocked}
+              title={allLocked ? "Desbloquea algún color para generar" : undefined}
             >
               <Shuffle aria-hidden="true" /> Generar paleta
             </button>
@@ -191,6 +220,26 @@ export function PaletteGenerator() {
                     <code>{palette[index]}</code>
                   )}
                 </div>
+                {mode === "auto" ? (
+                  <button
+                    type="button"
+                    className="palette-card__lock"
+                    aria-pressed={locked[index]}
+                    aria-label={`${locked[index] ? "Desbloquear" : "Bloquear"} color ${role.label.toLowerCase()}`}
+                    title={
+                      locked[index]
+                        ? "Color bloqueado: no cambia al generar"
+                        : "Bloquear este color"
+                    }
+                    onClick={() => toggleLock(index)}
+                  >
+                    {locked[index] ? (
+                      <Lock aria-hidden="true" />
+                    ) : (
+                      <LockOpen aria-hidden="true" />
+                    )}
+                  </button>
+                ) : null}
               </li>
             );
           })}
@@ -200,7 +249,10 @@ export function PaletteGenerator() {
           <button
             type="button"
             className="palette-button"
-            onClick={() => setPalette(swapDominantAndAccent(palette))}
+            onClick={() => {
+              setPalette(swapDominantAndAccent(palette));
+              setLocked(swapDominantAndAccent(locked));
+            }}
           >
             <ArrowLeftRight aria-hidden="true" /> Intercambiar 60 y 10
           </button>

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   formatPaletteText,
   generatePalette,
+  hexToHue,
   hslToHex,
   normalizeHex,
   readableTextColor,
@@ -28,6 +29,38 @@ describe("palette-utils", () => {
       expect(palette).toHaveLength(3);
       palette.forEach((color) => expect(normalizeHex(color)).toBe(color));
     }
+  });
+
+  it("calcula el tono de un color", () => {
+    expect(hexToHue("#FF0000")).toBe(0);
+    expect(hexToHue("#00FF00")).toBe(120);
+    expect(hexToHue("#0000FF")).toBe(240);
+    expect(hexToHue("#808080")).toBe(0);
+    expect(hexToHue("nope")).toBeNull();
+  });
+
+  it("mantiene los colores bloqueados al generar", () => {
+    for (let i = 0; i < 30; i++) {
+      const [dominant, secondary, accent] = generatePalette(
+        Math.random,
+        undefined,
+        ["#4E8F4A", null, "#C8502E"],
+      );
+      expect(dominant).toBe("#4E8F4A");
+      expect(accent).toBe("#C8502E");
+      expect(normalizeHex(secondary)).toBe(secondary);
+    }
+  });
+
+  it("genera a partir del tono del color bloqueado", () => {
+    // Triádica con el dominante bloqueado en azul (240°): secundario ≈ 0°, acento ≈ 120°.
+    const [, secondary, accent] = generatePalette(Math.random, "triádica", [
+      "#0000FF",
+      null,
+      null,
+    ]);
+    expect(hexToHue(secondary)).toBeCloseTo(0, -1);
+    expect(hexToHue(accent)).toBeCloseTo(120, -1);
   });
 
   it("intercambia dominante y acento", () => {
