@@ -24,7 +24,12 @@ function getCupTextClass(value: string) {
   if (value === "Toca para mezclar") return "is-empty is-long";
 
   const characters = value.trim().length;
-  const words = value.trim().split(/\s+/).length;
+  const wordList = value.trim().split(/\s+/);
+  const words = wordList.length;
+  const longestWord = Math.max(...wordList.map((word) => word.length));
+
+  if (longestWord > 11) return "is-extra-long";
+  if (longestWord > 8 && characters <= 17) return "is-long";
 
   if (characters > 38 || words > 6) return "is-extra-long";
   if (characters > 27 || words > 4) return "is-long";

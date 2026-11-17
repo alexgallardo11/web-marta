@@ -8539,27 +8539,28 @@ a {
   margin-block: auto;
   font-family: var(--font-display), sans-serif;
   line-height: 0.94;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  hyphens: none;
   text-wrap: balance;
   text-align: center;
 }
 
 .idea-cup__value.is-short {
-  font-size: clamp(2.35rem, 4vw, 3.65rem);
+  font-size: clamp(1.3rem, 2vw, 1.85rem);
 }
 
 .idea-cup__value.is-medium {
-  font-size: clamp(1.95rem, 3vw, 2.8rem);
+  font-size: clamp(1.15rem, 1.7vw, 1.55rem);
 }
 
 .idea-cup__value.is-long {
-  font-size: clamp(1.5rem, 2.25vw, 2.15rem);
+  font-size: clamp(1rem, 1.4vw, 1.3rem);
   line-height: 1;
 }
 
 .idea-cup__value.is-extra-long {
   max-width: 16ch;
-  font-size: clamp(1.18rem, 1.75vw, 1.7rem);
+  font-size: clamp(0.85rem, 1.15vw, 1.05rem);
   line-height: 1.04;
 }
 
