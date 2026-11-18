@@ -11,6 +11,15 @@ export function agreeAdjectiveWithCharacter(
 ): string {
   const isFeminine = character.trim().toLocaleLowerCase("es").startsWith("una ");
 
+  // Adjetivos con marca de género ("gruñón/a", "soñador/a").
+  const marked = adjective.match(/^(.+)\/a$/u);
+  if (marked) {
+    const base = marked[1]!;
+    if (!isFeminine) return base;
+    if (/o$/u.test(base)) return base.replace(/o$/u, "a");
+    return `${base.replace(/ón$/u, "on")}a`;
+  }
+
   if (!isFeminine) return adjective;
   return adjective.replace(/o$/u, "a");
 }
