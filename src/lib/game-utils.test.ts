@@ -39,6 +39,16 @@ describe("agreeAdjectiveWithCharacter", () => {
       "orgulloso",
     );
   });
+
+  it("resuelve los adjetivos con marca de género", () => {
+    expect(agreeAdjectiveWithCharacter("Una bruja", "gruñón/a")).toBe("gruñona");
+    expect(agreeAdjectiveWithCharacter("Un mago", "gruñón/a")).toBe("gruñón");
+    expect(agreeAdjectiveWithCharacter("Una pintora", "soñador/a")).toBe(
+      "soñadora",
+    );
+    expect(agreeAdjectiveWithCharacter("Una rana", "curioso/a")).toBe("curiosa");
+    expect(agreeAdjectiveWithCharacter("Un gato", "curioso/a")).toBe("curioso");
+  });
 });
 
 describe("wrapCanvasText", () => {
