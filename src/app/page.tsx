@@ -32,6 +32,28 @@ export const metadata: Metadata = {
   },
 };
 
+type HomePromoBannerVariant = "waitlist" | "club";
+
+// Change this value to switch between the waitlist and direct club banners.
+const HOME_PROMO_BANNER_VARIANT: HomePromoBannerVariant = "club";
+
+const homePromoBanners = {
+  waitlist: {
+    title: "Lista de espera de Mi Club de ilustración",
+    description:
+      "Entra en mi grupo privado y descarga la guía de 5 pasos para crear personajes",
+    cta: "Quiero la guía",
+    href: CLUB_WAITLIST_URL,
+  },
+  club: {
+    title: "Entra en Mi Club de Ilustración",
+    description:
+      "Únete a mi comunidad privada para aprender, practicar y crear personajes",
+    cta: "Entrar al Club",
+    href: CLUB_URL,
+  },
+} as const;
+
 const supportPaths = [
   {
     image: "/images/newsletter.webp",
@@ -154,6 +176,7 @@ const testimonials = [
 ] as const;
 
 export default function Home() {
+  const homePromoBanner = homePromoBanners[HOME_PROMO_BANNER_VARIANT];
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -178,22 +201,19 @@ export default function Home() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
 
-        <section className="reference-waitlist" aria-labelledby="waitlist-title">
+        <section className="reference-waitlist" aria-labelledby="home-promo-title">
           <div className="site-container reference-waitlist__inner">
             <div className="reference-waitlist__copy">
-              <h2 id="waitlist-title">Lista de espera de Mi Club de ilustración</h2>
-              <p className="reference-waitlist__description">
-                Entra en mi grupo privado y descarga la guía de 5 pasos para crear
-                personajes
-              </p>
+              <h2 id="home-promo-title">{homePromoBanner.title}</h2>
+              <p className="reference-waitlist__description">{homePromoBanner.description}</p>
             </div>
             <a
               className="reference-button reference-button--dark reference-waitlist__button"
-              href={CLUB_WAITLIST_URL}
+              href={homePromoBanner.href}
               target="_blank"
               rel="noreferrer"
             >
-              Quiero la guía <ArrowRight aria-hidden="true" />
+              {homePromoBanner.cta} <ArrowRight aria-hidden="true" />
             </a>
           </div>
         </section>
